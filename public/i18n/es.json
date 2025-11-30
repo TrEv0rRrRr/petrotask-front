@@ -1,0 +1,893 @@
+{
+  "location-management": {
+    "zones": "Gestión de zonas",
+    "add": "Agregar Zona",
+    "loading": "Cargando zonas",
+    "not-found": "No se encontraron zonas",
+    "create": "Crear tu primera zona"
+  },
+  "location-form-dialog": {
+    "name": "Nombre",
+    "n2": "El nombre es requerido",
+    "description": "Descripción",
+    "l1": "Latitud",
+    "l2": "La latitud es requerida",
+    "l3": "Longitud",
+    "l4": "La longitud es requerida",
+    "cancel": "Cancelar",
+    "update": "Actualizar",
+    "add": "Agregar"
+  },
+  "zone-form-dialog": {
+    "name": "Nombre",
+    "n2": "El nombre es requerido",
+    "description": "Descripción",
+    "cancel": "Cancelar",
+    "update": "Actualizar",
+    "add": "Agregar"
+  },
+  "zone-card": {
+    "locations": "Ubicaciones",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "activate": "Activar",
+    "deactivate": "Desactivar",
+    "add": "Agregar Ubicación"
+  },
+  "equipment-management": {
+    "equipment": "Gestión de equipamiento",
+    "filter": "Filtrar por estado: ",
+    "cards": "Ver en tarjetas",
+    "table": "Ver en tabla",
+    "add": "Agregar equipamiento",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "maintain": "A mantenimiento",
+    "able": "Disponible",
+    "picture": "Subir foto"
+  },
+  "equipment-card": {
+    "status": "Estado: ",
+    "charge": "Capacidad de carga: ",
+    "passengers": "Capacidad de pasajeros: ",
+    "edit": "Editar",
+    "picture": "Subir fotos",
+    "maintain": "A mantenimiento",
+    "able": "Disponible"
+  },
+  "equipment": {
+    "form": {
+      "name": "Nombre",
+      "code": "Código",
+      "plate": "Placa",
+      "capacityLoad": "Capacidad de carga (kg)",
+      "capacityPax": "Capacidad de pasajeros",
+      "status": "Estado",
+      "placeholders": {
+        "name": "Ingrese el nombre del equipo",
+        "code": "Ingrese el código",
+        "plate": "Ingrese la placa",
+        "capacityLoad": "Ingrese la capacidad de carga",
+        "capacityPax": "Ingrese la capacidad de pasajeros"
+      }
+    }
+  },
+  "team": {
+    "form": {
+      "name": "Nombre del equipo",
+      "placeholders": {
+        "name": "Ingrese el nombre del equipo"
+      }
+    }
+  },
+  "location": {
+    "form": {
+      "street": "Calle",
+      "city": "Ciudad",
+      "country": "País",
+      "latitude": "Latitud",
+      "longitude": "Longitud",
+      "status": "Estado",
+      "placeholders": {
+        "street": "Ingrese la calle",
+        "city": "Ingrese la ciudad",
+        "country": "Ingrese el país",
+        "latitude": "Ingrese la latitud",
+        "longitude": "Ingrese la longitud"
+      }
+    }
+  },
+  "employee": {
+    "form": {
+      "name": "Nombre",
+      "lastName": "Apellido",
+      "email": "Correo electrónico",
+      "phoneNumber": "Número de teléfono",
+      "position": "Cargo",
+      "status": "Estado",
+      "placeholders": {
+        "name": "Ingrese el nombre",
+        "lastName": "Ingrese el apellido",
+        "email": "Ingrese el correo electrónico",
+        "phoneNumber": "Ingrese el número de teléfono",
+        "position": "Ingrese el cargo"
+      }
+    }
+  },
+  "equipment-form-dialog": {
+    "plate": "Placa",
+    "model": "Modelo/Tipo",
+    "charge": "Capacidad de carga (kg) ",
+    "passengers": "Capacidad de pasajeros ",
+    "status": "Estado",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "list": "No hay equipamiento disponible con los filtros seleccionados."
+  },
+  "employee-management": {
+    "employee": "Gestión de Empleados",
+    "filter": "Filtrar por cargo: ",
+    "add": "Agregar Empleado",
+    "edit": "Editar",
+    "delete": "Eliminar"
+  },
+  "employee-form-dialog": {
+    "add": "Agregar empleado",
+    "edit": "Editar empleado",
+    "name": "Nombre",
+    "last-name": "Apellido",
+    "phone": "Teléfono",
+    "status": "Estado",
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "charges": "Cargos",
+    "cancel": "Cancelar",
+    "save": "Guardar"
+  },
+  "user-management": {
+    "title": "Gestión de Usuarios",
+    "all": "Todos los roles",
+    "search": "Buscar por nombre o email",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "role": "Rol",
+    "status": "Estado",
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "actions": "Acciones",
+    "page": "Página",
+    "of": "de",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "create": "Crear Usuario"
+  },
+  "team-management": {
+    "title": "Gestión de Equipos",
+    "filter": "Filtrar por Zona",
+    "all": "Todas las zonas",
+    "clean": "Limpiar filtro",
+    "no-teams": "No hay equipos para mostrar",
+    "no-filter": "No se encontraron equipos para la fecha y filtros seleccionados.",
+    "create": "Crear Equipo"
+  },
+  "team-card": {
+    "date": "Fecha: ",
+    "location": "Ubicación: ",
+    "status": "Estado: ",
+    "members": "Miembros del Equipo",
+    "no-members": "No hay miembros asignados a este equipo.",
+    "edit": "Editar",
+    "edit-m": "Editar Miembros",
+    "position": "Cargo: "
+  },
+  "login-container": {
+    "slogan": "Tu operación en orden, en todo momento",
+    "username": "Nombre de Usuario",
+    "username-required": "El nombre de usuario es obligatorio.",
+    "password": "Contraseña",
+    "password-required": "La contraseña es obligatoria.",
+    "password-missing": "¿Olvidaste tu contraseña?",
+    "login": "INGRESAR",
+    "register": "REGISTRARSE",
+    "loading": "Cargando...",
+    "fill": "Por favor, complete todos los campos.",
+    "invalid": "Nombre de usuario o contraseña incorrectos."
+  },
+  "password-recovery": {
+    "recover-password": "Recuperar Contraseña",
+    "link-sent": "Te enviaremos un enlace para restablecer tu contraseña.",
+    "email": "Correo electrónico",
+    "email-example": "ejemplo@correo.com",
+    "sent-link": "ENVIAR ENLACE",
+    "back-login": "VOLVER AL LOGIN"
+  },
+  "register-container": {
+    "slogan": "Tu operación en orden, en todo momento",
+    "company-basic": "Empresa",
+    "company-contact": "Contacto",
+    "user-basic": "Usuario",
+    "user-credentials": "Credenciales",
+    "ruc": "RUC",
+    "ruc-required": "El RUC es obligatorio",
+    "legal-name": "Nombre Legal",
+    "legal-name-required": "El nombre legal es obligatorio",
+    "commercial-name": "Nombre Comercial",
+    "address": "Dirección",
+    "city": "Ciudad",
+    "country": "País",
+    "phone": "Teléfono",
+    "company-email": "Email de la Empresa",
+    "website": "Sitio Web",
+    "first-name": "Nombre",
+    "first-name-required": "El nombre es obligatorio",
+    "last-name": "Apellido",
+    "last-name-required": "El apellido es obligatorio",
+    "username": "Nombre de Usuario",
+    "username-required": "El nombre de usuario es obligatorio",
+    "email": "Correo electrónico",
+    "email-required": "El correo electrónico es obligatorio",
+    "email-invalid": "Por favor ingresa un correo electrónico válido",
+    "password": "Contraseña",
+    "password-required": "La contraseña es obligatoria",
+    "password-min": "La contraseña debe tener al menos 6 caracteres",
+    "password-repeat": "Repetir contraseña",
+    "password-repeat-required": "Por favor repite tu contraseña",
+    "password-mismatch": "Las contraseñas no coinciden",
+    "fill-required-company-basic": "Por favor completa los campos obligatorios de la empresa",
+    "fill-required-user-basic": "Por favor completa los campos obligatorios del usuario",
+    "fill-required-credentials": "Por favor completa las credenciales requeridas",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "register": "REGISTRAR",
+    "registering": "REGISTRANDO...",
+    "already-have-account": "¿Ya tienes una cuenta?",
+    "login": "INICIAR SESIÓN",
+    "error": "Error al registrar. Por favor intenta nuevamente.",
+    "role-selection": "Rol",
+    "select-role": "Selecciona tu rol",
+    "role-description": "Elige el rol que mejor se adapte a tu función en la empresa",
+    "supervisor": "Supervisor",
+    "supervisor-description": "Gestiona equipos, supervisa operaciones y toma decisiones estratégicas",
+    "operario": "Operario",
+    "operario-description": "Ejecuta tareas de campo, reporta incidencias y mantiene registros operativos",
+    "role-required": "Por favor selecciona un rol"
+  },
+  "payment-view": {
+    "bank-info": "Ingrese la informacion bancaria",
+    "full-name": "Nombre completo",
+    "company-name": "Nombre de la empresa",
+    "card-number": "Numero de la tarjeta",
+    "card-type": "Tipo de tarjeta",
+    "month": "Mes",
+    "year": "Año",
+    "ruc": "Numero de RUC",
+    "save": "Guardar"
+  },
+  "account-creation": {
+    "email": "Correo electrónico",
+    "email-input": "Ingrese su email...",
+    "name": "Nombre",
+    "name-input": "Ingrese su nombre...",
+    "password": "Password",
+    "password-input": "Ingrese su contraseña",
+    "password-repeat": "Repita su contraseña",
+    "register": "Registrarse",
+    "logo": "Logo de PetroTask",
+    "small-logo": "Logo pequeño de PetroTask"
+  },
+  "home": {
+    "welcome": "Bienvenido a PetroTask",
+    "subtitle": "Tu plataforma integral de gestión de operaciones petroleras",
+    "quick-access": "Acceso Rápido",
+    "activities-management": {
+      "title": "Gestión de Tareas Críticas",
+      "description": "Gestiona y realiza seguimiento de todas las tareas críticas en operaciones petroleras"
+    },
+    "task-planning": {
+      "title": "Planificación de Tareas",
+      "description": "Planifica y programa tareas críticas en operaciones petroleras"
+    },
+    "equipment-management": {
+      "title": "Gestión de Equipos Petroleros",
+      "description": "Gestiona equipos y recursos petroleros especializados"
+    },
+    "team-management": {
+      "title": "Gestión de Equipos de Trabajo",
+      "description": "Organiza y gestiona equipos de campo petrolero"
+    },
+    "location-management": {
+      "title": "Ubicaciones Petroleras",
+      "description": "Gestiona plataformas, campos de extracción y plantas de procesamiento"
+    },
+    "safety-monitoring": {
+      "title": "Monitoreo de Seguridad",
+      "description": "Supervisa alertas de seguridad y riesgos operativos"
+    },
+    "execution-history": {
+      "title": "Historial de Ejecución",
+      "description": "Visualiza el historial completo de operaciones petroleras"
+    }
+  },
+  "shared": {
+    "components": {
+      "table": {
+        "no-records": "No hay registros disponibles",
+        "loading": "Cargando...",
+        "edit": "Editar"
+      },
+      "sidebar": {
+        "logo": "PetroTask",
+        "logo-short": "PT"
+      },
+      "header": {
+        "title": "PetroTask",
+        "menu": "Menú",
+        "account": "Cuenta"
+      },
+      "confirmation-dialog": {
+        "close": "Cerrar",
+        "confirm": "Confirmar"
+      },
+      "reschedule-dialog": {
+        "title": "Reprogramar Tarea",
+        "message": "¿Desea reprogramar \"{{taskName}}\" de {{oldTime}} a {{newTime}}?",
+        "cancel": "Cancelar",
+        "confirm": "Confirmar"
+      },
+      "page-not-found": {
+        "title": "Página no encontrada",
+        "message": "La ruta <b>{{path}}</b> no es válida.",
+        "register": "Registrarse"
+      },
+      "profile": {
+        "change-photo": "Cambiar foto"
+      }
+    }
+  },
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "add": "Agregar",
+    "update": "Actualizar",
+    "create": "Crear",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito"
+  },
+  "settings": {
+    "title": "Panel de Suscripción",
+    "subtitle": "Administra tu plan, estado y forma de pago",
+    "current-plan": "Plan actual",
+    "status": "Estado",
+    "select-status": "Seleccionar estado",
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "plan-start": "Inicio del plan",
+    "next-payment": "Próximo pago",
+    "payment-method": "Método de pago",
+    "payment-placeholder": "Ej. VISA **** 1234",
+    "view-plan": "Ver plan",
+    "change-payment": "Cambiar método de pago",
+    "renew": "Renovar suscripción",
+    "processing": "Procesando...",
+    "back-home": "Volver a Home",
+    "error-message": "Revisa los campos marcados antes de continuar.",
+    "required-field": "Este campo es obligatorio.",
+    "select-valid-status": "Selecciona un estado válido.",
+    "date-required": "Fecha requerida."
+  },
+  "demo": {
+    "styles": {
+      "title": "Sistema de Estilos",
+      "typography": {
+        "title": "Sistema de Tipografía",
+        "h1": "Encabezado 1",
+        "h1-desc": "Usado para títulos principales de página",
+        "h2": "Encabezado 2",
+        "h2-desc": "Usado para títulos de sección",
+        "h3": "Encabezado 3",
+        "h3-desc": "Usado para subtítulos",
+        "h4": "Encabezado 4",
+        "h4-desc": "Usado para títulos de tarjetas",
+        "h5": "Encabezado 5",
+        "h5-desc": "Usado para títulos pequeños",
+        "h6": "Encabezado 6",
+        "h6-desc": "Usado para títulos más pequeños",
+        "body": "Texto de cuerpo - Este es un párrafo de texto para demostrar el estilo de texto de cuerpo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "small": "Texto pequeño - Usado para subtítulos e información secundaria"
+      },
+      "colors": {
+        "title": "Sistema de Colores",
+        "primary": "Primario",
+        "accent": "Acento",
+        "secondary": "Secundario",
+        "success": "Éxito",
+        "error": "Error",
+        "warning": "Advertencia",
+        "info": "Información"
+      },
+      "components": {
+        "title": "Componentes Material",
+        "buttons": {
+          "title": "Botones",
+          "primary": "Botón Primario",
+          "accent": "Botón Acento",
+          "warn": "Botón Advertencia",
+          "stroked-primary": "Primario con Borde",
+          "stroked-accent": "Acento con Borde",
+          "stroked-warn": "Advertencia con Borde",
+          "flat-primary": "Primario Plano",
+          "flat-accent": "Acento Plano",
+          "flat-warn": "Advertencia Plano"
+        },
+        "cards": {
+          "title": "Tarjetas",
+          "basic": {
+            "title": "Tarjeta Básica",
+            "subtitle": "Con encabezado y contenido",
+            "content": "Esta es una tarjeta material básica con secciones de encabezado y contenido."
+          },
+          "actions": {
+            "title": "Tarjeta con Acciones",
+            "subtitle": "Incluye botones de acción",
+            "content": "Esta tarjeta incluye botones de acción en el pie.",
+            "action1": "Acción 1",
+            "action2": "Acción 2"
+          }
+        }
+      }
+    },
+    "components": {
+      "test": "Prueba",
+      "click-me": "Haz clic aquí",
+      "write-here": "Escribe aquí"
+    }
+  },
+  "execution-history": {
+    "title": "Historial de Ejecución de Tareas",
+    "chart-title": "Comparativo de Fechas Planificadas vs Reales",
+    "export-pdf": "Exportar a PDF",
+    "export-csv": "Exportar a CSV",
+    "table": {
+      "task": "Tarea",
+      "planned-date": "Fecha Planificada",
+      "real-date": "Fecha Real",
+      "status": "Estado",
+      "comment": "Comentario"
+    },
+    "status": {
+      "completed": "Completada",
+      "in-progress": "En progreso",
+      "delayed": "Retrasada"
+    }
+  },
+  "task-planning": {
+    "title": "Planificación de Tareas",
+    "create": "Crear Tarea",
+    "schedule": "Programar",
+    "reschedule": "Reprogramar",
+    "complete": "Completar",
+    "cancel": "Cancelar"
+  },
+  "activity-management": {
+    "title": "Gestión de Actividades",
+    "add": "Agregar Actividad",
+    "edit": "Editar Actividad",
+    "delete": "Eliminar Actividad",
+    "status": "Estado",
+    "priority": "Prioridad",
+    "assigned": "Asignado a"
+  },
+  "dashboard": {
+    "title": "Panel de Control Logístico",
+    "metrics": {
+      "active-shipments": {
+        "title": "Envíos Activos",
+        "trend": "vs semana anterior"
+      },
+      "on-time-delivery": {
+        "title": "Entrega a Tiempo",
+        "trend": "vs semana anterior"
+      },
+      "resource-utilization": {
+        "title": "Utilización de Recursos",
+        "trend": "vs semana anterior"
+      }
+    },
+    "resource-usage": {
+      "title": "Resumen de Uso de Recursos",
+      "time-period": {
+        "label": "Período de Tiempo",
+        "today": "Hoy",
+        "week": "Esta Semana",
+        "month": "Este Mes"
+      }
+    },
+    "incidents": {
+      "title": "Incidentes Recientes",
+      "view-all": "Ver Todos"
+    },
+    "team-performance": {
+      "title": "Rendimiento del Equipo",
+      "metrics": {
+        "tasks-completed": "Tareas Completadas",
+        "efficiency": "Eficiencia",
+        "trend": "Tendencia"
+      }
+    }
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "logout": "Cerrar Sesión"
+  },
+  "validation": {
+    "required": "Este campo es requerido",
+    "email": "Formato de email inválido",
+    "minLength": "Mínimo {{min}} caracteres",
+    "maxLength": "Máximo {{max}} caracteres"
+  },
+  "user-create-dialog": {
+    "title": "Crear Nuevo Usuario",
+    "subtitle": "Complete la información del nuevo usuario",
+    "username": "Nombre de usuario",
+    "username.placeholder": "Ej: juan.perez",
+    "firstName": "Nombre",
+    "firstName.placeholder": "Ej: Juan",
+    "lastName": "Apellido",
+    "lastName.placeholder": "Ej: Pérez",
+    "email": "Correo electrónico",
+    "email.placeholder": "Ej: juan.perez@empresa.com",
+    "password": "Contraseña",
+    "password.placeholder": "Mínimo 8 caracteres",
+    "roles": "Roles",
+    "roles.placeholder": "Seleccionar roles",
+    "status": "Usuario activo",
+    "cancel": "Cancelar",
+    "create": "Crear Usuario"
+  },
+  "user-edit-dialog": {
+    "title": "Editar Usuario",
+    "name": "Nombre",
+    "email": "Email",
+    "role": "Rol",
+    "cancel": "Cancelar",
+    "update": "Actualizar"
+  },
+  "company-settings": {
+    "title": "Configuración de la Empresa",
+    "company-info": "Información de la Empresa",
+    "contact-info": "Información de Contacto",
+    "save": "Guardar",
+    "cancel": "Cancelar"
+  },
+  "activity-card": {
+    "start": "Inicio",
+    "end": "Fin",
+    "duration": "Duración",
+    "progress": "Progreso"
+  },
+  "form": {
+    "actions": {
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "submit": "Enviar",
+      "create": "Crear",
+      "update": "Actualizar"
+    },
+    "errors": {
+      "required": "Este campo es requerido",
+      "email": "Formato de email inválido",
+      "minLength": "Mínimo {{length}} caracteres",
+      "maxLength": "Máximo {{length}} caracteres",
+      "min": "Valor mínimo: {{min}}",
+      "max": "Valor máximo: {{max}}",
+      "pattern": "Formato inválido"
+    },
+    "fields": {
+      "username": "Nombre de usuario",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "roles": "Roles",
+      "status": "Estado"
+    },
+    "placeholders": {
+      "select": "Seleccionar...",
+      "enter": "Ingrese...",
+      "choose": "Elegir..."
+    }
+  },
+  "roles": {
+    "admin": "Administrador",
+    "admin.description": "Acceso completo al sistema",
+    "supervisor": "Supervisor Logístico",
+    "supervisor.description": "Supervisión de operaciones logísticas",
+    "operator": "Operador Logístico",
+    "operator.description": "Operaciones básicas de logística"
+  },
+  "LOCATION_MANAGEMENT": {
+    "TITLE": "Gestión de Ubicaciones",
+    "SUBTITLE": "Administra zonas y ubicaciones para una organización eficiente de recursos",
+    "ADD_ZONE": "Agregar Zona",
+    "ADD_LOCATION": "Agregar Ubicación",
+    "ADD_FIRST_LOCATION": "Agregar Primera Ubicación",
+    "SEARCH_PLACEHOLDER": "Buscar zonas y ubicaciones...",
+    "SEARCH_ZONES_LOCATIONS": "Buscar zonas y ubicaciones...",
+    "FILTER_STATUS": "Filtrar por Estado",
+    "TENANT": "Inquilino",
+    "TOTAL_LOCATIONS": "Total de Ubicaciones",
+    "ACTIVE_LOCATIONS": "Ubicaciones Activas",
+    "NO_ZONES": "No hay zonas disponibles",
+    "NO_ZONES_DESCRIPTION": "Comienza creando zonas para organizar tus ubicaciones",
+    "ADD_FIRST_ZONE": "Agregar Primera Zona",
+    "NO_LOCATIONS_IN_ZONE": "No hay ubicaciones en esta zona",
+    "LOCATIONS_IN_ZONE": "Ubicaciones en la Zona",
+    "LOADING": "Cargando ubicaciones...",
+    "EMPTY_STATE": {
+      "TITLE": "No hay zonas disponibles",
+      "DESCRIPTION": "Comienza creando zonas para organizar tus ubicaciones",
+      "ACTION": "Crear Primera Zona"
+    },
+    "ZONE": {
+      "NAME": "Nombre de Zona",
+      "LOCATIONS_COUNT": "ubicaciones",
+      "ACTIVE_LOCATIONS": "activas",
+      "ACTIONS": {
+        "ADD_LOCATION": "Agregar Ubicación",
+        "EDIT": "Editar Zona",
+        "DELETE": "Eliminar Zona"
+      }
+    },
+    "LOCATION": {
+      "ADDRESS": "Dirección",
+      "CITY": "Ciudad",
+      "COUNTRY": "País",
+      "STATUS": "Estado",
+      "COORDINATES": "Coordenadas",
+      "ACTIONS": {
+        "EDIT": "Editar Ubicación",
+        "TOGGLE_STATUS": "Cambiar Estado",
+        "VIEW_DETAILS": "Ver Detalles"
+      }
+    },
+    "FILTERS": {
+      "ALL_STATUS": "Todos los Estados",
+      "ACTIVE_ONLY": "Solo Activos",
+      "INACTIVE_ONLY": "Solo Inactivos"
+    }
+  },
+  "SHARED": {
+    "ACTIONS": {
+      "DELETE": "Eliminar",
+      "EDIT": "Editar",
+      "REFRESH": "Actualizar",
+      "ACTIVATE": "Activar",
+      "DEACTIVATE": "Desactivar"
+    },
+    "ADD": "Agregar",
+    "EDIT": "Editar",
+    "DELETE": "Eliminar",
+    "CANCEL": "Cancelar",
+    "SAVE": "Guardar",
+    "CREATE": "Crear",
+    "UPDATE": "Actualizar",
+    "SEARCH": "Buscar",
+    "FILTER": "Filtrar",
+    "REFRESH": "Actualizar",
+    "LOADING": "Cargando...",
+    "NO_DATA": "No hay datos disponibles",
+    "CONFIRM": "Confirmar",
+    "SUCCESS": "Éxito",
+    "ERROR": "Error",
+    "WARNING": "Advertencia",
+    "INFO": "Información",
+    "CLOSE": "Cerrar",
+    "STATUS": {
+      "ACTIVE": "Activo",
+      "INACTIVE": "Inactivo",
+      "PENDING": "Pendiente",
+      "COMPLETED": "Completado",
+      "CANCELLED": "Cancelado"
+    },
+    "TABLE_VIEW": "Vista de Tabla",
+    "CARD_VIEW": "Vista de Tarjetas"
+  },
+  "NAVIGATION": {
+    "DASHBOARD": "Panel de Control",
+    "RESOURCES": "Recursos",
+    "PLANNING": "Planificación",
+    "EXECUTION": "Ejecución",
+    "IAM": "Gestión de Identidad",
+    "NOTIFICATIONS": "Notificaciones",
+    "BILLING": "Facturación",
+    "SETTINGS": "Configuración",
+    "LOGOUT": "Cerrar Sesión"
+  },
+  "POSITION_MANAGEMENT": {
+    "TITLE": "Gestión de Posiciones",
+    "SUBTITLE": "Administra las posiciones de trabajo disponibles en tu organización",
+    "ADD_POSITION": "Agregar Posición",
+    "EDIT_POSITION": "Editar Posición",
+    "ADD_FIRST_POSITION": "Agregar Primera Posición",
+    "SEARCH_PLACEHOLDER": "Buscar posiciones por nombre o descripción...",
+    "NO_POSITIONS": "No hay posiciones disponibles",
+    "NO_POSITIONS_DESCRIPTION": "Comienza agregando posiciones de trabajo para organizar tu estructura organizacional",
+    "TABLE": {
+      "ICON": "Icono",
+      "NAME": "Nombre",
+      "DESCRIPTION": "Descripción",
+      "ACTIONS": "Acciones"
+    },
+    "FORM": {
+      "TITLE": "Nombre de la Posición",
+      "TITLE_PLACEHOLDER": "Ej: Gerente de Operaciones",
+      "TITLE_REQUIRED": "El nombre de la posición es requerido",
+      "TITLE_MIN_LENGTH": "El nombre debe tener al menos 2 caracteres",
+      "DESCRIPTION": "Descripción de la Posición",
+      "DESCRIPTION_PLACEHOLDER": "Describe las responsabilidades y funciones principales...",
+      "DESCRIPTION_REQUIRED": "La descripción es requerida",
+      "DESCRIPTION_MIN_LENGTH": "La descripción debe tener al menos 5 caracteres",
+      "HELPER_TEXT": "Define claramente el título y las responsabilidades para una mejor organización del equipo"
+    }
+  },
+  "EQUIPMENT_MANAGEMENT": {
+    "TITLE": "Gestión de Equipos",
+    "SUBTITLE": "Monitorea y administra tu flota de equipos de manera eficiente",
+    "ADD_EQUIPMENT": "Agregar Equipo",
+    "ADD_FIRST_EQUIPMENT": "Agregar Primer Equipo",
+    "SEARCH_PLACEHOLDER": "Buscar equipos por nombre, modelo o serie...",
+    "FILTER_STATUS": "Filtrar por Estado",
+    "TABLE_VIEW": "Vista de Tabla",
+    "CARDS_VIEW": "Vista de Tarjetas",
+    "NO_EQUIPMENT": "No hay equipos disponibles",
+    "NO_EQUIPMENT_DESCRIPTION": "Comienza agregando equipos para gestionar tu flota",
+    "FILTERS": {
+      "ALL_TYPES": "Todos los Tipos",
+      "ALL_STATUS": "Todos los Estados"
+    },
+    "TABLE": {
+      "NAME": "Nombre",
+      "TYPE": "Tipo",
+      "MODEL": "Modelo",
+      "SERIAL": "Número de Serie",
+      "STATUS": "Estado",
+      "CAPACITY": "Capacidad",
+      "LOCATION": "Ubicación",
+      "ACTIONS": "Acciones"
+    },
+    "CARD": {
+      "SERIAL": "Serie",
+      "CAPACITY": "Capacidad",
+      "LOCATION": "Ubicación"
+    },
+    "STATUS": {
+      "AVAILABLE": "Disponible",
+      "IN_USE": "En Uso",
+      "MAINTENANCE": "Mantenimiento",
+      "OUT_OF_SERVICE": "Fuera de Servicio"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "No se encontraron equipos",
+      "DESCRIPTION": "Ningún equipo coincide con tus criterios de búsqueda y filtros actuales",
+      "ACTION": "Limpiar Filtros"
+    }
+  },
+  "photo-evidence": {
+    "title": "Evidencias Fotográficas",
+    "subtitle": "Gestión y seguimiento de evidencias fotográficas",
+    "upload-photos": "Subir Fotos",
+    "total-photos": "Total de Fotos",
+    "pending-approval": "Pendientes de Aprobación",
+    "approved-photos": "Fotos Aprobadas",
+    "all-evidence": "Todas las Evidencias",
+    "by-category": "Por Categoría",
+    "photos": "fotos",
+    "view-photos": "Ver Fotos",
+    "approve": "Aprobar",
+    "reject": "Rechazar",
+    "view": "Ver",
+    "before": "Antes",
+    "during": "Durante",
+    "after": "Después",
+    "incident": "Incidente",
+    "equipment": "Equipo",
+    "safety": "Seguridad",
+    "pending": "Pendiente",
+    "approved": "Aprobado",
+    "rejected": "Rechazado",
+    "select-photos": "Seleccionar Fotos",
+    "selected-photos": "Fotos Seleccionadas",
+    "category": "Categoría",
+    "location": "Ubicación",
+    "tags": "Etiquetas",
+    "add-tag": "Agregar etiqueta",
+    "cancel": "Cancelar",
+    "upload": "Subir",
+    "description": "Descripción",
+    "uploaded-by": "Subido por",
+    "date": "Fecha",
+    "close": "Cerrar"
+  },
+  "safety-alerts": {
+    "title": "Alertas de Seguridad",
+    "subtitle": "Monitoreo y gestión de alertas de seguridad",
+    "create-alert": "Crear Alerta",
+    "total-alerts": "Total de Alertas",
+    "active-alerts": "Alertas Activas",
+    "critical-alerts": "Alertas Críticas",
+    "all-alerts": "Todas las Alertas",
+    "by-type": "Por Tipo",
+    "acknowledge": "Reconocer",
+    "resolve": "Resolver",
+    "required-actions": "Acciones Requeridas",
+    "create-new-alert": "Crear Nueva Alerta",
+    "alert-title": "Título de la Alerta",
+    "alert-type": "Tipo de Alerta",
+    "due-date": "Fecha de Vencimiento",
+    "assigned-to": "Asignado a",
+    "action": "Acción",
+    "add-action": "Agregar Acción",
+    "additional-notes": "Notas Adicionales",
+    "critical": "Crítica",
+    "warning": "Advertencia",
+    "info": "Informativa",
+    "maintenance": "Mantenimiento",
+    "high": "Alta",
+    "medium": "Media",
+    "low": "Baja",
+    "active": "Activa",
+    "acknowledged": "Reconocida",
+    "resolved": "Resuelta"
+  },
+  "safety-monitoring": {
+    "title": "Monitoreo de Seguridad",
+    "subtitle": "Sistema de monitoreo en tiempo real",
+    "real-time-metrics": "Métricas en Tiempo Real",
+    "active-alerts": "Alertas Activas",
+    "incident-history": "Historial de Incidentes",
+    "critical": "Críticas",
+    "warnings": "Advertencias",
+    "info": "Información",
+    "acknowledge": "Reconocer",
+    "resolve": "Resolver",
+    "type": "Tipo",
+    "location": "Ubicación",
+    "timestamp": "Fecha y Hora",
+    "status": "Estado",
+    "safe": "Seguro",
+    "warning": "Advertencia",
+    "critical": "Crítico",
+    "up": "Subiendo",
+    "down": "Bajando",
+    "stable": "Estable",
+    "active": "Activo",
+    "acknowledged": "Reconocido",
+    "resolved": "Resuelto"
+  },
+  "home": {
+    "welcome": "Bienvenido a PetroTask",
+    "subtitle": "Tu plataforma integral de gestión de operaciones petroleras",
+    "quick-access": "Acceso Rápido",
+    "my-tasks": {
+      "title": "Mis Tareas",
+      "description": "Gestiona y realiza seguimiento de todas tus tareas asignadas"
+    },
+    "incident-reporting": {
+      "title": "Reporte de Incidencias",
+      "description": "Reporta problemas, incidentes y situaciones de emergencia"
+    },
+    "photo-evidence": {
+      "title": "Evidencias Fotográficas",
+      "description": "Sube y gestiona evidencias fotográficas de tus operaciones"
+    },
+    "safety-alerts": {
+      "title": "Alertas de Seguridad",
+      "description": "Monitorea y gestiona alertas de seguridad en tiempo real"
+    }
+  }
+}

@@ -1,0 +1,1000 @@
+{
+  "location-management": {
+    "zones": "Zone Management",
+    "add": "Add Zone",
+    "loading": "Loading zones",
+    "not-found": "No zones found",
+    "create": "Create your first zone"
+  },
+  "location-form-dialog": {
+    "name": "Name",
+    "n2": "Name is required",
+    "description": "Description",
+    "l1": "Latitude",
+    "l2": "Latitude is required",
+    "l3": "Longitude",
+    "l4": "Longitude is required",
+    "cancel": "Cancel",
+    "update": "Update",
+    "add": "Add"
+  },
+  "zone-form-dialog": {
+    "name": "Name",
+    "n2": "Name is required",
+    "description": "Description",
+    "cancel": "Cancel",
+    "update": "Update",
+    "add": "Add"
+  },
+  "zone-card": {
+    "locations": "Locations",
+    "edit": "Edit",
+    "delete": "Delete",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "add": "Add Location"
+  },
+  "equipment-management": {
+    "equipment": "Equipment Management",
+    "filter": "Filter by status: ",
+    "cards": "Card view",
+    "table": "Table view",
+    "add": "Add equipment",
+    "edit": "Edit",
+    "delete": "Delete",
+    "maintain": "To maintenance",
+    "able": "Available",
+    "picture": "Upload photo"
+  },
+  "equipment-card": {
+    "status": "Status: ",
+    "charge": "Load capacity: ",
+    "passengers": "Passenger capacity: ",
+    "edit": "Edit",
+    "picture": "Upload photos",
+    "maintain": "To maintenance",
+    "able": "Available"
+  },
+  "equipment": {
+    "form": {
+      "name": "Name",
+      "code": "Code",
+      "plate": "License Plate",
+      "capacityLoad": "Load Capacity (kg)",
+      "capacityPax": "Passenger Capacity",
+      "status": "Status",
+      "placeholders": {
+        "name": "Enter equipment name",
+        "code": "Enter code",
+        "plate": "Enter license plate",
+        "capacityLoad": "Enter load capacity",
+        "capacityPax": "Enter passenger capacity"
+      }
+    }
+  },
+  "team": {
+    "form": {
+      "name": "Team Name",
+      "placeholders": {
+        "name": "Enter team name"
+      }
+    }
+  },
+  "location": {
+    "form": {
+      "street": "Street",
+      "city": "City",
+      "country": "Country",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "status": "Status",
+      "placeholders": {
+        "street": "Enter street",
+        "city": "Enter city",
+        "country": "Enter country",
+        "latitude": "Enter latitude",
+        "longitude": "Enter longitude"
+      }
+    }
+  },
+  "employee": {
+    "form": {
+      "name": "Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phoneNumber": "Phone Number",
+      "position": "Position",
+      "status": "Status",
+      "placeholders": {
+        "name": "Enter name",
+        "lastName": "Enter last name",
+        "email": "Enter email",
+        "phoneNumber": "Enter phone number",
+        "position": "Enter position"
+      }
+    }
+  },
+  "equipment-form-dialog": {
+    "plate": "License plate",
+    "model": "Model/Type",
+    "charge": "Load capacity (kg) ",
+    "passengers": "Passenger capacity ",
+    "status": "Status",
+    "cancel": "Cancel",
+    "save": "Save",
+    "list": "No equipment available with the selected filters."
+  },
+  "employee-management": {
+    "employee": "Employee Management",
+    "filter": "Filter by position: ",
+    "add": "Add Employee",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "employee-form-dialog": {
+    "add": "Add employee",
+    "edit": "Edit employee",
+    "name": "Name",
+    "last-name": "Last name",
+    "phone": "Phone",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "charges": "Positions",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "user-management": {
+    "title": "User Management",
+    "all": "All roles",
+    "search": "Search by name or email",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "actions": "Actions",
+    "page": "Page",
+    "of": "of",
+    "previous": "Previous",
+    "next": "Next",
+    "create": "Create User"
+  },
+  "team-management": {
+    "title": "Team Management",
+    "filter": "Filter by Zone",
+    "all": "All zones",
+    "clean": "Clear filter",
+    "no-teams": "No teams to show",
+    "no-filter": "No teams found for the selected date and filters.",
+    "create": "Create Team"
+  },
+  "team-card": {
+    "date": "Date: ",
+    "location": "Location: ",
+    "status": "Status: ",
+    "members": "Team Members",
+    "no-members": "No members assigned to this team.",
+    "edit": "Edit",
+    "edit-m": "Edit Members",
+    "position": "Position: "
+  },
+  "login-container": {
+    "slogan": "Your operation in order, at all times",
+    "username": "Username",
+    "username-required": "Username is required.",
+    "password": "Password",
+    "password-required": "Password is required.",
+    "password-missing": "Forgot your password?",
+    "login": "LOGIN",
+    "register": "REGISTER",
+    "loading": "Loading...",
+    "fill": "Please fill in all fields.",
+    "invalid": "Invalid username or password."
+  },
+  "password-recovery": {
+    "recover-password": "Recover Password",
+    "link-sent": "We will send you a link to reset your password.",
+    "email": "Email",
+    "email-example": "example@email.com",
+    "sent-link": "SEND LINK",
+    "back-login": "BACK TO LOGIN"
+  },
+  "register-container": {
+    "slogan": "Your operation in order, at all times",
+    "company-basic": "Company",
+    "company-contact": "Contact",
+    "user-basic": "User",
+    "user-credentials": "Credentials",
+    "ruc": "RUC",
+    "ruc-required": "RUC is required",
+    "legal-name": "Legal Name",
+    "legal-name-required": "Legal name is required",
+    "commercial-name": "Commercial Name",
+    "address": "Address",
+    "city": "City",
+    "country": "Country",
+    "phone": "Phone",
+    "company-email": "Company Email",
+    "website": "Website",
+    "first-name": "First Name",
+    "first-name-required": "First name is required",
+    "last-name": "Last Name",
+    "last-name-required": "Last name is required",
+    "username": "Username",
+    "username-required": "Username is required",
+    "email": "Email",
+    "email-required": "Email is required",
+    "email-invalid": "Please enter a valid email",
+    "password": "Password",
+    "password-required": "Password is required",
+    "password-min": "Password must be at least 6 characters",
+    "password-repeat": "Repeat password",
+    "password-repeat-required": "Please repeat your password",
+    "password-mismatch": "Passwords do not match",
+    "fill-required-company-basic": "Please complete the required company fields",
+    "fill-required-user-basic": "Please complete the required user fields",
+    "fill-required-credentials": "Please complete the required credentials",
+    "previous": "Previous",
+    "next": "Next",
+    "register": "REGISTER",
+    "registering": "REGISTERING...",
+    "already-have-account": "Already have an account?",
+    "login": "LOGIN",
+    "error": "Registration error. Please try again.",
+    "role-selection": "Role",
+    "select-role": "Select your role",
+    "role-description": "Choose the role that best fits your function in the company",
+    "supervisor": "Supervisor",
+    "supervisor-description": "Manages teams, supervises operations and makes strategic decisions",
+    "operario": "Operator",
+    "operario-description": "Executes field tasks, reports incidents and maintains operational records",
+    "role-required": "Please select a role"
+  },
+  "payment-view": {
+    "bank-info": "Enter your bank information",
+    "full-name": "Full name",
+    "company-name": "Company name",
+    "card-number": "Card number",
+    "card-type": "Card type",
+    "month": "Month",
+    "year": "Year",
+    "ruc": "RUC number",
+    "save": "Save"
+  },
+  "account-creation": {
+    "email": "Email",
+    "email-input": "Enter your email...",
+    "name": "Name",
+    "name-input": "Enter your name...",
+    "password": "Password",
+    "password-input": "Enter your password",
+    "password-repeat": "Repeat your password",
+    "register": "Register",
+    "logo": "PetroTask Logo",
+    "small-logo": "PetroTask Small Logo"
+  },
+  "home": {
+    "welcome": "Welcome to PetroTask",
+    "subtitle": "Your comprehensive oil operations management platform",
+    "quick-access": "Quick Access",
+    "activities-management": {
+      "title": "Critical Tasks Management",
+      "description": "Manage and track all critical oil operations tasks"
+    },
+    "task-planning": {
+      "title": "Task Planning",
+      "description": "Plan and schedule critical oil operations tasks"
+    },
+    "equipment-management": {
+      "title": "Oil Equipment Management",
+      "description": "Manage specialized oil equipment and resources"
+    },
+    "team-management": {
+      "title": "Field Team Management",
+      "description": "Organize and manage oil field teams"
+    },
+    "location-management": {
+      "title": "Oil Locations",
+      "description": "Manage platforms, extraction fields and processing plants"
+    },
+    "safety-monitoring": {
+      "title": "Safety Monitoring",
+      "description": "Monitor safety alerts and operational risks"
+    },
+    "execution-history": {
+      "title": "Execution History",
+      "description": "View complete history of oil operations"
+    }
+  },
+  "shared": {
+    "components": {
+      "table": {
+        "no-records": "No records available",
+        "loading": "Loading...",
+        "edit": "Edit"
+      },
+      "sidebar": {
+        "logo": "PetroTask",
+        "logo-short": "PT"
+      },
+      "header": {
+        "title": "PetroTask",
+        "menu": "Menu",
+        "account": "Account"
+      },
+      "confirmation-dialog": {
+        "close": "Close",
+        "confirm": "Confirm"
+      },
+      "reschedule-dialog": {
+        "title": "Reschedule Task",
+        "message": "Do you want to reschedule \"{{taskName}}\" from {{oldTime}} to {{newTime}}?",
+        "cancel": "Cancel",
+        "confirm": "Confirm"
+      },
+      "page-not-found": {
+        "title": "Page Not Found",
+        "message": "The path <b>{{path}}</b> is not valid.",
+        "register": "Register"
+      },
+      "profile": {
+        "change-photo": "Change photo"
+      }
+    }
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "update": "Update",
+    "create": "Create",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "settings": {
+    "title": "Subscription Panel",
+    "subtitle": "Manage your plan, status and payment method",
+    "current-plan": "Current Plan",
+    "status": "Status",
+    "select-status": "Select status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "plan-start": "Plan Start",
+    "next-payment": "Next Payment",
+    "payment-method": "Payment Method",
+    "payment-placeholder": "Ex. VISA **** 1234",
+    "view-plan": "View Plan",
+    "change-payment": "Change Payment Method",
+    "renew": "Renew Subscription",
+    "processing": "Processing...",
+    "back-home": "Back to Home",
+    "error-message": "Please check the marked fields before continuing.",
+    "required-field": "This field is required.",
+    "select-valid-status": "Please select a valid status.",
+    "date-required": "Date is required."
+  },
+  "demo": {
+    "styles": {
+      "title": "Style System",
+      "typography": {
+        "title": "Typography System",
+        "h1": "Heading 1",
+        "h1-desc": "Used for main page titles",
+        "h2": "Heading 2",
+        "h2-desc": "Used for section titles",
+        "h3": "Heading 3",
+        "h3-desc": "Used for subsection titles",
+        "h4": "Heading 4",
+        "h4-desc": "Used for card titles",
+        "h5": "Heading 5",
+        "h5-desc": "Used for small titles",
+        "h6": "Heading 6",
+        "h6-desc": "Used for smallest titles",
+        "body": "Body text - This is a paragraph of text to demonstrate the body text style. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "small": "Small text - Used for captions and secondary information"
+      },
+      "colors": {
+        "title": "Color System",
+        "primary": "Primary",
+        "accent": "Accent",
+        "secondary": "Secondary",
+        "success": "Success",
+        "error": "Error",
+        "warning": "Warning",
+        "info": "Info"
+      },
+      "components": {
+        "title": "Material Components",
+        "buttons": {
+          "title": "Buttons",
+          "primary": "Primary Button",
+          "accent": "Accent Button",
+          "warn": "Warn Button",
+          "stroked-primary": "Stroked Primary",
+          "stroked-accent": "Stroked Accent",
+          "stroked-warn": "Stroked Warn",
+          "flat-primary": "Flat Primary",
+          "flat-accent": "Flat Accent",
+          "flat-warn": "Flat Warn"
+        },
+        "cards": {
+          "title": "Cards",
+          "basic": {
+            "title": "Basic Card",
+            "subtitle": "With header and content",
+            "content": "This is a basic material card with header and content sections."
+          },
+          "actions": {
+            "title": "Card with Actions",
+            "subtitle": "Includes action buttons",
+            "content": "This card includes action buttons in the footer.",
+            "action1": "Action 1",
+            "action2": "Action 2"
+          }
+        }
+      }
+    },
+    "components": {
+      "test": "Test",
+      "click-me": "Click me",
+      "write-here": "Write here"
+    }
+  },
+  "execution-history": {
+    "title": "Task Execution History",
+    "chart-title": "Planned vs Real Dates Comparison",
+    "export-pdf": "Export to PDF",
+    "export-csv": "Export to CSV",
+    "table": {
+      "task": "Task",
+      "planned-date": "Planned Date",
+      "real-date": "Real Date",
+      "status": "Status",
+      "comment": "Comment"
+    },
+    "status": {
+      "completed": "Completed",
+      "in-progress": "In Progress",
+      "delayed": "Delayed"
+    }
+  },
+  "task-planning": {
+    "title": "Task Planning",
+    "view-mode": {
+      "calendar": "Calendar View",
+      "table": "Table View"
+    },
+    "search": {
+      "placeholder": "Search tasks...",
+      "no-results": "No tasks found"
+    },
+    "filters": {
+      "status": {
+        "title": "Filter by status",
+        "all": "All statuses",
+        "programmed": "Programmed",
+        "completed": "Completed",
+        "pending": "Pending",
+        "cancelled": "Cancelled"
+      },
+      "priority": {
+        "title": "Filter by priority",
+        "all": "All priorities",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low"
+      },
+      "date-range": {
+        "title": "Date range",
+        "start": "Start date",
+        "end": "End date"
+      },
+      "show-completed": "Show completed",
+      "group-by": {
+        "title": "Group by",
+        "none": "No grouping",
+        "status": "Status",
+        "priority": "Priority",
+        "team": "Team"
+      }
+    },
+    "table": {
+      "task": "Task",
+      "start": "Start",
+      "end": "End",
+      "status": "Status",
+      "team": "Team",
+      "equipment": "Equipment",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "complete": "Complete",
+      "cancel": "Cancel"
+    },
+    "unscheduled": {
+      "title": "Unscheduled Tasks",
+      "drag": "Drag to schedule"
+    },
+    "scheduled": {
+      "title": "Scheduled Tasks"
+    },
+    "dialog": {
+      "title": "Schedule Task",
+      "edit-title": "Edit Scheduled Task",
+      "start-time": "Start time",
+      "end-time": "End time",
+      "team": "Team",
+      "equipment": "Equipment",
+      "comments": "Comments",
+      "save": "Save",
+      "cancel": "Cancel"
+    }
+  },
+  "activity-management": {
+    "title": "Activity Management",
+    "new-activity": "New Activity",
+    "search": {
+      "placeholder": "Search by title or description",
+      "label": "Search"
+    },
+    "filters": {
+      "status": {
+        "label": "Status",
+        "all": "All",
+        "pending": "Pending",
+        "in-progress": "In Progress",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      },
+      "priority": {
+        "label": "Priority",
+        "all": "All",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low"
+      },
+      "clear": "Clear filters"
+    },
+    "table": {
+      "title": "Title",
+      "description": "Description",
+      "status": "Status",
+      "priority": "Priority",
+      "duration": "Duration",
+      "date": "Date",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit activity",
+      "delete": "Delete activity",
+      "add-task": "Add task",
+      "edit-task": "Edit task",
+      "delete-task": "Delete task"
+    },
+    "no-results": {
+      "message": "No activities found with the selected filters",
+      "clear": "Clear filters"
+    },
+    "messages": {
+      "create-success": "Activity created successfully",
+      "update-success": "Activity updated successfully",
+      "delete-success": "Activity deleted successfully",
+      "error-create": "Error creating activity",
+      "error-update": "Error updating activity",
+      "error-delete": "Error deleting activity",
+      "error-load": "Error loading activities",
+      "confirm-delete": "Are you sure you want to delete this activity?"
+    }
+  },
+  "dashboard": {
+    "title": "Logistics Dashboard",
+    "metrics": {
+      "active-shipments": {
+        "title": "Active Shipments",
+        "trend": "vs last week"
+      },
+      "on-time-delivery": {
+        "title": "On-Time Delivery",
+        "trend": "vs last week"
+      },
+      "resource-utilization": {
+        "title": "Resource Utilization",
+        "trend": "vs last week"
+      }
+    },
+    "resource-usage": {
+      "title": "Resource Usage Overview",
+      "time-period": {
+        "label": "Time Period",
+        "today": "Today",
+        "week": "This Week",
+        "month": "This Month"
+      }
+    },
+    "incidents": {
+      "title": "Recent Incidents",
+      "view-all": "View All"
+    },
+    "team-performance": {
+      "title": "Team Performance",
+      "metrics": {
+        "tasks-completed": "Tasks Completed",
+        "efficiency": "Efficiency",
+        "trend": "Trend"
+      }
+    }
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Invalid email format",
+    "minLength": "Minimum {{min}} characters",
+    "maxLength": "Maximum {{max}} characters"
+  },
+  "user-create-dialog": {
+    "title": "Create New User",
+    "subtitle": "Complete the new user information",
+    "username": "Username",
+    "username.placeholder": "Ex: juan.perez",
+    "firstName": "First Name",
+    "firstName.placeholder": "Ex: Juan",
+    "lastName": "Last Name",
+    "lastName.placeholder": "Ex: Pérez",
+    "email": "Email",
+    "email.placeholder": "Ex: juan.perez@company.com",
+    "password": "Password",
+    "password.placeholder": "Minimum 8 characters",
+    "roles": "Roles",
+    "roles.placeholder": "Select roles",
+    "status": "Active user",
+    "cancel": "Cancel",
+    "create": "Create User"
+  },
+  "user-edit-dialog": {
+    "title": "Edit User",
+    "name": "Name",
+    "email": "Email",
+    "role": "Role",
+    "cancel": "Cancel",
+    "update": "Update"
+  },
+  "company-settings": {
+    "title": "Company Settings",
+    "company-info": "Company Information",
+    "contact-info": "Contact Information",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "form": {
+    "actions": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "submit": "Submit",
+      "create": "Create",
+      "update": "Update"
+    },
+    "errors": {
+      "required": "This field is required",
+      "email": "Invalid email format",
+      "minLength": "Minimum {{length}} characters",
+      "maxLength": "Maximum {{length}} characters",
+      "min": "Minimum value: {{min}}",
+      "max": "Maximum value: {{max}}",
+      "pattern": "Invalid format"
+    },
+    "fields": {
+      "username": "Username",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "password": "Password",
+      "roles": "Roles",
+      "status": "Status"
+    },
+    "placeholders": {
+      "select": "Select...",
+      "enter": "Enter...",
+      "choose": "Choose..."
+    }
+  },
+  "roles": {
+    "admin": "Administrator",
+    "admin.description": "Full system access",
+    "supervisor": "Logistics Supervisor",
+    "supervisor.description": "Logistics operations supervision",
+    "operator": "Logistics Operator",
+    "operator.description": "Basic logistics operations"
+  },
+  "SHARED": {
+    "ACTIONS": {
+      "DELETE": "Delete",
+      "EDIT": "Edit",
+      "REFRESH": "Refresh",
+      "ACTIVATE": "Activate",
+      "DEACTIVATE": "Deactivate"
+    },
+    "ADD": "Add",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "CANCEL": "Cancel",
+    "SAVE": "Save",
+    "CREATE": "Create",
+    "UPDATE": "Update",
+    "SEARCH": "Search",
+    "FILTER": "Filter",
+    "REFRESH": "Refresh",
+    "LOADING": "Loading...",
+    "NO_DATA": "No data available",
+    "CONFIRM": "Confirm",
+    "SUCCESS": "Success",
+    "ERROR": "Error",
+    "WARNING": "Warning",
+    "INFO": "Information",
+    "CLOSE": "Close",
+    "STATUS": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "PENDING": "Pending",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "TABLE_VIEW": "Table View",
+    "CARD_VIEW": "Card View"
+  },
+  "LOCATION_MANAGEMENT": {
+    "TITLE": "Location Management",
+    "SUBTITLE": "Manage zones and locations for efficient resource organization",
+    "ADD_ZONE": "Add Zone",
+    "ADD_LOCATION": "Add Location",
+    "ADD_FIRST_LOCATION": "Add First Location",
+    "SEARCH_PLACEHOLDER": "Search zones and locations...",
+    "SEARCH_ZONES_LOCATIONS": "Search zones and locations...",
+    "FILTER_STATUS": "Filter by Status",
+    "TENANT": "Tenant",
+    "TOTAL_LOCATIONS": "Total Locations",
+    "ACTIVE_LOCATIONS": "Active Locations",
+    "NO_ZONES": "No zones available",
+    "NO_ZONES_DESCRIPTION": "Start by creating zones to organize your locations",
+    "ADD_FIRST_ZONE": "Add First Zone",
+    "NO_LOCATIONS_IN_ZONE": "No locations in this zone",
+    "LOCATIONS_IN_ZONE": "Locations in Zone",
+    "LOADING": "Loading locations...",
+    "EMPTY_STATE": {
+      "TITLE": "No zones available",
+      "DESCRIPTION": "Start by creating zones to organize your locations",
+      "ACTION": "Create First Zone"
+    },
+    "ZONE": {
+      "NAME": "Zone Name",
+      "LOCATIONS_COUNT": "locations",
+      "ACTIVE_LOCATIONS": "active",
+      "ACTIONS": {
+        "ADD_LOCATION": "Add Location",
+        "EDIT": "Edit Zone",
+        "DELETE": "Delete Zone"
+      }
+    },
+    "LOCATION": {
+      "ADDRESS": "Address",
+      "CITY": "City",
+      "COUNTRY": "Country",
+      "STATUS": "Status",
+      "COORDINATES": "Coordinates",
+      "ACTIONS": {
+        "EDIT": "Edit Location",
+        "TOGGLE_STATUS": "Toggle Status",
+        "VIEW_DETAILS": "View Details"
+      }
+    },
+    "FILTERS": {
+      "ALL_STATUS": "All Status",
+      "ACTIVE_ONLY": "Active Only",
+      "INACTIVE_ONLY": "Inactive Only"
+    }
+  },
+  "NAVIGATION": {
+    "DASHBOARD": "Dashboard",
+    "RESOURCES": "Resources",
+    "PLANNING": "Planning",
+    "EXECUTION": "Execution",
+    "IAM": "Identity Management",
+    "NOTIFICATIONS": "Notifications",
+    "BILLING": "Billing",
+    "SETTINGS": "Settings",
+    "LOGOUT": "Logout"
+  },
+  "POSITION_MANAGEMENT": {
+    "TITLE": "Position Management",
+    "SUBTITLE": "Manage work positions available in your organization",
+    "ADD_POSITION": "Add Position",
+    "EDIT_POSITION": "Edit Position",
+    "ADD_FIRST_POSITION": "Add First Position",
+    "SEARCH_PLACEHOLDER": "Search positions by name or description...",
+    "NO_POSITIONS": "No positions available",
+    "NO_POSITIONS_DESCRIPTION": "Start by adding work positions to organize your organizational structure",
+    "TABLE": {
+      "ICON": "Icon",
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "ACTIONS": "Actions"
+    },
+    "FORM": {
+      "TITLE": "Position Title",
+      "TITLE_PLACEHOLDER": "E.g: Operations Manager",
+      "TITLE_REQUIRED": "Position title is required",
+      "TITLE_MIN_LENGTH": "Title must be at least 2 characters long",
+      "DESCRIPTION": "Position Description",
+      "DESCRIPTION_PLACEHOLDER": "Describe main responsibilities and functions...",
+      "DESCRIPTION_REQUIRED": "Description is required",
+      "DESCRIPTION_MIN_LENGTH": "Description must be at least 5 characters long",
+      "HELPER_TEXT": "Clearly define the title and responsibilities for better team organization"
+    }
+  },
+  "EQUIPMENT_MANAGEMENT": {
+    "TITLE": "Equipment Management",
+    "SUBTITLE": "Monitor and manage your equipment fleet efficiently",
+    "ADD_EQUIPMENT": "Add Equipment",
+    "ADD_FIRST_EQUIPMENT": "Add First Equipment",
+    "SEARCH_PLACEHOLDER": "Search equipment by name, model or serial...",
+    "FILTER_STATUS": "Filter by Status",
+    "TABLE_VIEW": "Table View",
+    "CARDS_VIEW": "Cards View",
+    "NO_EQUIPMENT": "No equipment available",
+    "NO_EQUIPMENT_DESCRIPTION": "Start by adding equipment to manage your fleet",
+    "FILTERS": {
+      "ALL_TYPES": "All Types",
+      "ALL_STATUS": "All Status"
+    },
+    "TABLE": {
+      "NAME": "Name",
+      "TYPE": "Type",
+      "MODEL": "Model",
+      "SERIAL": "Serial Number",
+      "STATUS": "Status",
+      "CAPACITY": "Capacity",
+      "LOCATION": "Location",
+      "ACTIONS": "Actions"
+    },
+    "CARD": {
+      "SERIAL": "Serial",
+      "CAPACITY": "Capacity",
+      "LOCATION": "Location"
+    },
+    "STATUS": {
+      "AVAILABLE": "Available",
+      "IN_USE": "In Use",
+      "MAINTENANCE": "Maintenance",
+      "OUT_OF_SERVICE": "Out of Service"
+    },
+    "EMPTY_STATE": {
+      "TITLE": "No equipment found",
+      "DESCRIPTION": "No equipment matches your current search and filter criteria",
+      "ACTION": "Clear Filters"
+    }
+  },
+  "photo-evidence": {
+    "title": "Photo Evidence",
+    "subtitle": "Management and tracking of photographic evidence",
+    "upload-photos": "Upload Photos",
+    "total-photos": "Total Photos",
+    "pending-approval": "Pending Approval",
+    "approved-photos": "Approved Photos",
+    "all-evidence": "All Evidence",
+    "by-category": "By Category",
+    "photos": "photos",
+    "view-photos": "View Photos",
+    "approve": "Approve",
+    "reject": "Reject",
+    "view": "View",
+    "before": "Before",
+    "during": "During",
+    "after": "After",
+    "incident": "Incident",
+    "equipment": "Equipment",
+    "safety": "Safety",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "select-photos": "Select Photos",
+    "selected-photos": "Selected Photos",
+    "category": "Category",
+    "location": "Location",
+    "tags": "Tags",
+    "add-tag": "Add tag",
+    "cancel": "Cancel",
+    "upload": "Upload",
+    "description": "Description",
+    "uploaded-by": "Uploaded by",
+    "date": "Date",
+    "close": "Close"
+  },
+  "safety-alerts": {
+    "title": "Safety Alerts",
+    "subtitle": "Safety alerts monitoring and management",
+    "create-alert": "Create Alert",
+    "total-alerts": "Total Alerts",
+    "active-alerts": "Active Alerts",
+    "critical-alerts": "Critical Alerts",
+    "all-alerts": "All Alerts",
+    "by-type": "By Type",
+    "acknowledge": "Acknowledge",
+    "resolve": "Resolve",
+    "required-actions": "Required Actions",
+    "create-new-alert": "Create New Alert",
+    "alert-title": "Alert Title",
+    "alert-type": "Alert Type",
+    "due-date": "Due Date",
+    "assigned-to": "Assigned To",
+    "action": "Action",
+    "add-action": "Add Action",
+    "additional-notes": "Additional Notes",
+    "critical": "Critical",
+    "warning": "Warning",
+    "info": "Info",
+    "maintenance": "Maintenance",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low",
+    "active": "Active",
+    "acknowledged": "Acknowledged",
+    "resolved": "Resolved"
+  },
+  "safety-monitoring": {
+    "title": "Safety Monitoring",
+    "subtitle": "Real-time monitoring system",
+    "real-time-metrics": "Real-time Metrics",
+    "active-alerts": "Active Alerts",
+    "incident-history": "Incident History",
+    "critical": "Critical",
+    "warnings": "Warnings",
+    "info": "Info",
+    "acknowledge": "Acknowledge",
+    "resolve": "Resolve",
+    "type": "Type",
+    "location": "Location",
+    "timestamp": "Date and Time",
+    "status": "Status",
+    "safe": "Safe",
+    "warning": "Warning",
+    "critical": "Critical",
+    "up": "Rising",
+    "down": "Falling",
+    "stable": "Stable",
+    "active": "Active",
+    "acknowledged": "Acknowledged",
+    "resolved": "Resolved"
+  },
+  "home": {
+    "welcome": "Welcome to PetroTask",
+    "subtitle": "Your comprehensive platform for managing oil operations",
+    "quick-access": "Quick Access",
+    "my-tasks": {
+      "title": "My Tasks",
+      "description": "Manage and track all your assigned tasks"
+    },
+    "incident-reporting": {
+      "title": "Incident Reporting",
+      "description": "Report problems, incidents and emergency situations"
+    },
+    "photo-evidence": {
+      "title": "Photo Evidence",
+      "description": "Upload and manage photographic evidence of your operations"
+    },
+    "safety-alerts": {
+      "title": "Safety Alerts",
+      "description": "Monitor and manage safety alerts in real time"
+    }
+  }
+}
