@@ -1,0 +1,584 @@
+// Color variables
+$primary-50: #f0f9f0;
+$primary-100: #e8f5e8;
+$primary-300: #a8d5a8;
+$primary-500: #27ae60;
+$primary-600: #1e7e34;
+$primary-700: #155724;
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$success-100: #dcfce7;
+$success-700: #15803d;
+$warning-500: #f59e0b;
+$white: #ffffff;
+
+// Responsive mixins
+@mixin mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.location-management-container {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  
+  @include mobile {
+    padding: 1rem;
+  }
+}
+
+.header {
+  margin-bottom: 2rem;
+  
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    
+    @include mobile {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+  
+  .title-section {
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: $primary-600;
+      margin: 0 0 0.5rem 0;
+      
+      @include mobile {
+        font-size: 2rem;
+      }
+    }
+    
+    .subtitle {
+      color: $gray-600;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+  }
+  
+  .actions {
+    display: flex;
+    gap: 1rem;
+    
+    @include mobile {
+      width: 100%;
+      flex-direction: column;
+    }
+  }
+}
+
+.toolbar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: $white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  @include mobile {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .search-section {
+    flex: 1;
+    max-width: 400px;
+    
+    @include mobile {
+      max-width: none;
+    }
+  }
+  
+  .filter-section {
+    min-width: 200px;
+    
+    @include mobile {
+      min-width: auto;
+    }
+  }
+}
+
+.content {
+  .loading-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    
+    .loading-spinner {
+      text-align: center;
+      
+      .spinner {
+        @include spinner;
+        margin: 0 auto 1rem;
+      }
+      
+      p {
+        color: $gray-600;
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  .zones-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .zone-card {
+    background: $white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+    
+    .zone-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, $primary-50 0%, $primary-100 100%);
+      border-bottom: 1px solid $gray-200;
+      
+      @include mobile {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+      }
+      
+      .zone-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        
+        .zone-icon {
+          width: 60px;
+          height: 60px;
+          background: linear-gradient(135deg, $primary-500 0%, $primary-600 100%);
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          
+          mat-icon {
+            font-size: 2rem;
+            color: $white;
+          }
+        }
+        
+        .zone-details {
+          .zone-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: $primary-700;
+            margin: 0 0 0.5rem 0;
+          }
+          
+          .zone-meta {
+            display: flex;
+            gap: 1rem;
+            
+            @include mobile {
+              flex-direction: column;
+              gap: 0.25rem;
+            }
+            
+            .zone-id,
+            .zone-tenant {
+              color: $gray-600;
+              font-size: 0.9rem;
+            }
+          }
+        }
+      }
+      
+      .zone-actions {
+        display: flex;
+        gap: 0.5rem;
+        
+        @include mobile {
+          flex-wrap: wrap;
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    }
+    
+    .zone-stats {
+      display: flex;
+      padding: 1.5rem 2rem;
+      background: $gray-50;
+      border-bottom: 1px solid $gray-200;
+      
+      @include mobile {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+      }
+      
+      .stat-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex: 1;
+        
+        &:not(:last-child) {
+          border-right: 1px solid $gray-300;
+          padding-right: 1rem;
+          margin-right: 1rem;
+          
+          @include mobile {
+            border-right: none;
+            padding-right: 0;
+            margin-right: 0;
+          }
+        }
+        
+        mat-icon {
+          color: $primary-600;
+          font-size: 1.5rem;
+        }
+        
+        .stat-value {
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: $primary-700;
+        }
+        
+        .stat-label {
+          color: $gray-600;
+          font-size: 0.9rem;
+        }
+      }
+    }
+    
+    .locations-section {
+      padding: 2rem;
+      
+      .locations-header {
+        margin-bottom: 1.5rem;
+        
+        h3 {
+          font-size: 1.2rem;
+          font-weight: 600;
+          color: $gray-800;
+          margin: 0;
+        }
+      }
+      
+      .locations-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        
+        .location-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1rem;
+          background: $gray-50;
+          border-radius: 12px;
+          border: 1px solid $gray-200;
+          transition: all 0.2s ease;
+          
+          &:hover {
+            background: $white;
+            border-color: $primary-300;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          }
+          
+          &.inactive {
+            opacity: 0.6;
+            
+            .location-icon mat-icon {
+              color: $gray-400;
+            }
+          }
+          
+          @include mobile {
+            flex-direction: column;
+            gap: 1rem;
+          }
+          
+          .location-main {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            
+            @include mobile {
+              width: 100%;
+            }
+            
+            .location-icon {
+              width: 40px;
+              height: 40px;
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: $primary-100;
+              
+              mat-icon {
+                color: $primary-600;
+                font-size: 1.5rem;
+              }
+            }
+            
+            .location-info {
+              flex: 1;
+              
+              .location-address {
+                font-weight: 600;
+                color: $gray-800;
+                margin-bottom: 0.25rem;
+              }
+              
+              .location-details {
+                display: flex;
+                gap: 1rem;
+                
+                @include mobile {
+                  flex-direction: column;
+                  gap: 0.25rem;
+                }
+                
+                .location-city,
+                .location-coordinates {
+                  color: $gray-600;
+                  font-size: 0.9rem;
+                }
+              }
+            }
+            
+            .location-status {
+              .status-badge {
+                padding: 0.25rem 0.75rem;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                font-weight: 500;
+                text-transform: uppercase;
+                
+                &.status-active {
+                  background: $success-100;
+                  color: $success-700;
+                }
+                
+                &.status-inactive {
+                  background: $gray-100;
+                  color: $gray-600;
+                }
+              }
+            }
+          }
+          
+          .location-actions {
+            display: flex;
+            gap: 0.5rem;
+            
+            @include mobile {
+              width: 100%;
+              justify-content: center;
+            }
+          }
+        }
+      }
+      
+      .no-locations {
+        text-align: center;
+        padding: 2rem;
+        color: $gray-600;
+        
+        mat-icon {
+          font-size: 3rem;
+          color: $gray-400;
+          margin-bottom: 1rem;
+        }
+        
+        p {
+          margin: 0 0 1rem 0;
+          font-size: 1.1rem;
+        }
+      }
+    }
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    
+    .empty-icon {
+      margin-bottom: 2rem;
+      
+      mat-icon {
+        font-size: 4rem;
+        color: $gray-400;
+      }
+    }
+    
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: $gray-700;
+      margin: 0 0 1rem 0;
+    }
+    
+    p {
+      color: $gray-600;
+      font-size: 1.1rem;
+      margin: 0 0 2rem 0;
+    }
+  }
+}
+
+// Responsive Design
+@include tablet {
+  .location-management-container {
+    padding: 1.5rem;
+  }
+  
+  .zone-card {
+    .zone-header {
+      .zone-info {
+        .zone-icon {
+          width: 50px;
+          height: 50px;
+          
+          mat-icon {
+            font-size: 1.5rem;
+          }
+        }
+        
+        .zone-details {
+          .zone-name {
+            font-size: 1.3rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include mobile {
+  .location-management-container {
+    padding: 1rem;
+  }
+  
+  .header {
+    .header-content {
+      .title-section {
+        h1 {
+          font-size: 1.8rem;
+        }
+        
+        .subtitle {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+  
+  .toolbar {
+    padding: 1rem;
+  }
+  
+  .zone-card {
+    .zone-header {
+      .zone-info {
+        .zone-icon {
+          width: 40px;
+          height: 40px;
+          
+          mat-icon {
+            font-size: 1.25rem;
+          }
+        }
+        
+        .zone-details {
+          .zone-name {
+            font-size: 1.1rem;
+          }
+        }
+      }
+    }
+    
+    .zone-stats {
+      .stat-item {
+        .stat-value {
+          font-size: 1.25rem;
+        }
+      }
+    }
+    
+    .locations-section {
+      padding: 1.5rem;
+      
+      .locations-header {
+        h3 {
+          font-size: 1.1rem;
+        }
+      }
+      
+      .locations-list {
+        .location-item {
+          .location-main {
+            .location-icon {
+              width: 32px;
+              height: 32px;
+              
+              mat-icon {
+                font-size: 1.25rem;
+              }
+            }
+            
+            .location-info {
+              .location-address {
+                font-size: 0.9rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

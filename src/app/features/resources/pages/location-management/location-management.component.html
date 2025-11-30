@@ -1,0 +1,218 @@
+<div class="location-management-container">
+  <!-- Header Section -->
+  <div class="header">
+    <div class="header-content">
+      <div class="title-section">
+        <h1>{{ 'LOCATION_MANAGEMENT.TITLE' | translate }}</h1>
+        <p class="subtitle">{{ 'LOCATION_MANAGEMENT.SUBTITLE' | translate }}</p>
+      </div>
+      
+      <div class="actions">
+        <app-button
+          [translateKey]="'SHARED.ACTIONS.REFRESH'"
+          [color]="'neutral'"
+          [variant]="'outline'"
+          [icon]="'refresh'"
+          [loading]="loading"
+          (clicked)="refreshData()"
+        ></app-button>
+        
+        <app-button
+          [translateKey]="'LOCATION_MANAGEMENT.ADD_ZONE'"
+          [color]="'primary'"
+          [variant]="'solid'"
+          [icon]="'add'"
+          [disabled]="loading"
+          (clicked)="openAddZoneDialog()"
+        ></app-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search and Filters -->
+  <div class="toolbar">
+    <div class="search-section">
+      <app-input
+        [placeholderTranslateKey]="'LOCATION_MANAGEMENT.SEARCH_ZONES_LOCATIONS'"
+        [leadingIcon]="'search'"
+        [clearable]="true"
+        [fullWidth]="false"
+        [size]="'medium'"
+        (valueChange)="onSearch($event)"
+      ></app-input>
+    </div>
+    
+    <div class="filter-section">
+      <app-selector
+        [placeholderTranslateKey]="'LOCATION_MANAGEMENT.FILTER_STATUS'"
+        [options]="statusOptions"
+        [clearable]="true"
+        [size]="'medium'"
+        [color]="'primary'"
+        [icon]="'filter_alt'"
+        (selectionChange)="onFilterStatus($event)"
+      ></app-selector>
+    </div>
+  </div>
+
+  <!-- Content Section -->
+  <div class="content">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p>{{ 'LOCATION_MANAGEMENT.LOADING' | translate }}</p>
+      </div>
+    </div>
+
+    <!-- Zones with Locations -->
+    <div class="zones-container" *ngIf="!loading">
+      <div class="zone-card" *ngFor="let zone of filteredZones; trackBy: trackByZoneId">
+        <!-- Zone Header -->
+        <div class="zone-header">
+          <div class="zone-info">
+            <div class="zone-icon">
+              <mat-icon>location_city</mat-icon>
+            </div>
+            <div class="zone-details">
+              <h2 class="zone-name">{{ zone.name }}</h2>
+              <div class="zone-meta">
+                <span class="zone-id">ID: {{ zone.id }}</span>
+                <span class="zone-tenant">{{ 'LOCATION_MANAGEMENT.TENANT' | translate }}: {{ zone.tenantId }}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="zone-actions">
+            <app-button
+              [translateKey]="'LOCATION_MANAGEMENT.ADD_LOCATION'"
+              [color]="'primary'"
+              [variant]="'outline'"
+              [icon]="'add_location'"
+              [size]="'small'"
+              [disabled]="loading"
+              (clicked)="openAddLocationDialog(zone)"
+            ></app-button>
+            <app-button
+              [translateKey]="'SHARED.ACTIONS.EDIT'"
+              [color]="'neutral'"
+              [variant]="'text'"
+              [icon]="'edit'"
+              [size]="'small'"
+              [disabled]="loading"
+              (clicked)="openEditZoneDialog(zone)"
+            ></app-button>
+            <app-button
+              [translateKey]="'SHARED.ACTIONS.DELETE'"
+              [color]="'danger'"
+              [variant]="'text'"
+              [icon]="'delete'"
+              [size]="'small'"
+              [disabled]="loading"
+              (clicked)="deleteZone(zone)"
+            ></app-button>
+          </div>
+        </div>
+
+        <!-- Zone Stats -->
+        <div class="zone-stats">
+          <div class="stat-item">
+            <mat-icon>place</mat-icon>
+            <span class="stat-value">{{ getLocationCountForZone(zone.id) }}</span>
+            <span class="stat-label">{{ 'LOCATION_MANAGEMENT.TOTAL_LOCATIONS' | translate }}</span>
+          </div>
+          <div class="stat-item">
+            <mat-icon>business</mat-icon>
+            <span class="stat-value">{{ getActiveLocationCountForZone(zone.id) }}</span>
+            <span class="stat-label">{{ 'LOCATION_MANAGEMENT.ACTIVE_LOCATIONS' | translate }}</span>
+          </div>
+        </div>
+
+        <!-- Locations List -->
+        <div class="locations-section">
+          <div class="locations-header">
+            <h3>{{ 'LOCATION_MANAGEMENT.LOCATIONS_IN_ZONE' | translate }}</h3>
+          </div>
+          
+          <div class="locations-list" *ngIf="getLocationsForZone(zone.id).length > 0">
+            <div class="location-item" 
+                 *ngFor="let location of getLocationsForZone(zone.id); trackBy: trackByLocationId"
+                 [class.inactive]="location.status === 'INACTIVE'">
+              
+              <div class="location-main">
+                <div class="location-icon">
+                  <mat-icon>{{ location.status === 'ACTIVE' ? 'place' : 'location_off' }}</mat-icon>
+                </div>
+                
+                <div class="location-info">
+                  <div class="location-address">{{ location.address }}</div>
+                  <div class="location-details">
+                    <span class="location-city">{{ location.city }}, {{ location.country }}</span>
+                    <span class="location-coordinates">{{ location.latitude }}, {{ location.longitude }}</span>
+                  </div>
+                </div>
+                
+                <div class="location-status">
+                  <span class="status-badge" [class]="'status-' + location.status.toLowerCase()">
+                    {{ location.status }}
+                  </span>
+                </div>
+              </div>
+              
+              <div class="location-actions">
+                <app-button
+                  [translateKey]="'SHARED.ACTIONS.EDIT'"
+                  [color]="'primary'"
+                  [variant]="'text'"
+                  [icon]="'edit'"
+                  [size]="'small'"
+                  [disabled]="loading"
+                  (clicked)="openEditLocationDialog(location)"
+                ></app-button>
+                <app-button
+                  [translateKey]="location.status === 'ACTIVE' ? 'SHARED.ACTIONS.DEACTIVATE' : 'SHARED.ACTIONS.ACTIVATE'"
+                  [color]="location.status === 'ACTIVE' ? 'warning' : 'success'"
+                  [variant]="'text'"
+                  [icon]="location.status === 'ACTIVE' ? 'visibility_off' : 'visibility'"
+                  [size]="'small'"
+                  [disabled]="loading"
+                  (clicked)="toggleLocationStatus(location)"
+                ></app-button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- No Locations State -->
+          <div class="no-locations" *ngIf="getLocationsForZone(zone.id).length === 0">
+            <mat-icon>location_off</mat-icon>
+            <p>{{ 'LOCATION_MANAGEMENT.NO_LOCATIONS_IN_ZONE' | translate }}</p>
+            <app-button
+              [translateKey]="'LOCATION_MANAGEMENT.ADD_FIRST_LOCATION'"
+              [color]="'primary'"
+              [variant]="'text'"
+              [icon]="'add_location'"
+              [size]="'small'"
+              (clicked)="openAddLocationDialog(zone)"
+            ></app-button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- No Zones State -->
+      <div class="empty-state" *ngIf="filteredZones.length === 0">
+        <div class="empty-icon">
+          <mat-icon>location_city</mat-icon>
+        </div>
+        <h3>{{ 'LOCATION_MANAGEMENT.NO_ZONES' | translate }}</h3>
+        <p>{{ 'LOCATION_MANAGEMENT.NO_ZONES_DESCRIPTION' | translate }}</p>
+        <app-button
+          [translateKey]="'LOCATION_MANAGEMENT.ADD_FIRST_ZONE'"
+          [color]="'primary'"
+          [variant]="'solid'"
+          [icon]="'add'"
+          (clicked)="openAddZoneDialog()"
+        ></app-button>
+      </div>
+    </div>
+  </div>
+</div>
