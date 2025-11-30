@@ -1,0 +1,692 @@
+// Color palette
+$primary: #27ae60;
+$primary-dark: #1e7e34;
+$primary-light: #5cb85c;
+$secondary: #1a237e;
+$secondary-dark: #10194a;
+$secondary-light: #534bae;
+$danger: #d32f2f;
+$danger-dark: #a31515;
+$danger-light: #ff5f52;
+$neutral: #6c757d;
+$neutral-dark: #495057;
+$neutral-light: #adb5bd;
+$success: #28a745;
+$success-dark: #1e7e34;
+$success-light: #5cb85c;
+$warning: #ffc107;
+$warning-dark: #e0a800;
+$warning-light: #ffed4a;
+
+// Base colors
+$white: #ffffff;
+$black: #000000;
+$gray-50: #f9fafb;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+
+// Design tokens
+$border-radius: 8px;
+$border-radius-sm: 4px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$transition: 0.2s ease-in-out;
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+$shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+
+.equipment-management-container {
+  padding: 24px;
+  background-color: $gray-100;
+  min-height: 100vh;
+
+  // Header Section
+  .header {
+    margin-bottom: 24px;
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      .title-section {
+        h1 {
+          margin: 0 0 8px 0;
+          font-size: 32px;
+          font-weight: 600;
+          color: $gray-900;
+        }
+
+        .subtitle {
+          margin: 0;
+          font-size: 16px;
+          color: $gray-600;
+          font-weight: 400;
+        }
+      }
+
+      .actions {
+        display: flex;
+        gap: 12px;
+      }
+    }
+  }
+
+  // Toolbar Section
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 20px;
+    background-color: $white;
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-sm;
+    border: 1px solid $gray-200;
+
+    .filters-section {
+      flex: 1;
+      max-width: 300px;
+    }
+
+    .view-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .view-toggle {
+        display: flex;
+        gap: 4px;
+        padding: 4px;
+        background-color: $gray-100;
+        border-radius: $border-radius;
+      }
+    }
+  }
+
+  // Content Section
+  .content {
+    // Loading State
+    .loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      background-color: $white;
+      border-radius: $border-radius-lg;
+      box-shadow: $shadow-sm;
+      border: 1px solid $gray-200;
+
+      .loading-spinner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+
+        .spinner {
+          width: 48px;
+          height: 48px;
+          border: 4px solid $gray-200;
+          border-top: 4px solid $primary;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+
+        p {
+          margin: 0;
+          font-size: 16px;
+          color: $gray-600;
+          font-weight: 500;
+        }
+      }
+    }
+
+    // Table View
+    .table-view {
+      .table-container {
+        background-color: $white;
+        border-radius: $border-radius-lg;
+        box-shadow: $shadow-sm;
+        border: 1px solid $gray-200;
+        overflow: hidden;
+      }
+
+      .table-action-buttons {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+    }
+
+    // Cards View
+    .cards-view {
+      .equipment-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 24px;
+
+        .equipment-card {
+          background-color: $white;
+          border-radius: $border-radius-lg;
+          box-shadow: $shadow-sm;
+          border: 1px solid $gray-200;
+          overflow: hidden;
+          transition: all $transition;
+
+          &:hover {
+            box-shadow: $shadow-md;
+            transform: translateY(-4px);
+          }
+
+          // Card Header
+          .card-header {
+            padding: 20px;
+            border-bottom: 1px solid $gray-200;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            .equipment-info {
+              display: flex;
+              gap: 16px;
+              flex: 1;
+
+              .equipment-icon {
+                width: 56px;
+                height: 56px;
+                border-radius: $border-radius-lg;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                font-size: 24px;
+                
+                &.status-available {
+                  background: linear-gradient(135deg, $success-light, $success);
+                  color: $white;
+                }
+                
+                &.status-maintenance {
+                  background: linear-gradient(135deg, $warning-light, $warning);
+                  color: $white;
+                }
+                
+                &.status-out_of_service {
+                  background: linear-gradient(135deg, $danger-light, $danger);
+                  color: $white;
+                }
+                
+                &.status-reserved {
+                  background: linear-gradient(135deg, $secondary-light, $secondary);
+                  color: $white;
+                }
+
+                mat-icon {
+                  font-size: 28px;
+                  height: 28px;
+                  width: 28px;
+                }
+              }
+
+              .equipment-details {
+                flex: 1;
+
+                .equipment-name {
+                  margin: 0 0 8px 0;
+                  font-size: 20px;
+                  font-weight: 600;
+                  color: $gray-900;
+                  line-height: 1.2;
+                }
+
+                .equipment-meta {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 4px;
+
+                  .equipment-code,
+                  .equipment-plate {
+                    font-size: 14px;
+                    color: $gray-600;
+                    font-weight: 500;
+                  }
+
+                  .equipment-code {
+                    font-family: 'Courier New', monospace;
+                    background-color: $gray-100;
+                    padding: 2px 8px;
+                    border-radius: $border-radius-sm;
+                    display: inline-block;
+                    width: fit-content;
+                  }
+                }
+              }
+            }
+
+            .status-section {
+              .status-badge {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                padding: 8px 12px;
+                border-radius: $border-radius;
+                font-size: 12px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+
+                mat-icon {
+                  font-size: 16px;
+                  height: 16px;
+                  width: 16px;
+                }
+
+                &.status-available {
+                  background-color: rgba($success, 0.1);
+                  color: $success-dark;
+                  border: 1px solid rgba($success, 0.2);
+                }
+
+                &.status-maintenance {
+                  background-color: rgba($warning, 0.1);
+                  color: $warning-dark;
+                  border: 1px solid rgba($warning, 0.2);
+                }
+
+                &.status-out_of_service {
+                  background-color: rgba($danger, 0.1);
+                  color: $danger-dark;
+                  border: 1px solid rgba($danger, 0.2);
+                }
+
+                &.status-reserved {
+                  background-color: rgba($secondary, 0.1);
+                  color: $secondary-dark;
+                  border: 1px solid rgba($secondary, 0.2);
+                }
+              }
+            }
+          }
+
+          // Card Content
+          .card-content {
+            padding: 20px;
+
+            .capacity-info {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 16px;
+              margin-bottom: 20px;
+
+              .capacity-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 16px;
+                background-color: $gray-50;
+                border-radius: $border-radius;
+                border: 1px solid $gray-200;
+
+                .capacity-icon {
+                  width: 40px;
+                  height: 40px;
+                  background-color: $primary;
+                  color: $white;
+                  border-radius: 50%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  flex-shrink: 0;
+
+                  mat-icon {
+                    font-size: 20px;
+                    height: 20px;
+                    width: 20px;
+                  }
+                }
+
+                .capacity-details {
+                  display: flex;
+                  flex-direction: column;
+
+                  .capacity-value {
+                    font-size: 20px;
+                    font-weight: 700;
+                    color: $gray-900;
+                    line-height: 1;
+                  }
+
+                  .capacity-label {
+                    font-size: 12px;
+                    color: $gray-600;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                    letter-spacing: 0.5px;
+                    margin-top: 4px;
+                  }
+                }
+              }
+            }
+
+            .equipment-stats {
+              .stat-item {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 12px 16px;
+                background-color: $gray-50;
+                border-radius: $border-radius;
+                border: 1px solid $gray-200;
+
+                mat-icon {
+                  color: $gray-500;
+                  font-size: 18px;
+                  height: 18px;
+                  width: 18px;
+                }
+
+                .stat-label {
+                  font-size: 14px;
+                  color: $gray-600;
+                  font-weight: 500;
+                }
+
+                .stat-value {
+                  font-size: 14px;
+                  color: $gray-900;
+                  font-weight: 600;
+                  margin-left: auto;
+                }
+              }
+            }
+          }
+
+          // Card Actions
+          .card-actions {
+            padding: 16px 20px;
+            background-color: $gray-50;
+            border-top: 1px solid $gray-200;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .primary-actions {
+              display: flex;
+              gap: 8px;
+            }
+
+            .status-actions {
+              display: flex;
+              gap: 8px;
+              flex-wrap: wrap;
+            }
+          }
+        }
+      }
+    }
+
+    // Empty States
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      background-color: $white;
+      border-radius: $border-radius-lg;
+      box-shadow: $shadow-sm;
+      border: 1px solid $gray-200;
+      text-align: center;
+
+      .empty-icon {
+        width: 80px;
+        height: 80px;
+        background-color: $gray-100;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 24px;
+
+        mat-icon {
+          font-size: 40px;
+          height: 40px;
+          width: 40px;
+          color: $gray-500;
+        }
+      }
+
+      h3 {
+        margin: 0 0 12px 0;
+        font-size: 24px;
+        font-weight: 600;
+        color: $gray-900;
+      }
+
+      p {
+        margin: 0 0 32px 0;
+        font-size: 16px;
+        color: $gray-600;
+        max-width: 400px;
+        line-height: 1.5;
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive Design
+@media (max-width: 1200px) {
+  .equipment-management-container {
+    .content .cards-view .equipment-grid {
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .equipment-management-container {
+    padding: 16px;
+
+    .header .header-content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+
+      .title-section h1 {
+        font-size: 24px;
+      }
+
+      .actions {
+        align-self: stretch;
+      }
+    }
+
+    .toolbar {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 16px;
+
+      .filters-section {
+        max-width: none;
+      }
+
+      .view-controls {
+        justify-content: center;
+      }
+    }
+
+    .content .cards-view .equipment-grid {
+      grid-template-columns: 1fr;
+
+      .equipment-card {
+        .card-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 16px;
+        }
+
+        .card-content .capacity-info {
+          grid-template-columns: 1fr;
+        }
+
+        .card-actions {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 12px;
+
+          .primary-actions,
+          .status-actions {
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .equipment-management-container {
+    padding: 12px;
+
+    .content .cards-view .equipment-grid .equipment-card {
+      .card-header .equipment-info {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .card-content .capacity-info .capacity-item {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  }
+}
+
+// Dark theme support
+@media (prefers-color-scheme: dark) {
+  .equipment-management-container {
+    background-color: $gray-900;
+
+    .header .header-content .title-section {
+      h1 {
+        color: $white;
+      }
+
+      .subtitle {
+        color: $gray-400;
+      }
+    }
+
+    .toolbar {
+      background-color: $gray-800;
+      border-color: $gray-700;
+
+      .view-controls .view-toggle {
+        background-color: $gray-700;
+      }
+    }
+
+    .content {
+      .loading-state,
+      .empty-state,
+      .table-view .table-container {
+        background-color: $gray-800;
+        border-color: $gray-700;
+      }
+
+      .empty-state {
+        .empty-icon {
+          background-color: $gray-700;
+        }
+
+        h3 {
+          color: $white;
+        }
+
+        p {
+          color: $gray-400;
+        }
+      }
+
+      .cards-view .equipment-grid .equipment-card {
+        background-color: $gray-800;
+        border-color: $gray-700;
+
+        .card-header {
+          border-bottom-color: $gray-700;
+
+          .equipment-info .equipment-details {
+            .equipment-name {
+              color: $white;
+            }
+
+            .equipment-meta {
+              .equipment-code,
+              .equipment-plate {
+                color: $gray-400;
+              }
+
+              .equipment-code {
+                background-color: $gray-700;
+              }
+            }
+          }
+        }
+
+        .card-content {
+          .capacity-info .capacity-item {
+            background-color: $gray-700;
+            border-color: $gray-600;
+
+            .capacity-details {
+              .capacity-value {
+                color: $white;
+              }
+
+              .capacity-label {
+                color: $gray-400;
+              }
+            }
+          }
+
+          .equipment-stats .stat-item {
+            background-color: $gray-700;
+            border-color: $gray-600;
+
+            .stat-label {
+              color: $gray-400;
+            }
+
+            .stat-value {
+              color: $white;
+            }
+          }
+        }
+
+        .card-actions {
+          background-color: $gray-700;
+          border-top-color: $gray-600;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,305 @@
+<div class="equipment-management-container">
+  <!-- Header Section -->
+  <div class="header">
+    <div class="header-content">
+      <div class="title-section">
+        <h1>{{ 'EQUIPMENT_MANAGEMENT.TITLE' | translate }}</h1>
+        <p class="subtitle">{{ 'EQUIPMENT_MANAGEMENT.SUBTITLE' | translate }}</p>
+      </div>
+      
+      <div class="actions">
+        <app-button
+          [translateKey]="'SHARED.ACTIONS.REFRESH'"
+          [color]="'neutral'"
+          [variant]="'outline'"
+          [icon]="'refresh'"
+          [loading]="loading"
+          (clicked)="refreshData()"
+        ></app-button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toolbar Section -->
+  <div class="toolbar">
+    <div class="filters-section">
+      <app-selector
+        [placeholderTranslateKey]="'EQUIPMENT_MANAGEMENT.FILTER_STATUS'"
+        [options]="statusFilterOptions"
+        [clearable]="true"
+        [size]="'medium'"
+        [color]="'primary'"
+        [icon]="'filter_alt'"
+        [disabled]="loading"
+        (selectionChange)="onStatusFilterChange($event)"
+      ></app-selector>
+    </div>
+    
+    <div class="view-controls">
+      <div class="view-toggle">
+        <app-button
+          [translateKey]="'EQUIPMENT_MANAGEMENT.TABLE_VIEW'"
+          [color]="'primary'"
+          [variant]="viewMode === 'table' ? 'solid' : 'ghost'"
+          [icon]="'table_rows'"
+          [size]="'medium'"
+          [disabled]="loading"
+          (clicked)="setViewMode('table')"
+        ></app-button>
+        <app-button
+          [translateKey]="'EQUIPMENT_MANAGEMENT.CARDS_VIEW'"
+          [color]="'primary'"
+          [variant]="viewMode === 'cards' ? 'solid' : 'ghost'"
+          [icon]="'grid_view'"
+          [size]="'medium'"
+          [disabled]="loading"
+          (clicked)="setViewMode('cards')"
+        ></app-button>
+      </div>
+      
+      <app-button
+        [translateKey]="'EQUIPMENT_MANAGEMENT.ADD_EQUIPMENT'"
+        [color]="'primary'"
+        [variant]="'solid'"
+        [icon]="'add'"
+        [disabled]="loading"
+        (clicked)="openAddDialog()"
+      ></app-button>
+    </div>
+  </div>
+
+  <!-- Content Section -->
+  <div class="content">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p>{{ 'EQUIPMENT_MANAGEMENT.LOADING_EQUIPMENT' | translate }}</p>
+      </div>
+    </div>
+
+    <!-- Table View -->
+    <div class="table-view" *ngIf="!loading && viewMode === 'table'">
+      <div class="table-container" *ngIf="filteredEquipment.length > 0">
+        <app-table
+          [columns]="columns"
+          [dataSource]="filteredEquipment"
+          [showPaginator]="true"
+          [customColumns]="tableActions"
+        ></app-table>
+      </div>
+      
+      <!-- Empty State for Table -->
+      <div class="empty-state" *ngIf="filteredEquipment.length === 0">
+        <div class="empty-icon">
+          <mat-icon>construction</mat-icon>
+        </div>
+        <h3>{{ 'EQUIPMENT_MANAGEMENT.NO_EQUIPMENT' | translate }}</h3>
+        <p *ngIf="statusFilter !== 'all'">
+          {{ 'EQUIPMENT_MANAGEMENT.NO_EQUIPMENT_FILTER' | translate }}
+        </p>
+        <p *ngIf="statusFilter === 'all'">
+          {{ 'EQUIPMENT_MANAGEMENT.NO_EQUIPMENT_DESCRIPTION' | translate }}
+        </p>
+        <app-button
+          [translateKey]="'EQUIPMENT_MANAGEMENT.ADD_FIRST_EQUIPMENT'"
+          [color]="'primary'"
+          [variant]="'solid'"
+          [icon]="'add'"
+          (clicked)="openAddDialog()"
+        ></app-button>
+      </div>
+    </div>
+
+    <!-- Cards View -->
+    <div class="cards-view" *ngIf="!loading && viewMode === 'cards'">
+      <div class="equipment-grid" *ngIf="filteredEquipment.length > 0">
+        <div class="equipment-card" *ngFor="let equipment of filteredEquipment; trackBy: trackByEquipmentId">
+          <!-- Card Header -->
+          <div class="card-header">
+            <div class="equipment-info">
+              <div class="equipment-icon" [class]="'status-' + equipment.status.toLowerCase()">
+                <mat-icon>{{ getEquipmentIcon(equipment.status) }}</mat-icon>
+              </div>
+              <div class="equipment-details">
+                <h3 class="equipment-name">{{ equipment.name }}</h3>
+                <div class="equipment-meta">
+                  <span class="equipment-code">{{ equipment.code }}</span>
+                  <span class="equipment-plate">{{ equipment.plate }}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="status-section">
+              <div class="status-badge" [class]="'status-' + equipment.status.toLowerCase()">
+                <mat-icon>{{ getStatusIcon(equipment.status) }}</mat-icon>
+                <span>{{ getStatusDisplayName(equipment.status) }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Content -->
+          <div class="card-content">
+            <div class="capacity-info">
+              <div class="capacity-item">
+                <div class="capacity-icon">
+                  <mat-icon>fitness_center</mat-icon>
+                </div>
+                <div class="capacity-details">
+                  <span class="capacity-value">{{ equipment.capacityLoad }}</span>
+                  <span class="capacity-label">{{ 'EQUIPMENT_MANAGEMENT.LOAD_CAPACITY_KG' | translate }}</span>
+                </div>
+              </div>
+              
+              <div class="capacity-item">
+                <div class="capacity-icon">
+                  <mat-icon>group</mat-icon>
+                </div>
+                <div class="capacity-details">
+                  <span class="capacity-value">{{ equipment.capacityPax }}</span>
+                  <span class="capacity-label">{{ 'EQUIPMENT_MANAGEMENT.PASSENGER_CAPACITY' | translate }}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="equipment-stats">
+              <div class="stat-item">
+                <mat-icon>schedule</mat-icon>
+                <span class="stat-label">{{ 'EQUIPMENT_MANAGEMENT.LAST_MAINTENANCE' | translate }}</span>
+                <span class="stat-value">{{ getLastMaintenanceText(equipment) }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Actions -->
+          <div class="card-actions">
+            <div class="primary-actions">
+              <app-button
+                [translateKey]="'SHARED.ACTIONS.EDIT'"
+                [color]="'primary'"
+                [variant]="'text'"
+                [icon]="'edit'"
+                [size]="'small'"
+                [disabled]="loading"
+                (clicked)="openEditDialog(equipment)"
+              ></app-button>
+            </div>
+            
+            <div class="status-actions">
+              <app-button
+                *ngIf="equipment.status === 'AVAILABLE'"
+                [translateKey]="'EQUIPMENT_MANAGEMENT.SET_MAINTENANCE'"
+                [color]="'warning'"
+                [variant]="'outline'"
+                [icon]="'build'"
+                [size]="'small'"
+                [disabled]="loading"
+                (clicked)="changeStatus(equipment, 'MAINTENANCE')"
+              ></app-button>
+              
+              <app-button
+                *ngIf="equipment.status === 'MAINTENANCE'"
+                [translateKey]="'EQUIPMENT_MANAGEMENT.SET_AVAILABLE'"
+                [color]="'success'"
+                [variant]="'outline'"
+                [icon]="'check_circle'"
+                [size]="'small'"
+                [disabled]="loading"
+                (clicked)="changeStatus(equipment, 'AVAILABLE')"
+              ></app-button>
+              
+              <app-button
+                *ngIf="equipment.status === 'RESERVED'"
+                [translateKey]="'EQUIPMENT_MANAGEMENT.RELEASE'"
+                [color]="'neutral'"
+                [variant]="'outline'"
+                [icon]="'unlock'"
+                [size]="'small'"
+                [disabled]="loading"
+                (clicked)="changeStatus(equipment, 'AVAILABLE')"
+              ></app-button>
+              
+              <app-button
+                [translateKey]="'EQUIPMENT_MANAGEMENT.OUT_OF_SERVICE'"
+                [color]="'danger'"
+                [variant]="'text'"
+                [icon]="'block'"
+                [size]="'small'"
+                [disabled]="loading || equipment.status === 'OUT_OF_SERVICE'"
+                (clicked)="deleteEquipment(equipment)"
+              ></app-button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Empty State for Cards -->
+      <div class="empty-state" *ngIf="filteredEquipment.length === 0">
+        <div class="empty-icon">
+          <mat-icon>construction</mat-icon>
+        </div>
+        <h3>{{ 'EQUIPMENT_MANAGEMENT.NO_EQUIPMENT' | translate }}</h3>
+        <p *ngIf="statusFilter !== 'all'">
+          {{ 'EQUIPMENT_MANAGEMENT.NO_EQUIPMENT_FILTER' | translate }}
+        </p>
+        <p *ngIf="statusFilter === 'all'">
+          {{ 'EQUIPMENT_MANAGEMENT.NO_EQUIPMENT_DESCRIPTION' | translate }}
+        </p>
+        <app-button
+          [translateKey]="'EQUIPMENT_MANAGEMENT.ADD_FIRST_EQUIPMENT'"
+          [color]="'primary'"
+          [variant]="'solid'"
+          [icon]="'add'"
+          (clicked)="openAddDialog()"
+        ></app-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table Actions Template -->
+<ng-template #tableActions let-column="column" let-row="row">
+  <div *ngIf="column === 'actions'" class="table-action-buttons">
+    <app-button
+      [translateKey]="'SHARED.ACTIONS.EDIT'"
+      [color]="'primary'"
+      [variant]="'text'"
+      [icon]="'edit'"
+      [size]="'small'"
+      [disabled]="loading"
+      (clicked)="openEditDialog(row)"
+    ></app-button>
+    
+    <app-button
+      *ngIf="row.status === 'AVAILABLE'"
+      [translateKey]="'EQUIPMENT_MANAGEMENT.MAINTENANCE'"
+      [color]="'warning'"
+      [variant]="'text'"
+      [icon]="'build'"
+      [size]="'small'"
+      [disabled]="loading"
+      (clicked)="changeStatus(row, 'MAINTENANCE')"
+    ></app-button>
+    
+    <app-button
+      *ngIf="row.status === 'MAINTENANCE'"
+      [translateKey]="'EQUIPMENT_MANAGEMENT.AVAILABLE'"
+      [color]="'success'"
+      [variant]="'text'"
+      [icon]="'check_circle'"
+      [size]="'small'"
+      [disabled]="loading"
+      (clicked)="changeStatus(row, 'AVAILABLE')"
+    ></app-button>
+    
+    <app-button
+      [translateKey]="'EQUIPMENT_MANAGEMENT.OUT_OF_SERVICE'"
+      [color]="'danger'"
+      [variant]="'text'"
+      [icon]="'block'"
+      [size]="'small'"
+      [disabled]="loading || row.status === 'OUT_OF_SERVICE'"
+      (clicked)="deleteEquipment(row)"
+    ></app-button>
+  </div>
+</ng-template>
