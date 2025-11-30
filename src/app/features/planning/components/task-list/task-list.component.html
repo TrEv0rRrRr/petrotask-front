@@ -1,0 +1,37 @@
+<div class="task-list-container">
+  <div *ngIf="tasks.length === 0" class="no-tasks">
+    No hay tareas asociadas a esta actividad
+  </div>
+
+  <app-table
+    *ngIf="tasks.length > 0"
+    [dataSource]="tasks"
+    [columns]="tableColumns"
+    [customColumns]="customColumns"
+    [loading]="loading"
+    [sort]="sort"
+    (sortChange)="sortChange.emit($event)"
+    (selecteChange)="onTableRowSelect($event)"
+    (deleteChange)="onDeleteTask($event)">
+  </app-table>
+</div> 
+
+<ng-template #customColumns let-column="column" let-row="row">
+    <div *ngIf="column === 'status'" class="status-container">
+      <mat-chip-set>
+        <mat-chip [ngClass]="getStatusChipClass(row.status)">
+          <mat-icon class="status-icon">{{ getStatusIcon(row.status) }}</mat-icon>
+          {{ row.status }}
+        </mat-chip>
+      </mat-chip-set>
+    </div>
+
+    <div *ngIf="column === 'actions'" class="actions-cell">
+      <button mat-icon-button matTooltip="Editar tarea" (click)="onEditTask(row); $event.stopPropagation()">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Eliminar tarea" color="warn" (click)="onDeleteTask(row.taskId); $event.stopPropagation()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </ng-template>

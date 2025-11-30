@@ -1,0 +1,93 @@
+@use '../../../../../styles/variables' as v;
+
+.task-list-container {
+  width: 100%;
+  margin-bottom: v.$spacing-md;
+}
+
+.no-tasks {
+  text-align: center;
+  padding: v.$spacing-lg - 0.5rem;
+  background-color: var(--surface);
+  border-radius: 4px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+
+.status-container {
+  display: flex;
+  align-items: center;
+}
+
+.status-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.status-completed {
+  background-color: rgba(var(--success), 0.1);
+  color: var(--success);
+  border: 1px solid rgba(var(--success), 0.2);
+}
+
+.status-in-progress {
+  background-color: rgba(var(--info), 0.1);
+  color: var(--info);
+  border: 1px solid rgba(var(--info), 0.2);
+}
+
+.status-pending {
+  background-color: rgba(var(--warning), 0.1);
+  color: var(--warning);
+  border: 1px solid rgba(var(--warning), 0.2);
+}
+
+.status-cancelled {
+  background-color: rgba(var(--error), 0.1);
+  color: var(--error);
+  border: 1px solid rgba(var(--error), 0.2);
+}
+
+// Progress bar styles
+.progress-cell {
+  display: flex;
+  align-items: center;
+  gap: v.$spacing-sm;
+  max-width: 200px;
+  padding-right: v.$spacing-md;
+
+  .mat-progress-bar {
+    flex: 1;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .progress-value {
+    font-size: v.$font-size-sm - 1px;
+    font-weight: v.$font-weight-bold;
+    min-width: 40px;
+    text-align: right;
+  }
+}
+
+// Actions column styles
+.actions-cell {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: v.$spacing-sm / 2;
+  white-space: nowrap;
+
+  button {
+    transition: transform 0.2s ease;
+    
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+} 
