@@ -1,0 +1,239 @@
+<div class="safety-alerts-container">
+  <div class="header">
+    <h1>{{ 'safety-alerts.title' | translate }}</h1>
+    <p>{{ 'safety-alerts.subtitle' | translate }}</p>
+    <button mat-raised-button color="primary" (click)="createNewAlert()" class="create-btn">
+      <mat-icon>add</mat-icon>
+      {{ 'safety-alerts.create-alert' | translate }}
+    </button>
+  </div>
+
+  <!-- Estadísticas -->
+  <div class="stats-grid">
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <mat-icon color="primary">notifications</mat-icon>
+          <div class="stat-info">
+            <span class="stat-number">{{ totalAlerts }}</span>
+            <span class="stat-label">{{ 'safety-alerts.total-alerts' | translate }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <mat-icon color="warn">schedule</mat-icon>
+          <div class="stat-info">
+            <span class="stat-number">{{ activeAlerts }}</span>
+            <span class="stat-label">{{ 'safety-alerts.active-alerts' | translate }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <mat-icon color="warn">error</mat-icon>
+          <div class="stat-info">
+            <span class="stat-number">{{ criticalAlerts }}</span>
+            <span class="stat-label">{{ 'safety-alerts.critical-alerts' | translate }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-tab-group [(selectedIndex)]="currentTab" class="alerts-tabs">
+    
+    <!-- Tab 1: Todas las Alertas -->
+    <mat-tab label="{{ 'safety-alerts.all-alerts' | translate }}">
+      <div class="alerts-grid">
+        <mat-card *ngFor="let alert of safetyAlerts" 
+                  class="alert-card"
+                  [ngClass]="'alert-' + alert.type + ' status-' + alert.status">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon [ngClass]="'alert-icon-' + alert.type">
+                {{ getAlertTypeIcon(alert.type) }}
+              </mat-icon>
+              {{ alert.title }}
+              <mat-chip [ngClass]="'priority-chip-' + alert.priority" class="priority-chip">
+                {{ alert.priority | translate }}
+              </mat-chip>
+            </mat-card-title>
+            <mat-card-subtitle>
+              {{ alert.location }} • {{ formatDate(alert.timestamp) }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          
+          <mat-card-content>
+            <p>{{ alert.description }}</p>
+            
+            <div class="alert-meta">
+              <div class="meta-item">
+                <mat-icon>person</mat-icon>
+                <span>{{ alert.reportedBy }}</span>
+              </div>
+              <div class="meta-item" *ngIf="alert.assignedTo">
+                <mat-icon>assignment_ind</mat-icon>
+                <span>{{ alert.assignedTo }}</span>
+              </div>
+              <div class="meta-item" *ngIf="alert.dueDate">
+                <mat-icon [ngClass]="isOverdue(alert) ? 'overdue' : ''">schedule</mat-icon>
+                <span [ngClass]="isOverdue(alert) ? 'overdue' : ''">
+                  {{ isOverdue(alert) ? 'Vencido' : getTimeRemaining(alert) }}
+                </span>
+              </div>
+            </div>
+
+            <div class="actions-section" *ngIf="alert.actions.length > 0">
+              <h4>{{ 'safety-alerts.required-actions' | translate }}:</h4>
+              <ul class="actions-list">
+                <li *ngFor="let action of alert.actions">{{ action }}</li>
+              </ul>
+            </div>
+
+            <div class="status-section">
+              <mat-chip [ngClass]="'status-chip-' + alert.status">
+                <mat-icon>{{ getStatusIcon(alert.status) }}</mat-icon>
+                {{ alert.status | translate }}
+              </mat-chip>
+            </div>
+          </mat-card-content>
+
+          <mat-card-actions>
+            <button mat-button 
+                    color="accent" 
+                    (click)="acknowledgeAlert(alert)"
+                    *ngIf="alert.status === 'active'">
+              <mat-icon>check</mat-icon>
+              {{ 'safety-alerts.acknowledge' | translate }}
+            </button>
+            <button mat-button 
+                    color="primary" 
+                    (click)="resolveAlert(alert)"
+                    *ngIf="alert.status !== 'resolved'">
+              <mat-icon>done_all</mat-icon>
+              {{ 'safety-alerts.resolve' | translate }}
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <!-- Tab 2: Alertas Activas -->
+    <mat-tab label="{{ 'safety-alerts.active-alerts' | translate }}">
+      <div class="active-alerts">
+        <mat-card *ngFor="let alert of getFilteredAlerts(undefined, 'active')" 
+                  class="alert-card active"
+                  [ngClass]="'alert-' + alert.type">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon color="warn">warning</mat-icon>
+              {{ alert.title }}
+              <mat-chip [ngClass]="'priority-chip-' + alert.priority" class="priority-chip">
+                {{ alert.priority | translate }}
+              </mat-chip>
+            </mat-card-title>
+            <mat-card-subtitle>
+              {{ alert.location }} • {{ formatDate(alert.timestamp) }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          
+          <mat-card-content>
+            <p>{{ alert.description }}</p>
+            
+            <div class="urgent-actions" *ngIf="alert.type === 'critical'">
+              <h4 class="urgent-title">
+                <mat-icon color="warn">error</mat-icon>
+                {{ 'safety-alerts.urgent-action-required' | translate }}
+              </h4>
+            </div>
+
+            <div class="actions-section">
+              <h4>{{ 'safety-alerts.required-actions' | translate }}:</h4>
+              <ul class="actions-list">
+                <li *ngFor="let action of alert.actions">{{ action }}</li>
+              </ul>
+            </div>
+          </mat-card-content>
+
+          <mat-card-actions>
+            <button mat-raised-button 
+                    color="accent" 
+                    (click)="acknowledgeAlert(alert)">
+              <mat-icon>check</mat-icon>
+              {{ 'safety-alerts.acknowledge' | translate }}
+            </button>
+            <button mat-raised-button 
+                    color="primary" 
+                    (click)="resolveAlert(alert)">
+              <mat-icon>done_all</mat-icon>
+              {{ 'safety-alerts.resolve' | translate }}
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <!-- Tab 3: Por Tipo -->
+    <mat-tab label="{{ 'safety-alerts.by-type' | translate }}">
+      <div class="type-filters">
+        <mat-chip-set>
+          <mat-chip *ngFor="let type of alertTypes" 
+                    [ngClass]="'type-chip-' + type.value"
+                    (click)="currentTab = 0">
+            <mat-icon>{{ type.icon }}</mat-icon>
+            {{ type.label }}
+          </mat-chip>
+        </mat-chip-set>
+      </div>
+
+      <div class="type-grid">
+        <div *ngFor="let type of alertTypes" class="type-section">
+          <h3>
+            <mat-icon [ngClass]="'alert-icon-' + type.value">
+              {{ type.icon }}
+            </mat-icon>
+            {{ type.label }}
+          </h3>
+          
+          <div class="type-alerts">
+            <mat-card *ngFor="let alert of getFilteredAlerts(type.value)" 
+                      class="alert-card compact"
+                      [ngClass]="'alert-' + alert.type">
+              <mat-card-content>
+                <div class="compact-content">
+                  <div class="compact-header">
+                    <span class="alert-title">{{ alert.title }}</span>
+                    <mat-chip [ngClass]="'status-chip-' + alert.status">
+                      {{ alert.status | translate }}
+                    </mat-chip>
+                  </div>
+                  <p class="alert-description">{{ alert.description }}</p>
+                  <div class="compact-meta">
+                    <span>{{ alert.location }}</span>
+                    <span>{{ alert.priority | translate }}</span>
+                  </div>
+                </div>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button 
+                        (click)="acknowledgeAlert(alert)"
+                        *ngIf="alert.status === 'active'">
+                  <mat-icon>check</mat-icon>
+                  {{ 'safety-alerts.acknowledge' | translate }}
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>
