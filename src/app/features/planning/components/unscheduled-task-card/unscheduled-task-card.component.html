@@ -1,0 +1,11 @@
+<div class="task-card"
+  draggable="true"
+  (dragstart)="onDragStart($event)">
+  <h4>{{ task.title }}</h4>
+  <p>{{ task.description }}</p>
+  <div class="actions">
+    <button mat-icon-button (click)="schedule.emit(task)" matTooltip="{{ 'task-planning.actions.edit' | translate }}">
+      <mat-icon>schedule</mat-icon>
+    </button>
+  </div>
+</div>
