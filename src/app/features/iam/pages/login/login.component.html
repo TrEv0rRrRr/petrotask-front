@@ -1,0 +1,60 @@
+<div class="login-wrapper">
+  <div class="login-container">
+    <h1>PetroTask</h1>
+    <p>{{ 'login-container.slogan' | translate }}</p>
+
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm" novalidate>
+
+      <label for="username">{{ 'login-container.username' | translate }}</label>
+      <input
+        type="text"
+        id="username"
+        [placeholder]="'login-container.username' | translate"
+        [(ngModel)]="username"
+        name="username"
+        required
+        #usernameInput="ngModel"
+        [class.invalid-input]="usernameInput.invalid && (usernameInput.touched || submitted)"
+      />
+      <small *ngIf="usernameInput.errors?.['required'] && (usernameInput.touched || submitted)" class="field-error">
+        {{ 'login-container.username-required' | translate }}
+      </small>
+
+      <label for="password">{{ 'login-container.password' | translate }}</label>
+      <input
+        type="password"
+        id="password"
+        [placeholder] ="'login-container.password' | translate"
+        [(ngModel)]="password"
+        name="password"
+        required
+        minlength="6"
+        #passInput="ngModel"
+        [class.invalid-input]="passInput.invalid && (passInput.touched || submitted)"
+      />
+      <small *ngIf="passInput.errors?.['required'] && (passInput.touched || submitted)" class="field-error">
+        {{ 'login-container.password-required' | translate }}
+      </small>
+      <small *ngIf="passInput.errors?.['minlength'] && (passInput.touched || submitted)" class="field-error">
+        {{ 'login-container.characters' | translate }}
+      </small>
+
+      <a class="forgot-password" (click)="goToRecovery()">{{ 'login-container.password-missing' | translate }}</a>
+
+      <!-- Mensaje de error general -->
+      <div *ngIf="errorMessage" class="error-msg">
+        {{ errorMessage | translate }}
+      </div>
+
+      <button type="submit" class="login-btn" [disabled]="isLoading">
+        <span *ngIf="!isLoading" style="margin-left: 8px;">🔐 {{ 'login-container.login' | translate }}</span>
+        <span *ngIf="isLoading" style="margin-left: 8px;">{{ 'login-container.loading' | translate }}</span>
+      </button>
+
+      <button type="button" class="register-btn" (click)="onRegister()">
+        📝 {{ 'login-container.register' | translate }}
+      </button>
+
+    </form>
+  </div>
+</div>
