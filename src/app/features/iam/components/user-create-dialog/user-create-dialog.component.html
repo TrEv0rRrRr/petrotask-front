@@ -1,0 +1,24 @@
+<div class="user-dialog-container">
+  <div class="user-dialog-header">
+    <h2 class="user-dialog-title">{{ 'user-create-dialog.title' | translate }}</h2>
+    <button 
+      mat-icon-button 
+      class="user-dialog-close" 
+      (click)="onFormCancel()"
+      [attr.aria-label]="'common.close' | translate"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  
+  <div class="user-dialog-content">
+    <app-base-form
+      [config]="formConfig"
+      [initialValues]="initialValues"
+      [isSubmitting]="isSubmitting"
+      (formSubmit)="onFormSubmit($event)"
+      (formCancel)="onFormCancel()"
+      (formValueChange)="onFormChange($event)"
+    ></app-base-form>
+  </div>
+</div> 
