@@ -1,0 +1,15 @@
+<mat-card class="card">
+  <mat-card-header class="card-header">
+    <mat-card-title class="card-title">{{ title}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="card-body">
+    <mat-card-subtitle class="card-subtitle">Beneficios: </mat-card-subtitle>
+    <ul>
+      <li *ngFor="let item of items">{{ item }}</li>
+    </ul>
+  </mat-card-content>
+  <mat-card-actions class="card-footer">
+    <span class="price">{{ 'Precio: ' + price }}</span>
+    <app-button class="button" [color]="'primary'" [label]="'Seleccionar'" (click)="onSaveType()"></app-button>
+  </mat-card-actions>
+</mat-card>
