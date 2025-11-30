@@ -1,0 +1,19 @@
+<div class="home-container">
+  <section class="welcome-section">
+    <h1>{{ 'home.welcome' | translate }}</h1>
+    <p class="subtitle">{{ 'home.subtitle' | translate }}</p>
+  </section>
+
+  <section class="quick-actions">
+    <h2>{{ 'home.quick-access' | translate }}</h2>
+    <div class="actions-grid">
+      <mat-card *ngFor="let action of quickActions" class="action-card" [routerLink]="action.route">
+        <mat-card-content>
+          <mat-icon>{{action.icon}}</mat-icon>
+          <h3>{{ 'home.' + action.key + '.title' | translate }}</h3>
+          <p class="description">{{ 'home.' + action.key + '.description' | translate }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+</div>
