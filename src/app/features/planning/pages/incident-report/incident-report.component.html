@@ -1,0 +1,62 @@
+<div class="incident-report-card">
+  <div class="card-header">
+    <h2>Reporte de Incidente</h2>
+  </div>
+
+  <form [formGroup]="incidentForm" (ngSubmit)="submitReport()" class="incident-report-form">
+
+    <div class="field-group small-field">
+      <label class="field-label">Título</label>
+      <app-input
+        formControlName="title"
+        [placeholder]="'Máx. 100 caracteres'"
+        [maxLength]="100">
+      </app-input>
+      <small *ngIf="incidentForm.get('title')?.touched && incidentForm.get('title')?.invalid" class="field-error">
+        Requerido y hasta 100 caracteres
+      </small>
+    </div>
+
+    <div class="field-group full-field">
+      <label class="field-label">Descripción</label>
+      <app-input
+        formControlName="description"
+        [type]="'textarea'"
+        [placeholder]="'Describe el incidente...'"
+        [maxLength]="500">
+      </app-input>
+      <small *ngIf="incidentForm.get('description')?.touched && incidentForm.get('description')?.invalid" class="field-error">
+        Requerido
+      </small>
+    </div>
+
+    <div class="field-group small-field">
+      <label class="field-label">Tipo de reporte</label>
+      <app-selector
+        formControlName="type"
+        [options]="['logistico','seguridad','ambiental']"
+        [color]="'secondary'"
+        [size]="'medium'">
+      </app-selector>
+      <small *ngIf="incidentForm.get('type')?.touched && incidentForm.get('type')?.invalid" class="field-error">
+        Requerido
+      </small>
+    </div>
+
+    <div class="button-row">
+      <app-button
+        [label]="'Enviar reporte'"
+        [type]="'submit'"
+        [color]="'primary'"
+        [disabled]="incidentForm.invalid">
+      </app-button>
+    </div>
+  </form>
+
+  <div *ngIf="submitted" class="result-summary">
+    <h3>Reporte enviado:</h3>
+    <p><strong>Título:</strong> {{ incidentForm.value.title }}</p>
+    <p><strong>Descripción:</strong> {{ incidentForm.value.description }}</p>
+    <p><strong>Tipo:</strong> {{ incidentForm.value.type }}</p>
+  </div>
+</div>
