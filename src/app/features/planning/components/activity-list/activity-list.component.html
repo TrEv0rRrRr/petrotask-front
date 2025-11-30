@@ -1,0 +1,17 @@
+<div class="activity-list-container">
+  <div *ngIf="activities.length === 0" class="no-activities">
+    {{ 'activity-management.no-results.message' | translate }}
+  </div>
+
+  <app-activity-card
+    *ngFor="let activity of activities"
+    [activity]="activity"
+    [expanded]="expandedActivityId === activity.id"
+    (toggleExpand)="toggleExpand($event)"
+    (editActivity)="onEditActivity($event)"
+    (deleteActivity)="onDeleteActivity($event)"
+    (editTask)="onEditTask($event)"
+    (deleteTask)="onDeleteTask($event)"
+    (addTask)="onAddTask($event)"
+  ></app-activity-card>
+</div>

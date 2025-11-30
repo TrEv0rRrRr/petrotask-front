@@ -1,0 +1,17 @@
+@use '../../../../../styles/variables' as v;
+
+.activity-list-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.no-activities {
+  text-align: center;
+  padding: v.$spacing-lg;
+  font-size: v.$font-size-base + 2px;
+  color: var(--text-secondary);
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
