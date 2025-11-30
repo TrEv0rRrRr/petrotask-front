@@ -1,0 +1,54 @@
+:host {
+  display: block;
+}
+
+::ng-deep {
+  .mat-mdc-dialog-container {
+    --mdc-dialog-container-color: white;
+    
+    .mat-mdc-dialog-surface {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+  }
+}
+
+.mat-mdc-dialog-title {
+  background-color: var(--primary);
+  color: white;
+  padding: 16px 24px;
+  margin: 0 !important;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+mat-dialog-content {
+  min-width: 400px;
+  max-width: 100%;
+  max-height: 65vh;
+  padding: 24px;
+  margin-top: 16px;
+  
+  .form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .form-row {
+    display: flex;
+    gap: 16px;
+    
+    .form-field {
+      flex: 1;
+    }
+  }
+}
+
+mat-dialog-actions {
+  padding: 16px 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  margin: 0;
+} 
