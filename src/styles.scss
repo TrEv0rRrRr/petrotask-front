@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+@use './styles/reset';
+@use './styles/variables';
+@use './styles/themes';
+@use './styles/typography';
+@use './styles/material-theme';
+
+@include material-theme.apply-material-themes();
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
