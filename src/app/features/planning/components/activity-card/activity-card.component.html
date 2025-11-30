@@ -1,0 +1,82 @@
+<mat-card class="activity-card">
+  <mat-card-header (click)="onToggleExpand()" class="card-header">
+    <div class="header-content">
+      <div class="title-section">
+        <mat-card-title>{{ activity.activityCode }}</mat-card-title>
+        <div class="status-badges">
+          <span class="status-badge" [ngClass]="getStatusClass(activity.activityStatus)">
+            <mat-icon class="badge-icon">{{ getStatusIcon(activity.activityStatus) }}</mat-icon>
+            {{ activity.activityStatus }}
+          </span>
+          <span class="week-indicator">
+            <mat-icon class="badge-icon">event</mat-icon>
+            Semana {{ activity.weekNumber }}
+          </span>
+        </div>
+      </div>
+      <div class="actions">
+        <button mat-icon-button [matTooltip]="'activity-management.actions.edit' | translate" (click)="onEditActivity(); $event.stopPropagation()">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button [matTooltip]="'activity-management.actions.delete' | translate" color="warn" (click)="onDeleteActivity(); $event.stopPropagation()">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <mat-icon class="expand-icon" [ngClass]="{'expanded': expanded}">
+          {{ expanded ? 'expand_less' : 'expand_more' }}
+        </mat-icon>
+      </div>
+    </div>
+  </mat-card-header>
+
+  <div *ngIf="expanded" class="expanded-content">
+    <mat-card-content>
+      <div class="activity-details">
+        <div class="detail-row">
+          <span class="detail-label">Descripción</span>
+          <span class="detail-value">{{ activity.description }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Fecha esperada</span>
+          <span class="detail-value">{{ activity.expectedTime | date:'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Número de semana</span>
+          <span class="detail-value">{{ activity.weekNumber }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Zona origen</span>
+          <span class="detail-value">{{ activity.zoneOrigin }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Ubicación origen</span>
+          <span class="detail-value">{{ activity.locationOrigin }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Zona destino</span>
+          <span class="detail-value">{{ activity.zoneDestination }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Ubicación destino</span>
+          <span class="detail-value">{{ activity.locationDestination }}</span>
+        </div>
+      </div>
+
+      <mat-divider class="section-divider"></mat-divider>
+
+      <div class="tasks-section">
+        <div class="section-header">
+          <h3>Tareas</h3>
+          <button mat-mini-fab color="primary" matTooltip="Agregar tarea" (click)="onAddTask()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+
+        <app-task-list
+          [activityId]="activity.id"
+          (editTask)="onEditTask($event)"
+          (deleteTask)="onDeleteTask($event)">
+        </app-task-list>
+      </div>
+    </mat-card-content>
+  </div>
+</mat-card>
