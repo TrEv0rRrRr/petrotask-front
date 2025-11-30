@@ -1,0 +1,210 @@
+<div class="photo-evidence-container">
+  <div class="header">
+    <h1>{{ 'photo-evidence.title' | translate }}</h1>
+    <p>{{ 'photo-evidence.subtitle' | translate }}</p>
+    <button mat-raised-button color="primary" (click)="openUploadDialog()" class="upload-btn">
+      <mat-icon>camera_alt</mat-icon>
+      {{ 'photo-evidence.upload-photos' | translate }}
+    </button>
+  </div>
+
+  <!-- Estadísticas -->
+  <div class="stats-grid">
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <mat-icon color="primary">photo_library</mat-icon>
+          <div class="stat-info">
+            <span class="stat-number">{{ totalPhotos }}</span>
+            <span class="stat-label">{{ 'photo-evidence.total-photos' | translate }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <mat-icon color="accent">schedule</mat-icon>
+          <div class="stat-info">
+            <span class="stat-number">{{ pendingApproval }}</span>
+            <span class="stat-label">{{ 'photo-evidence.pending-approval' | translate }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <mat-icon color="primary">check_circle</mat-icon>
+          <div class="stat-info">
+            <span class="stat-number">{{ approvedPhotos }}</span>
+            <span class="stat-label">{{ 'photo-evidence.approved-photos' | translate }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-tab-group [(selectedIndex)]="currentTab" class="evidence-tabs">
+    
+    <!-- Tab 1: Todas las Evidencias -->
+    <mat-tab label="{{ 'photo-evidence.all-evidence' | translate }}">
+      <div class="evidence-grid">
+        <mat-card *ngFor="let evidence of photoEvidences" 
+                  class="evidence-card"
+                  [ngClass]="'status-' + evidence.status">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon [ngClass]="'category-icon-' + evidence.category">
+                {{ getCategoryIcon(evidence.category) }}
+              </mat-icon>
+              {{ evidence.title }}
+            </mat-card-title>
+            <mat-card-subtitle>
+              {{ evidence.location }} • {{ formatDate(evidence.timestamp) }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          
+          <mat-card-content>
+            <p>{{ evidence.description }}</p>
+            
+            <div class="evidence-meta">
+              <div class="meta-item">
+                <mat-icon>person</mat-icon>
+                <span>{{ evidence.uploadedBy }}</span>
+              </div>
+              <div class="meta-item">
+                <mat-icon>photo_library</mat-icon>
+                <span>{{ evidence.photos.length }} {{ 'photo-evidence.photos' | translate }}</span>
+              </div>
+            </div>
+
+            <div class="tags-section">
+              <mat-chip-set>
+                <mat-chip *ngFor="let tag of evidence.tags" class="tag-chip">
+                  {{ tag }}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+
+            <div class="status-section">
+              <mat-chip [ngClass]="'status-chip-' + evidence.status">
+                <mat-icon>{{ getStatusIcon(evidence.status) }}</mat-icon>
+                {{ evidence.status | translate }}
+              </mat-chip>
+            </div>
+          </mat-card-content>
+
+          <mat-card-actions>
+            <button mat-button (click)="viewPhotos(evidence)">
+              <mat-icon>visibility</mat-icon>
+              {{ 'photo-evidence.view-photos' | translate }}
+            </button>
+            <button mat-button 
+                    color="primary" 
+                    (click)="approveEvidence(evidence)"
+                    *ngIf="evidence.status === 'pending'">
+              <mat-icon>check</mat-icon>
+              {{ 'photo-evidence.approve' | translate }}
+            </button>
+            <button mat-button 
+                    color="warn" 
+                    (click)="rejectEvidence(evidence)"
+                    *ngIf="evidence.status === 'pending'">
+              <mat-icon>close</mat-icon>
+              {{ 'photo-evidence.reject' | translate }}
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <!-- Tab 2: Por Categoría -->
+    <mat-tab label="{{ 'photo-evidence.by-category' | translate }}">
+      <div class="category-filters">
+        <mat-chip-set>
+          <mat-chip *ngFor="let category of categories" 
+                    [ngClass]="'category-chip-' + category.value"
+                    (click)="currentTab = 0">
+            <mat-icon>{{ category.icon }}</mat-icon>
+            {{ category.label }}
+          </mat-chip>
+        </mat-chip-set>
+      </div>
+
+      <div class="category-grid">
+        <div *ngFor="let category of categories" class="category-section">
+          <h3>
+            <mat-icon [ngClass]="'category-icon-' + category.value">
+              {{ category.icon }}
+            </mat-icon>
+            {{ category.label }}
+          </h3>
+          
+          <div class="category-evidence">
+            <mat-card *ngFor="let evidence of getFilteredEvidences(category.value)" 
+                      class="evidence-card compact">
+              <mat-card-content>
+                <div class="compact-content">
+                  <div class="compact-header">
+                    <span class="evidence-title">{{ evidence.title }}</span>
+                    <mat-chip [ngClass]="'status-chip-' + evidence.status">
+                      {{ evidence.status | translate }}
+                    </mat-chip>
+                  </div>
+                  <p class="evidence-description">{{ evidence.description }}</p>
+                  <div class="compact-meta">
+                    <span>{{ evidence.location }}</span>
+                    <span>{{ evidence.photos.length }} {{ 'photo-evidence.photos' | translate }}</span>
+                  </div>
+                </div>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button (click)="viewPhotos(evidence)">
+                  <mat-icon>visibility</mat-icon>
+                  {{ 'photo-evidence.view' | translate }}
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Tab 3: Pendientes de Aprobación -->
+    <mat-tab label="{{ 'photo-evidence.pending-approval' | translate }}">
+      <div class="pending-evidence">
+        <mat-card *ngFor="let evidence of getFilteredEvidences()" 
+                  class="evidence-card pending"
+                  [style.display]="evidence.status === 'pending' ? 'block' : 'none'">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon color="warn">warning</mat-icon>
+              {{ evidence.title }}
+            </mat-card-title>
+            <mat-card-subtitle>
+              {{ evidence.location }} • {{ formatDate(evidence.timestamp) }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          
+          <mat-card-content>
+            <p>{{ evidence.description }}</p>
+            <div class="pending-actions">
+              <button mat-raised-button color="primary" (click)="approveEvidence(evidence)">
+                <mat-icon>check</mat-icon>
+                {{ 'photo-evidence.approve' | translate }}
+              </button>
+              <button mat-raised-button color="warn" (click)="rejectEvidence(evidence)">
+                <mat-icon>close</mat-icon>
+                {{ 'photo-evidence.reject' | translate }}
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>

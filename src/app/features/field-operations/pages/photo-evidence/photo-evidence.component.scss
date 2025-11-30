@@ -1,0 +1,341 @@
+.photo-evidence-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    h1 {
+      color: #2c3e50;
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 300;
+    }
+
+    p {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+      margin: 8px 0 0 0;
+    }
+
+    .upload-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+
+    .stat-card {
+      border-radius: 12px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      }
+
+      .stat-content {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        mat-icon {
+          font-size: 2.5rem;
+          width: 2.5rem;
+          height: 2.5rem;
+        }
+
+        .stat-info {
+          display: flex;
+          flex-direction: column;
+
+          .stat-number {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            line-height: 1;
+          }
+
+          .stat-label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 4px;
+          }
+        }
+      }
+    }
+  }
+
+  .evidence-tabs {
+    .mat-mdc-tab-group {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .evidence-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 24px;
+    padding: 24px;
+
+    .evidence-card {
+      border-radius: 12px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      }
+
+      &.status-pending {
+        border-left: 4px solid #f39c12;
+      }
+
+      &.status-approved {
+        border-left: 4px solid #27ae60;
+      }
+
+      &.status-rejected {
+        border-left: 4px solid #e74c3c;
+      }
+
+      .evidence-meta {
+        display: flex;
+        gap: 16px;
+        margin: 12px 0;
+
+        .meta-item {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          font-size: 0.9rem;
+          color: #7f8c8d;
+
+          mat-icon {
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+          }
+        }
+      }
+
+      .tags-section {
+        margin: 12px 0;
+
+        .tag-chip {
+          background-color: #ecf0f1;
+          color: #2c3e50;
+          font-size: 0.8rem;
+        }
+      }
+
+      .status-section {
+        margin: 12px 0;
+
+        .status-chip-pending {
+          background-color: #f39c12;
+          color: white;
+        }
+
+        .status-chip-approved {
+          background-color: #27ae60;
+          color: white;
+        }
+
+        .status-chip-rejected {
+          background-color: #e74c3c;
+          color: white;
+        }
+      }
+    }
+  }
+
+  .category-filters {
+    padding: 24px;
+    border-bottom: 1px solid #ecf0f1;
+
+    .category-chip-before {
+      background-color: #3498db;
+      color: white;
+    }
+
+    .category-chip-during {
+      background-color: #9b59b6;
+      color: white;
+    }
+
+    .category-chip-after {
+      background-color: #27ae60;
+      color: white;
+    }
+
+    .category-chip-incident {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    .category-chip-equipment {
+      background-color: #f39c12;
+      color: white;
+    }
+
+    .category-chip-safety {
+      background-color: #34495e;
+      color: white;
+    }
+  }
+
+  .category-grid {
+    padding: 24px;
+
+    .category-section {
+      margin-bottom: 32px;
+
+      h3 {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #2c3e50;
+        margin-bottom: 16px;
+        font-size: 1.3rem;
+        font-weight: 500;
+      }
+
+      .category-evidence {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 16px;
+
+        .evidence-card.compact {
+          .compact-content {
+            .compact-header {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 8px;
+
+              .evidence-title {
+                font-weight: 500;
+                color: #2c3e50;
+              }
+            }
+
+            .evidence-description {
+              font-size: 0.9rem;
+              color: #7f8c8d;
+              margin-bottom: 8px;
+            }
+
+            .compact-meta {
+              display: flex;
+              gap: 16px;
+              font-size: 0.8rem;
+              color: #95a5a6;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .pending-evidence {
+    padding: 24px;
+
+    .evidence-card.pending {
+      border-left: 4px solid #f39c12;
+      margin-bottom: 16px;
+
+      .pending-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 16px;
+
+        button {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+      }
+    }
+  }
+
+  // Iconos de categoría
+  .category-icon-before {
+    color: #3498db;
+  }
+
+  .category-icon-during {
+    color: #9b59b6;
+  }
+
+  .category-icon-after {
+    color: #27ae60;
+  }
+
+  .category-icon-incident {
+    color: #e74c3c;
+  }
+
+  .category-icon-equipment {
+    color: #f39c12;
+  }
+
+  .category-icon-safety {
+    color: #34495e;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .photo-evidence-container {
+    padding: 16px;
+
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .upload-btn {
+        align-self: stretch;
+        justify-content: center;
+      }
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .evidence-grid {
+      grid-template-columns: 1fr;
+      padding: 16px;
+    }
+
+    .category-grid {
+      padding: 16px;
+
+      .category-evidence {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pending-evidence {
+      padding: 16px;
+    }
+  }
+}
