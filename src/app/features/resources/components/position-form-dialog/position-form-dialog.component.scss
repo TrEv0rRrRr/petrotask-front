@@ -1,0 +1,105 @@
+// Position Form Dialog Styles
+.position-form-dialog {
+  width: 100%;
+  max-width: 500px;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+
+  .dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, #ed9530, #ff8c42);
+    color: white;
+
+    .dialog-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .close-button {
+      color: white;
+      width: 32px;
+      height: 32px;
+      
+      mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  .dialog-content {
+    padding: 2rem;
+
+    .position-form {
+      .form-group {
+        margin-bottom: 1.5rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .helper-text {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem;
+        background: #f8fafc;
+        border-left: 4px solid #ed9530;
+        border-radius: 4px;
+        color: #6b6b6b;
+        font-size: 0.875rem;
+        margin-top: 1rem;
+
+        mat-icon {
+          color: #ed9530;
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  // Responsive design
+  @media (max-width: 600px) {
+    max-width: calc(100vw - 2rem);
+    margin: 1rem;
+
+    .dialog-header {
+      padding: 1rem 1.5rem;
+
+      .dialog-title {
+        font-size: 1.125rem;
+      }
+    }
+
+    .dialog-content {
+      padding: 1.5rem;
+    }
+
+    .dialog-actions {
+      padding: 1rem 1.5rem;
+      flex-direction: column;
+
+      app-button {
+        width: 100%;
+      }
+    }
+  }
+} 

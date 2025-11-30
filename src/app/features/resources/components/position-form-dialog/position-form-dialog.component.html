@@ -1,0 +1,72 @@
+<div class="position-form-dialog">
+  <!-- Dialog Header -->
+  <div class="dialog-header">
+    <h2 class="dialog-title">{{ title | translate }}</h2>
+    <button 
+      type="button" 
+      class="close-button"
+      (click)="onCancel()"
+      mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Dialog Content -->
+  <div class="dialog-content">
+    <form [formGroup]="positionForm" class="position-form">
+      
+      <!-- Position Title -->
+      <div class="form-group">
+        <app-input
+          [type]="'text'"
+          [label]="'POSITION_MANAGEMENT.FORM.TITLE'"
+          [placeholder]="'POSITION_MANAGEMENT.FORM.TITLE_PLACEHOLDER'"
+          [required]="true"
+          [errorMessage]="titleError && (titleControl?.touched || titleControl?.dirty) ? (titleError | translate) : ''"
+          [fullWidth]="true"
+          formControlName="title">
+        </app-input>
+      </div>
+
+      <!-- Position Description -->
+      <div class="form-group">
+        <app-input
+          [type]="'text'"
+          [label]="'POSITION_MANAGEMENT.FORM.DESCRIPTION'"
+          [placeholder]="'POSITION_MANAGEMENT.FORM.DESCRIPTION_PLACEHOLDER'"
+          [required]="true"
+          [errorMessage]="descriptionError && (descriptionControl?.touched || descriptionControl?.dirty) ? (descriptionError | translate) : ''"
+          [fullWidth]="true"
+          formControlName="description">
+        </app-input>
+      </div>
+
+      <!-- Helper Text -->
+      <div class="helper-text">
+        <mat-icon>info</mat-icon>
+        <span>{{ 'POSITION_MANAGEMENT.FORM.HELPER_TEXT' | translate }}</span>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Dialog Actions -->
+  <div class="dialog-actions">
+    <app-button
+      [variant]="'ghost'"
+      [color]="'secondary'"
+      [size]="'medium'"
+      [translateKey]="'SHARED.CANCEL'"
+      (click)="onCancel()">
+    </app-button>
+    
+    <app-button
+      [variant]="'solid'"
+      [color]="'primary'"
+      [size]="'medium'"
+      [disabled]="!positionForm.valid"
+      [translateKey]="isEdit ? 'SHARED.UPDATE' : 'SHARED.CREATE'"
+      (click)="onSave()">
+    </app-button>
+  </div>
+</div> 
