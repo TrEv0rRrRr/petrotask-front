@@ -1,0 +1,59 @@
+.zone-card {
+  margin: 16px 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: var(--background);
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  &--selected {
+    border-left: 4px solid var(--primary);
+    background-color: var(--surface);
+  }
+  
+  &--inactive {
+    opacity: 0.7;
+    background-color: var(--secondary);
+  }
+}
+
+.location-count {
+  margin-left: 8px;
+  color: var(--primary);
+}
+
+mat-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 8px;
+  gap: 8px;
+  
+  div {
+    flex: 1;
+    min-width: 120px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+::ng-deep {
+  .mat-mdc-card-title {
+    color: var(--text-primary);
+  }
+  
+  .mat-mdc-card-subtitle {
+    color: var(--text-secondary);
+  }
+  
+  .mat-warn {
+    color: var(--error) !important;
+  }
+  
+  .mat-accent {
+    color: var(--accent) !important;
+  }
+} 

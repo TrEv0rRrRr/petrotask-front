@@ -1,0 +1,65 @@
+<mat-card
+  class="zone-card"
+  [class.zone-card--selected]="isSelected"
+  [class.zone-card--inactive]="!zone.active"
+  (click)="select.emit(zone.id)">
+  <mat-card-header>
+    <mat-card-title>
+      {{ zone.name }}
+      <mat-icon *ngIf="!zone.active" color="warn">do_not_disturb</mat-icon>
+      <mat-icon
+        class="location-count"
+        matBadge="{{ zone.locations.length }}"
+        matBadgeColor="accent"
+        *ngIf="zone.locations.length > 0">
+        place
+      </mat-icon>
+    </mat-card-title>
+    <mat-card-subtitle>{{ zone.description }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content *ngIf="isSelected && zone.locations.length > 0">
+    <mat-list>
+      <div mat-subheader>{{ 'zone-card.locations' | translate }}</div>
+      <mat-list-item *ngFor="let location of zone.locations">
+        <mat-icon matListItemIcon>place</mat-icon>
+        <div matListItemTitle>{{ location.name }}</div>
+        <div matListItemLine>{{ location.description }}</div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <div (click)="$event.stopPropagation()">
+      <app-button
+        [label]="'zone-card.edit' | translate"
+        [color]="'primary'"
+        (clicked)="edit.emit(zone)">
+      </app-button>
+    </div>
+
+    <div (click)="$event.stopPropagation()">
+      <app-button
+        [label]="zone.active ? ('zone-card.activate' | translate) : ('zone-card.deactivate' | translate)"
+        [color]="zone.active ? 'danger' : 'primary'"
+        (clicked)="toggleActive.emit(zone.id)">
+      </app-button>
+    </div>
+
+    <div (click)="$event.stopPropagation()">
+      <app-button
+        [label]="'zone-card.add' | translate"
+        [color]="'secondary'"
+        (clicked)="addLocation.emit(zone.id)">
+      </app-button>
+    </div>
+
+    <div (click)="$event.stopPropagation()">
+      <app-button
+        [label]="'zone-card.delete' | translate"
+        [color]="'danger'"
+        (clicked)="delete.emit(zone.id)">
+      </app-button>
+    </div>
+  </mat-card-actions>
+</mat-card>
