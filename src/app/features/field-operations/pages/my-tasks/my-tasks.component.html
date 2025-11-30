@@ -1,0 +1,277 @@
+<div class="my-tasks-container">
+  <!-- Header con estadísticas del operario -->
+  <div class="operator-header">
+    <div class="header-info">
+      <h1>Mis Tareas</h1>
+      <div class="connection-status" [class.offline]="!isOnline">
+        <mat-icon>{{ isOnline ? 'wifi' : 'wifi_off' }}</mat-icon>
+        <span>{{ isOnline ? 'En línea' : 'Modo offline' }}</span>
+      </div>
+    </div>
+    
+    <div class="stats-grid">
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <div class="stat-content">
+            <mat-icon>assignment</mat-icon>
+            <div class="stat-info">
+              <span class="stat-number">{{ operatorStats.totalTasks }}</span>
+              <span class="stat-label">Total</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      
+      <mat-card class="stat-card completed">
+        <mat-card-content>
+          <div class="stat-content">
+            <mat-icon>check_circle</mat-icon>
+            <div class="stat-info">
+              <span class="stat-number">{{ operatorStats.completedToday }}</span>
+              <span class="stat-label">Completadas Hoy</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      
+      <mat-card class="stat-card in-progress">
+        <mat-card-content>
+          <div class="stat-content">
+            <mat-icon>play_circle</mat-icon>
+            <div class="stat-info">
+              <span class="stat-number">{{ operatorStats.inProgress }}</span>
+              <span class="stat-label">En Progreso</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      
+      <mat-card class="stat-card pending">
+        <mat-card-content>
+          <div class="stat-content">
+            <mat-icon>schedule</mat-icon>
+            <div class="stat-info">
+              <span class="stat-number">{{ operatorStats.pending }}</span>
+              <span class="stat-label">Pendientes</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      
+      <mat-card class="stat-card offline" *ngIf="operatorStats.offlineTasks > 0">
+        <mat-card-content>
+          <div class="stat-content">
+            <mat-icon>sync</mat-icon>
+            <div class="stat-info">
+              <span class="stat-number">{{ operatorStats.offlineTasks }}</span>
+              <span class="stat-label">Pendientes Sync</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Tabs para diferentes vistas -->
+  <mat-tab-group [(selectedIndex)]="currentTab" class="tasks-tabs">
+    <!-- Tab: Tareas Activas -->
+    <mat-tab label="Tareas Activas">
+      <div class="tasks-grid">
+        <mat-card *ngFor="let task of getActiveTasks()" 
+                  class="task-card" 
+                  [class.offline]="task.isOffline">
+          
+          <!-- Header de la tarea -->
+          <mat-card-header>
+            <div class="task-header">
+              <div class="task-title-section">
+                <h3>{{ task.title }}</h3>
+                <div class="task-meta">
+                  <mat-chip [color]="getPriorityColor(task.priority)" selected>
+                    <mat-icon matChipAvatar>{{ getPriorityIcon(task.priority) }}</mat-icon>
+                    {{ task.priority | titlecase }}
+                  </mat-chip>
+                  <mat-chip [color]="getStatusColor(task.status)" selected>
+                    <mat-icon matChipAvatar>{{ getStatusIcon(task.status) }}</mat-icon>
+                    {{ task.status | titlecase }}
+                  </mat-chip>
+                  <mat-chip *ngIf="task.isOffline" color="warn" selected>
+                    <mat-icon matChipAvatar>sync</mat-icon>
+                    Offline
+                  </mat-chip>
+                </div>
+              </div>
+            </div>
+          </mat-card-header>
+
+          <mat-card-content>
+            <!-- Descripción -->
+            <p class="task-description">{{ task.description }}</p>
+            
+            <!-- Ubicación y recursos -->
+            <div class="task-details">
+              <div class="detail-item">
+                <mat-icon>location_on</mat-icon>
+                <span>{{ task.location }}</span>
+              </div>
+              <div class="detail-item">
+                <mat-icon>schedule</mat-icon>
+                <span>{{ formatDuration(task.estimatedDuration) }} estimado</span>
+              </div>
+              <div class="detail-item" *ngIf="task.actualDuration">
+                <mat-icon>timer</mat-icon>
+                <span>{{ formatDuration(task.actualDuration) }} real</span>
+              </div>
+            </div>
+
+            <!-- Progreso -->
+            <div class="task-progress" *ngIf="task.status === 'in-progress'">
+              <div class="progress-info">
+                <span>Progreso</span>
+                <span>{{ getProgressPercentage(task) | number:'1.0-0' }}%</span>
+              </div>
+              <mat-progress-bar 
+                mode="determinate" 
+                [value]="getProgressPercentage(task)">
+              </mat-progress-bar>
+            </div>
+
+            <!-- Recursos necesarios -->
+            <div class="task-resources" *ngIf="task.resources.length > 0">
+              <h4>Recursos necesarios:</h4>
+              <div class="resources-list">
+                <mat-chip *ngFor="let resource of task.resources" [color]="'primary'">
+                  {{ resource }}
+                </mat-chip>
+              </div>
+            </div>
+
+            <!-- Fotos adjuntas -->
+            <div class="task-photos" *ngIf="task.photos.length > 0">
+              <h4>Evidencias fotográficas ({{ task.photos.length }}):</h4>
+              <div class="photos-grid">
+                <div *ngFor="let photo of task.photos" class="photo-item">
+                  <img [src]="photo.url" [alt]="photo.description" class="photo-thumbnail">
+                  <div class="photo-info">
+                    <span class="photo-category">{{ photo.category | titlecase }}</span>
+                    <span class="photo-time">{{ photo.timestamp | date:'short' }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Incidencias -->
+            <div class="task-incidents" *ngIf="task.incidents.length > 0">
+              <h4>Incidencias reportadas ({{ task.incidents.length }}):</h4>
+              <div class="incidents-list">
+                <div *ngFor="let incident of task.incidents" class="incident-item">
+                  <mat-icon [color]="incident.severity === 'critical' ? 'warn' : 'accent'">
+                    {{ incident.severity === 'critical' ? 'error' : 'warning' }}
+                  </mat-icon>
+                  <div class="incident-info">
+                    <span class="incident-type">{{ incident.type | titlecase }}</span>
+                    <span class="incident-description">{{ incident.description }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+
+          <mat-card-actions>
+            <!-- Botones de acción según el estado -->
+            <button *ngIf="task.status === 'pending'" 
+                    mat-raised-button 
+                    color="primary" 
+                    (click)="startTask(task)">
+              <mat-icon>play_arrow</mat-icon>
+              Iniciar Tarea
+            </button>
+            
+            <button *ngIf="task.status === 'in-progress'" 
+                    mat-raised-button 
+                    color="accent" 
+                    (click)="completeTask(task)">
+              <mat-icon>check</mat-icon>
+              Completar Tarea
+            </button>
+            
+            <button *ngIf="task.status === 'in-progress' || task.status === 'pending'" 
+                    mat-button 
+                    (click)="addPhoto(task)">
+              <mat-icon>camera_alt</mat-icon>
+              Agregar Foto
+            </button>
+            
+            <button *ngIf="task.status === 'in-progress' || task.status === 'pending'" 
+                    mat-button 
+                    color="warn" 
+                    (click)="reportIncident(task)">
+              <mat-icon>report_problem</mat-icon>
+              Reportar Incidencia
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <!-- Tab: Historial -->
+    <mat-tab label="Historial">
+      <div class="tasks-grid">
+        <mat-card *ngFor="let task of getCompletedTasks()" 
+                  class="task-card completed">
+          
+          <mat-card-header>
+            <div class="task-header">
+              <div class="task-title-section">
+                <h3>{{ task.title }}</h3>
+                <div class="task-meta">
+                  <mat-chip color="primary" selected>
+                    <mat-icon matChipAvatar>check_circle</mat-icon>
+                    Completada
+                  </mat-chip>
+                  <mat-chip [color]="getPriorityColor(task.priority)" selected>
+                    <mat-icon matChipAvatar>{{ getPriorityIcon(task.priority) }}</mat-icon>
+                    {{ task.priority | titlecase }}
+                  </mat-chip>
+                </div>
+              </div>
+            </div>
+          </mat-card-header>
+
+          <mat-card-content>
+            <p class="task-description">{{ task.description }}</p>
+            
+            <div class="task-details">
+              <div class="detail-item">
+                <mat-icon>location_on</mat-icon>
+                <span>{{ task.location }}</span>
+              </div>
+              <div class="detail-item">
+                <mat-icon>schedule</mat-icon>
+                <span>{{ formatDuration(task.actualDuration || task.estimatedDuration) }}</span>
+              </div>
+              <div class="detail-item" *ngIf="task.endTime">
+                <mat-icon>event</mat-icon>
+                <span>Completada: {{ task.endTime | date:'short' }}</span>
+              </div>
+            </div>
+
+            <!-- Evidencias fotográficas -->
+            <div class="task-photos" *ngIf="task.photos.length > 0">
+              <h4>Evidencias fotográficas ({{ task.photos.length }}):</h4>
+              <div class="photos-grid">
+                <div *ngFor="let photo of task.photos" class="photo-item">
+                  <img [src]="photo.url" [alt]="photo.description" class="photo-thumbnail">
+                  <div class="photo-info">
+                    <span class="photo-category">{{ photo.category | titlecase }}</span>
+                    <span class="photo-time">{{ photo.timestamp | date:'short' }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
