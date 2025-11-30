@@ -1,0 +1,251 @@
+<div class="activities-list-container">
+  <div class="header">
+    <h1>Lista de Tareas</h1>
+    <p>Gestión completa de todas las tareas operativas</p>
+  </div>
+
+  <!-- Estadísticas -->
+  <div class="stats-grid">
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <mat-icon color="primary">assignment</mat-icon>
+          <div class="stat-info">
+            <span class="stat-number">{{ totalTasks }}</span>
+            <span class="stat-label">Total de Tareas</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <mat-icon color="accent">schedule</mat-icon>
+          <div class="stat-info">
+            <span class="stat-number">{{ pendingTasks }}</span>
+            <span class="stat-label">Pendientes</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <mat-icon color="primary">play_circle</mat-icon>
+          <div class="stat-info">
+            <span class="stat-number">{{ inProgressTasks }}</span>
+            <span class="stat-label">En Progreso</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-content">
+          <mat-icon color="primary">check_circle</mat-icon>
+          <div class="stat-info">
+            <span class="stat-number">{{ completedTasks }}</span>
+            <span class="stat-label">Completadas</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="stat-card overdue" *ngIf="overdueTasks > 0">
+      <mat-card-content>
+        <div class="stat-content">
+          <mat-icon color="warn">warning</mat-icon>
+          <div class="stat-info">
+            <span class="stat-number">{{ overdueTasks }}</span>
+            <span class="stat-label">Vencidas</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filters-section">
+    <mat-card class="filters-card">
+      <mat-card-content>
+        <div class="filters-grid">
+          <mat-form-field appearance="outline" class="search-field">
+            <mat-label>Buscar tareas</mat-label>
+            <input matInput 
+                   [(ngModel)]="searchTerm" 
+                   (input)="applyFilters()"
+                   placeholder="Título, descripción, asignado...">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Estado</mat-label>
+            <mat-select [(ngModel)]="selectedStatus" (selectionChange)="applyFilters()">
+              <mat-option *ngFor="let option of statusOptions" [value]="option.value">
+                {{ option.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Prioridad</mat-label>
+            <mat-select [(ngModel)]="selectedPriority" (selectionChange)="applyFilters()">
+              <mat-option *ngFor="let option of priorityOptions" [value]="option.value">
+                {{ option.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Categoría</mat-label>
+            <mat-select [(ngModel)]="selectedCategory" (selectionChange)="applyFilters()">
+              <mat-option *ngFor="let option of categoryOptions" [value]="option.value">
+                {{ option.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <button mat-stroked-button (click)="clearFilters()" class="clear-filters-btn">
+            <mat-icon>clear</mat-icon>
+            Limpiar Filtros
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Lista de Tareas -->
+  <mat-tab-group [(selectedIndex)]="currentTab" class="tasks-tabs">
+    
+    <!-- Tab 1: Todas las Tareas -->
+    <mat-tab label="Todas las Tareas">
+      <div class="tasks-grid">
+        <mat-card *ngFor="let task of filteredTasks" 
+                  class="task-card"
+                  [ngClass]="'task-' + task.status + ' priority-' + task.priority">
+          <mat-card-header>
+            <mat-card-title>
+              <div class="task-title">
+                <mat-icon [ngClass]="'status-icon-' + task.status">
+                  {{ getStatusIcon(task.status) }}
+                </mat-icon>
+                {{ task.title }}
+                <mat-chip [ngClass]="'priority-chip-' + task.priority" class="priority-chip">
+                  {{ task.priority | titlecase }}
+                </mat-chip>
+                <mat-chip [ngClass]="'status-chip-' + task.status" class="status-chip">
+                  {{ task.status | titlecase }}
+                </mat-chip>
+              </div>
+            </mat-card-title>
+            <mat-card-subtitle>
+              {{ task.location }} • {{ formatDate(task.dueDate) }}
+              <span *ngIf="isOverdue(task)" class="overdue-indicator">VENCIDA</span>
+            </mat-card-subtitle>
+          </mat-card-header>
+          
+          <mat-card-content>
+            <p class="task-description">{{ task.description }}</p>
+            
+            <div class="task-meta">
+              <div class="meta-item">
+                <mat-icon>person</mat-icon>
+                <span>{{ task.assignedTo }}</span>
+              </div>
+              <div class="meta-item">
+                <mat-icon>category</mat-icon>
+                <span>{{ task.category }}</span>
+              </div>
+              <div class="meta-item">
+                <mat-icon>schedule</mat-icon>
+                <span>{{ task.estimatedHours }}h estimadas</span>
+              </div>
+              <div class="meta-item" *ngIf="task.actualHours">
+                <mat-icon>timer</mat-icon>
+                <span>{{ task.actualHours }}h reales</span>
+              </div>
+            </div>
+
+            <div class="progress-section" *ngIf="task.status === 'in-progress'">
+              <div class="progress-info">
+                <span>Progreso: {{ task.progress }}%</span>
+              </div>
+              <mat-progress-bar 
+                mode="determinate" 
+                [value]="task.progress"
+                [ngClass]="'progress-' + task.priority">
+              </mat-progress-bar>
+            </div>
+          </mat-card-content>
+
+          <mat-card-actions>
+            <button mat-button (click)="viewTaskDetails(task)">
+              <mat-icon>visibility</mat-icon>
+              Ver Detalles
+            </button>
+            <button mat-button (click)="editTask(task)">
+              <mat-icon>edit</mat-icon>
+              Editar
+            </button>
+            <button mat-button (click)="assignTask(task)">
+              <mat-icon>assignment_ind</mat-icon>
+              Asignar
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <!-- Tab 2: Por Estado -->
+    <mat-tab label="Por Estado">
+      <div class="status-sections">
+        <div class="status-section" *ngFor="let status of ['pending', 'in-progress', 'completed']">
+          <h3>
+            <mat-icon [ngClass]="'status-icon-' + status">
+              {{ getStatusIcon(status) }}
+            </mat-icon>
+            {{ status | titlecase }}
+            <span class="count">({{ getFilteredTasksByStatus(status).length }})</span>
+          </h3>
+          
+          <div class="status-tasks">
+            <mat-card *ngFor="let task of getFilteredTasksByStatus(status)" 
+                      class="task-card compact"
+                      [ngClass]="'task-' + task.status">
+              <mat-card-content>
+                <div class="compact-content">
+                  <div class="compact-header">
+                    <span class="task-title">{{ task.title }}</span>
+                    <mat-chip [ngClass]="'priority-chip-' + task.priority">
+                      {{ task.priority | titlecase }}
+                    </mat-chip>
+                  </div>
+                  <p class="task-description">{{ task.description }}</p>
+                  <div class="compact-meta">
+                    <span>{{ task.assignedTo }}</span>
+                    <span>{{ task.location }}</span>
+                    <span>{{ formatDate(task.dueDate) }}</span>
+                  </div>
+                </div>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button (click)="viewTaskDetails(task)">
+                  <mat-icon>visibility</mat-icon>
+                  Ver
+                </button>
+                <button mat-button (click)="editTask(task)">
+                  <mat-icon>edit</mat-icon>
+                  Editar
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>
