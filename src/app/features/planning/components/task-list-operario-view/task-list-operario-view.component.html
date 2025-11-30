@@ -1,0 +1,24 @@
+<div class="general-container">
+  <h1>Bienvenido </h1>
+  <div>
+    Sergio's days divider
+  </div>
+  <div class="table-container">
+    <app-table
+      [columns]="columns"
+      [customColumns]="customColumns"
+      [dataSource]="tableData"
+      [loading]="loadingTest"
+      [showPaginator]="true"
+      [selectable]="false"
+    ></app-table>
+  </div>
+</div>
+
+<ng-template #customColumns let-column="column" let-row="row">
+  <div *ngIf="column === 'action'" class="actions-cell">
+    <button mat-icon-button (click)="onEjectTask(row); $event.stopPropagation()">
+      Registro
+    </button>
+  </div>
+</ng-template>
