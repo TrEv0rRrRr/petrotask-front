@@ -1,0 +1,122 @@
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+h3 {
+  margin: 0;
+  font-weight: 500;
+}
+
+mat-form-field {
+  display: block;
+  width: 100%;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+mat-dialog-content {
+  min-width: 500px;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 0;
+  margin: 0 0 24px 0;
+}
+
+.date-info {
+  padding: 12px 0;
+  margin-bottom: 16px;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.03);
+  padding: 16px;
+  
+  label {
+    font-weight: 500;
+    margin-right: 8px;
+  }
+  
+  .date-value {
+    font-weight: 500;
+    color: #2962ff;
+  }
+  
+  .date-note {
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.6);
+    font-style: italic;
+  }
+}
+
+.location-selection {
+  margin-bottom: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.team-members-section {
+  margin-top: 24px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.empty-members {
+  padding: 16px 0;
+  color: #666;
+  font-style: italic;
+}
+
+.team-member-item {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.member-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  
+  span {
+    font-weight: 500;
+  }
+}
+
+.member-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  mat-dialog-content {
+    min-width: 300px;
+  }
+  
+  .location-selection {
+    grid-template-columns: 1fr;
+  }
+  
+  .member-fields {
+    grid-template-columns: 1fr;
+  }
+}

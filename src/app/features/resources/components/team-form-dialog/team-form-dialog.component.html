@@ -1,0 +1,15 @@
+<div class="team-dialog">
+  <div class="dialog-header">
+    <h2 mat-dialog-title>{{ data.title | translate }}</h2>
+  </div>
+
+  <div class="dialog-content" mat-dialog-content>
+    <app-base-form
+      [config]="formConfig"
+      [initialValues]="initialValues"
+      [isSubmitting]="isSubmitting"
+      (formSubmit)="onFormSubmit($event)"
+      (formCancel)="onFormCancel()"
+    ></app-base-form>
+  </div>
+</div>
