@@ -1,0 +1,13 @@
+<div class="equipment-list">
+  <app-equipment-card
+    *ngFor="let equipment of equipmentList"
+    [equipment]="equipment"
+    (edit)="onEdit(equipment)"
+    (statusChange)="onStatusChange(equipment)"
+    (uploadPhoto)="onUploadPhoto(equipment)"
+  ></app-equipment-card>
+
+  <div *ngIf="equipmentList.length === 0" class="no-equipment">
+    <p>{{ 'equipment-form-dialog.list' | translate }}</p>
+  </div>
+</div>

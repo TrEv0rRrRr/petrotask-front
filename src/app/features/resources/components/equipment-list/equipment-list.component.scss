@@ -1,0 +1,39 @@
+.equipment-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  width: 100%;
+  padding: 1rem 0;
+  
+  app-equipment-card {
+    flex: 1 0 280px;
+    max-width: 100%;
+    
+    @media (min-width: 600px) {
+      max-width: calc(50% - 0.75rem);
+    }
+    
+    @media (min-width: 900px) {
+      max-width: calc(33.333% - 1rem);
+    }
+    
+    @media (min-width: 1200px) {
+      max-width: calc(25% - 1.125rem);
+    }
+  }
+  
+  .no-equipment {
+    flex: 1 0 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    
+    p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+    }
+  }
+}
