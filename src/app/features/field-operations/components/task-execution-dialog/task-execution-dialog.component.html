@@ -1,0 +1,160 @@
+<div class="task-execution-dialog">
+  <h2 mat-dialog-title>
+    <mat-icon [color]="getActionColor()">{{ getActionIcon() }}</mat-icon>
+    {{ getActionTitle() }}
+  </h2>
+  
+  <mat-dialog-content>
+    <!-- Información de la tarea -->
+    <mat-card class="task-info-card">
+      <mat-card-content>
+        <h3>{{ task.title }}</h3>
+        <p class="task-description">{{ task.description }}</p>
+        <div class="task-details">
+          <div class="detail-item">
+            <mat-icon>location_on</mat-icon>
+            <span>{{ task.location }}</span>
+          </div>
+          <div class="detail-item">
+            <mat-icon>schedule</mat-icon>
+            <span>{{ task.estimatedDuration }} horas estimadas</span>
+          </div>
+          <div class="detail-item">
+            <mat-icon>priority</mat-icon>
+            <span>{{ task.priority | titlecase }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Formulario de ejecución -->
+    <form [formGroup]="executionForm" class="execution-form">
+      
+      <!-- Checklist de seguridad (solo para iniciar) -->
+      <div *ngIf="action === 'start'" class="safety-section">
+        <h3>Checklist de Seguridad</h3>
+        <div class="safety-progress">
+          <mat-progress-bar 
+            mode="determinate" 
+            [value]="getSafetyProgress()">
+          </mat-progress-bar>
+          <span class="progress-text">{{ getSafetyProgress() | number:'1.0-0' }}% completado</span>
+        </div>
+        
+        <div class="safety-checklist">
+          <mat-card *ngFor="let item of safetyChecklist" 
+                    class="safety-item" 
+                    [class.checked]="item.checked">
+            <mat-card-content>
+              <div class="safety-item-content">
+                <mat-checkbox 
+                  [checked]="item.checked"
+                  (change)="onSafetyItemChange(item.id, $event.checked)">
+                </mat-checkbox>
+                <span class="safety-label">{{ item.label }}</span>
+                <mat-icon *ngIf="item.checked" color="primary">check_circle</mat-icon>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+      <!-- Instrucciones de la tarea -->
+      <div class="instructions-section">
+        <h3>Instrucciones de Ejecución</h3>
+        <mat-card class="instructions-card">
+          <mat-card-content>
+            <pre class="instructions-text">{{ task.instructions }}</pre>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <!-- Recursos necesarios -->
+      <div class="resources-section" *ngIf="task.resources.length > 0">
+        <h3>Recursos Necesarios</h3>
+        <div class="resources-list">
+          <mat-chip *ngFor="let resource of task.resources" [color]="'primary'">
+            {{ resource }}
+          </mat-chip>
+        </div>
+      </div>
+
+      <!-- Subida de foto (solo para agregar foto) -->
+      <div *ngIf="action === 'photo'" class="photo-section">
+        <h3>Evidencia Fotográfica</h3>
+        
+        <!-- Preview de la foto -->
+        <div *ngIf="photoPreview" class="photo-preview">
+          <img [src]="photoPreview" alt="Preview" class="preview-image">
+          <button mat-icon-button (click)="removePhoto()" class="remove-photo-btn">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+
+        <!-- Input de archivo -->
+        <div class="file-input-section">
+          <input type="file" 
+                 #fileInput 
+                 (change)="onFileSelected($event)"
+                 accept="image/*" 
+                 style="display: none;">
+          <button mat-raised-button (click)="fileInput.click()">
+            <mat-icon>camera_alt</mat-icon>
+            {{ photoPreview ? 'Cambiar Foto' : 'Seleccionar Foto' }}
+          </button>
+        </div>
+
+        <!-- Descripción de la foto -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Descripción de la foto</mat-label>
+          <textarea matInput 
+                    formControlName="photoDescription"
+                    placeholder="Describe qué muestra la foto..."
+                    rows="3"></textarea>
+        </mat-form-field>
+
+        <!-- Categoría de la foto -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Categoría</mat-label>
+          <mat-select formControlName="photoCategory">
+            <mat-option *ngFor="let category of photoCategories" [value]="category.value">
+              {{ category.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Notas adicionales -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Notas adicionales</mat-label>
+        <textarea matInput 
+                  formControlName="notes"
+                  placeholder="Observaciones, comentarios o detalles adicionales..."
+                  rows="3"></textarea>
+      </mat-form-field>
+
+      <!-- Confirmaciones finales -->
+      <div class="confirmations-section">
+        <mat-checkbox formControlName="safetyConfirmed" 
+                      [disabled]="action === 'start' && !allSafetyItemsChecked()">
+          Confirmo que he revisado y cumplido con todos los protocolos de seguridad
+        </mat-checkbox>
+        
+        <mat-checkbox formControlName="equipmentChecked">
+          Confirmo que he verificado el estado y funcionamiento del equipo necesario
+        </mat-checkbox>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-raised-button 
+            [color]="getActionColor()" 
+            (click)="onSubmit()"
+            [disabled]="!executionForm.valid || (action === 'photo' && !selectedFile)">
+      <mat-icon>{{ getActionIcon() }}</mat-icon>
+      {{ action === 'start' ? 'Iniciar' : action === 'complete' ? 'Completar' : 'Agregar Foto' }}
+    </button>
+  </mat-dialog-actions>
+</div>

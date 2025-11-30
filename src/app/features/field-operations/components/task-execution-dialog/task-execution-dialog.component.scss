@@ -1,0 +1,242 @@
+.task-execution-dialog {
+  min-width: 600px;
+  max-width: 800px;
+
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--primary);
+    margin-bottom: 24px;
+    font-weight: 500;
+
+    mat-icon {
+      font-size: 1.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+}
+
+.task-info-card {
+  margin-bottom: 24px;
+  border-left: 4px solid var(--primary);
+
+  h3 {
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+  }
+
+  .task-description {
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    line-height: 1.4;
+  }
+
+  .task-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+
+      mat-icon {
+        font-size: 1rem;
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+  }
+}
+
+.execution-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.safety-section {
+  h3 {
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .safety-progress {
+    margin-bottom: 16px;
+
+    .progress-text {
+      display: block;
+      text-align: center;
+      margin-top: 8px;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+  }
+
+  .safety-checklist {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 12px;
+  }
+
+  .safety-item {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+
+    &.checked {
+      border-color: var(--primary);
+      background-color: rgba(0, 139, 100, 0.05);
+    }
+
+    .safety-item-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .safety-label {
+        flex: 1;
+        font-size: 0.875rem;
+        color: var(--text-primary);
+      }
+
+      mat-icon {
+        font-size: 1.2rem;
+        width: 1.2rem;
+        height: 1.2rem;
+      }
+    }
+  }
+}
+
+.instructions-section,
+.resources-section,
+.photo-section {
+  h3 {
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}
+
+.instructions-card {
+  background-color: var(--bg-light);
+  border: 1px solid var(--border);
+
+  .instructions-text {
+    font-family: 'Courier New', monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+    margin: 0;
+  }
+}
+
+.resources-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.photo-section {
+  .photo-preview {
+    position: relative;
+    margin-bottom: 16px;
+    display: inline-block;
+
+    .preview-image {
+      max-width: 200px;
+      max-height: 200px;
+      border-radius: 8px;
+      border: 2px solid var(--border);
+    }
+
+    .remove-photo-btn {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: var(--warn);
+      color: white;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+
+      mat-icon {
+        font-size: 1rem;
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+  }
+
+  .file-input-section {
+    margin-bottom: 16px;
+  }
+}
+
+.confirmations-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background-color: var(--bg-light);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+
+  mat-checkbox {
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-dialog-actions {
+  padding: 16px 0 0 0;
+  margin-top: 24px;
+  border-top: 1px solid var(--border-light);
+
+  button {
+    margin-left: 8px;
+  }
+}
+
+// Chips customization
+mat-chip {
+  font-size: 0.75rem;
+  min-height: 28px;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .task-execution-dialog {
+    min-width: 90vw;
+    max-width: 95vw;
+  }
+
+  .safety-checklist {
+    grid-template-columns: 1fr;
+  }
+
+  .task-details {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .photo-preview .preview-image {
+    max-width: 150px;
+    max-height: 150px;
+  }
+}
