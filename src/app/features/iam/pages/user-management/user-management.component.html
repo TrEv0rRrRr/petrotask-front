@@ -1,0 +1,62 @@
+<div class="user-management-container">
+  <div class="header">
+    <h2>{{ 'user-management.title' | translate }}</h2>
+    <div class="filters">
+      <select [(ngModel)]="selectedRole" (change)="filterUsers()">
+        <option value="">{{ 'user-management.all' | translate }}</option>
+        <option *ngFor="let role of roles" [value]="role">{{ getRoleLabel(role) }}</option>
+      </select>
+      <input type="text" placeholder="{{'user-management.search' | translate}}" [(ngModel)]="searchTerm" (input)="filterUsers()">
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="user-table">
+      <thead>
+      <tr>
+        <th>{{'user-management.name' | translate}}</th>
+        <th>{{'user-management.email' | translate}}</th>
+        <th>{{'user-management.role' | translate}}</th>
+        <th>{{'user-management.status' | translate}}</th>
+        <th>{{'user-management.actions' | translate}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of paginatedUsers">
+        <td>{{ getFullName(user) }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ getRolesDisplay(user) }}</td>
+        <td>
+            <span class="status" [class.active]="user.status" [class.inactive]="!user.status">
+              {{ user.status ? ('user-management.active' | translate) : ('user-management.inactive' | translate) }}
+            </span>
+        </td>
+        <td>
+          <button class="btn edit" (click)="editUser(user)" mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button class="btn toggle" (click)="toggleEstado(user)" mat-icon-button>
+            <mat-icon>{{ user.status ? 'lock' : 'lock_open' }}</mat-icon>
+          </button>
+          <button class="btn delete" (click)="deleteUser(user)" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">← {{'user-management.previous' | translate}}</button>
+    <span>{{'user-management.page' | translate}} {{ currentPage }} {{'user-management.of' | translate}} {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">{{'user-management.next' | translate}} →</button>
+  </div>
+
+  <div class="footer">
+    <button class="create-btn" (click)="openCreateModal()" mat-raised-button color="primary">
+      <mat-icon>add</mat-icon>
+      {{'user-management.create' | translate}}
+    </button>
+  </div>
+</div>

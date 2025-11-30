@@ -1,0 +1,174 @@
+.user-management-container {
+  padding: 32px;
+  background-color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  color: #333;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.header h2 {
+  margin: 0;
+  color: #27ae60;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.filters {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.filters select,
+.filters input {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  min-width: 200px;
+  font-size: 14px;
+  transition: border 0.2s ease;
+}
+
+.filters input:focus,
+.filters select:focus {
+  outline: none;
+  border-color: #27ae60;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  min-width: 800px;
+}
+
+.user-table th,
+.user-table td {
+  padding: 14px 16px;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+}
+
+.user-table thead tr {
+  background-color: #27ae60;
+  color: #fff;
+}
+
+.user-table th {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 13px;
+  transition: background 0.3s ease;
+}
+
+.user-table tbody tr:hover {
+  background-color: #e8f5e8;
+}
+
+.status {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: capitalize;
+  font-size: 13px;
+  display: inline-block;
+}
+
+.status.active {
+  background-color: #66BB6A;
+  color: white;
+}
+
+.status.inactive {
+  background-color: #FF7976;
+  color: white;
+}
+
+.btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-right: 6px;
+  transition: color 0.2s ease;
+}
+
+.btn.edit:hover {
+  color: #1D3775;
+}
+
+.btn.toggle:hover {
+  color: #27ae60;
+}
+
+.btn.delete:hover {
+  color: #FF7976;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.pagination button {
+  background-color: #E6801A;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #cc6f0f;
+}
+
+.pagination button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.footer {
+  margin-top: 28px;
+  text-align: center;
+}
+
+.create-btn {
+  background-color: #E6801A;
+  color: white;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.create-btn:hover {
+  background-color: #cc6f0f;
+  transform: translateY(-2px);
+}
