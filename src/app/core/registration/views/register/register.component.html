@@ -1,0 +1,23 @@
+<div class="register-container">
+  <h1>Escoge tu plan</h1>
+  <div class="cards-container">
+    <app-payment-card
+      [title]="basic.title"
+      [items]="basic.items"
+      [price]="basic.price"
+      (typeSaved)="onTitleSaved($event)">
+    </app-payment-card>
+    <app-payment-card
+      [title]="pro.title"
+      [items]="pro.items"
+      [price]="pro.price"
+      (typeSaved)="onTitleSaved($event)">
+    </app-payment-card>
+    <app-payment-card
+      [title]="empresarial.title"
+      [items]="empresarial.items"
+      [price]="empresarial.price"
+      (typeSaved)="onTitleSaved($event)">
+    </app-payment-card>
+  </div>
+</div>
