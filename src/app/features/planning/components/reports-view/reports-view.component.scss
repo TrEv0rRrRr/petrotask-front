@@ -1,0 +1,414 @@
+.reports-dashboard-container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 32px;
+  
+  h1 {
+    color: #2c3e50;
+    margin-bottom: 8px;
+    font-size: 2.5rem;
+    font-weight: 600;
+  }
+  
+  p {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+    margin-bottom: 24px;
+  }
+}
+
+.header-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  
+  .period-selector {
+    min-width: 200px;
+  }
+}
+
+// Métricas de Productividad
+.metrics-section {
+  margin-bottom: 32px;
+  
+  h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.metric-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  
+  h3 {
+    color: #2c3e50;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  mat-icon {
+    font-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+.metric-values {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+  
+  .current-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    line-height: 1;
+  }
+  
+  .previous-value {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+  }
+}
+
+.metric-trend {
+  font-size: 1rem;
+  font-weight: 600;
+  
+  &.trend-positive {
+    color: #27ae60;
+  }
+  
+  &.trend-negative {
+    color: #e74c3c;
+  }
+}
+
+// Tabs
+.reports-tabs {
+  margin-top: 24px;
+}
+
+.tab-content {
+  padding: 24px 0;
+}
+
+.filters-section {
+  display: flex;
+  gap: 16px;
+  align-items: end;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+// Productividad por Equipo
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.team-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.team-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  
+  .metric-label {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    font-weight: 500;
+  }
+  
+  .metric-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+  }
+}
+
+.efficiency-bar {
+  height: 8px;
+  border-radius: 4px;
+  
+  ::ng-deep .mat-progress-bar-fill::after {
+    background-color: #3498db;
+  }
+}
+
+.productivity-bar {
+  height: 8px;
+  border-radius: 4px;
+  
+  ::ng-deep .mat-progress-bar-fill::after {
+    background-color: #27ae60;
+  }
+}
+
+// Uso de Recursos
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.resource-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.resource-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  .metric-label {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    font-weight: 500;
+  }
+  
+  .metric-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2c3e50;
+  }
+}
+
+.utilization-active {
+  ::ng-deep .mat-progress-bar-fill::after {
+    background-color: #27ae60;
+  }
+}
+
+.utilization-maintenance {
+  ::ng-deep .mat-progress-bar-fill::after {
+    background-color: #f39c12;
+  }
+}
+
+.utilization-idle {
+  ::ng-deep .mat-progress-bar-fill::after {
+    background-color: #e74c3c;
+  }
+}
+
+// Estados de recursos
+.status-active {
+  background-color: #27ae60;
+  color: white;
+}
+
+.status-maintenance {
+  background-color: #f39c12;
+  color: white;
+}
+
+.status-idle {
+  background-color: #e74c3c;
+  color: white;
+}
+
+// Reporte de Incidentes
+.incidents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.incident-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.incident-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+}
+
+.incident-badges {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.incident-description {
+  color: #5a6c7d;
+  margin: 12px 0;
+  line-height: 1.5;
+}
+
+.incident-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  
+  mat-icon {
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+// Severidad de incidentes
+.severity-critical {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.severity-high {
+  background-color: #e67e22;
+  color: white;
+}
+
+.severity-medium {
+  background-color: #f39c12;
+  color: white;
+}
+
+.severity-low {
+  background-color: #3498db;
+  color: white;
+}
+
+// Estado de incidentes
+.status-resolved {
+  background-color: #27ae60;
+  color: white;
+}
+
+.status-investigating {
+  background-color: #3498db;
+  color: white;
+}
+
+.status-open {
+  background-color: #e74c3c;
+  color: white;
+}
+
+// Responsive
+@media (max-width: 1200px) {
+  .header-actions {
+    flex-direction: column;
+    align-items: stretch;
+    
+    .period-selector {
+      min-width: auto;
+    }
+  }
+  
+  .filters-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 768px) {
+  .reports-dashboard-container {
+    padding: 16px;
+  }
+  
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .teams-grid,
+  .resources-grid,
+  .incidents-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .header h1 {
+    font-size: 2rem;
+  }
+  
+  .incident-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .incident-badges {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .metric-values .current-value {
+    font-size: 1.5rem;
+  }
+  
+  .metric-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}

@@ -1,0 +1,219 @@
+<div class="reports-dashboard-container">
+  <div class="header">
+    <h1>Dashboard de Reportes</h1>
+    <p>Análisis completo de productividad, recursos e incidentes operativos</p>
+    <div class="header-actions">
+      <mat-form-field appearance="outline" class="period-selector">
+        <mat-label>Período</mat-label>
+        <mat-select [(ngModel)]="selectedPeriod">
+          <mat-option *ngFor="let option of periodOptions" [value]="option.value">
+            {{ option.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Métricas de Productividad -->
+  <div class="metrics-section">
+    <h2>Métricas de Productividad</h2>
+    <div class="metrics-grid">
+      <mat-card *ngFor="let metric of productivityMetrics" class="metric-card">
+        <mat-card-content>
+          <div class="metric-header">
+            <h3>{{ metric.metric }}</h3>
+            <mat-icon [color]="getTrendColor(metric.trend)">
+              {{ getTrendIcon(metric.trend) }}
+            </mat-icon>
+          </div>
+          <div class="metric-values">
+            <span class="current-value">{{ metric.current }} {{ metric.unit }}</span>
+            <span class="previous-value">Anterior: {{ metric.previous }} {{ metric.unit }}</span>
+          </div>
+          <div class="metric-trend" [ngClass]="'trend-' + (metric.trend >= 0 ? 'positive' : 'negative')">
+            {{ metric.trend >= 0 ? '+' : '' }}{{ metric.trend }}%
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Tabs de Reportes -->
+  <mat-tab-group [(selectedIndex)]="currentTab" class="reports-tabs">
+    
+    <!-- Tab 1: Productividad por Equipo -->
+    <mat-tab label="Productividad por Equipo">
+      <div class="tab-content">
+        <div class="filters-section">
+          <mat-form-field appearance="outline">
+            <mat-label>Filtrar por Equipo</mat-label>
+            <mat-select [(ngModel)]="selectedTeam">
+              <mat-option *ngFor="let option of teamOptions" [value]="option.value">
+                {{ option.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-stroked-button (click)="downloadReport('productividad-equipos')">
+            <mat-icon>download</mat-icon>
+            Descargar Reporte
+          </button>
+        </div>
+
+        <div class="teams-grid">
+          <mat-card *ngFor="let team of getFilteredTeams()" class="team-card">
+            <mat-card-header>
+              <mat-card-title>{{ team.teamName }}</mat-card-title>
+              <mat-card-subtitle>
+                {{ team.completedTasks }} de {{ team.totalTasks }} tareas completadas
+              </mat-card-subtitle>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <div class="team-metrics">
+                <div class="metric-item">
+                  <span class="metric-label">Eficiencia:</span>
+                  <span class="metric-value">{{ team.efficiency }}%</span>
+                  <mat-progress-bar 
+                    mode="determinate" 
+                    [value]="team.efficiency"
+                    class="efficiency-bar">
+                  </mat-progress-bar>
+                </div>
+                
+                <div class="metric-item">
+                  <span class="metric-label">Productividad:</span>
+                  <span class="metric-value">{{ team.productivity }}%</span>
+                  <mat-progress-bar 
+                    mode="determinate" 
+                    [value]="team.productivity"
+                    class="productivity-bar">
+                  </mat-progress-bar>
+                </div>
+                
+                <div class="metric-item">
+                  <span class="metric-label">Tiempo Promedio:</span>
+                  <span class="metric-value">{{ team.avgCompletionTime }}h</span>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Tab 2: Uso de Recursos -->
+    <mat-tab label="Uso de Recursos">
+      <div class="tab-content">
+        <div class="filters-section">
+          <mat-form-field appearance="outline">
+            <mat-label>Filtrar por Tipo de Recurso</mat-label>
+            <mat-select [(ngModel)]="selectedResource">
+              <mat-option *ngFor="let option of resourceOptions" [value]="option.value">
+                {{ option.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-stroked-button (click)="downloadReport('uso-recursos')">
+            <mat-icon>download</mat-icon>
+            Descargar Reporte
+          </button>
+        </div>
+
+        <div class="resources-grid">
+          <mat-card *ngFor="let resource of getFilteredResources()" class="resource-card">
+            <mat-card-header>
+              <mat-card-title>{{ resource.resourceName }}</mat-card-title>
+              <mat-card-subtitle>{{ resource.resourceType }}</mat-card-subtitle>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <div class="resource-metrics">
+                <div class="metric-row">
+                  <span class="metric-label">Utilización:</span>
+                  <span class="metric-value">{{ resource.utilization }}%</span>
+                  <mat-progress-bar 
+                    mode="determinate" 
+                    [value]="resource.utilization"
+                    [ngClass]="'utilization-' + resource.status">
+                  </mat-progress-bar>
+                </div>
+                
+                <div class="metric-row">
+                  <span class="metric-label">Horas Totales:</span>
+                  <span class="metric-value">{{ resource.totalHours }}h</span>
+                </div>
+                
+                <div class="metric-row">
+                  <span class="metric-label">Costo:</span>
+                  <span class="metric-value">${{ resource.cost | number }}</span>
+                </div>
+                
+                <div class="metric-row">
+                  <span class="metric-label">Estado:</span>
+                  <mat-chip [ngClass]="'status-' + resource.status">
+                    {{ resource.status | titlecase }}
+                  </mat-chip>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Tab 3: Reporte de Incidentes -->
+    <mat-tab label="Reporte de Incidentes">
+      <div class="tab-content">
+        <div class="filters-section">
+          <button mat-stroked-button (click)="downloadReport('incidentes')">
+            <mat-icon>download</mat-icon>
+            Descargar Reporte
+          </button>
+        </div>
+
+        <div class="incidents-grid">
+          <mat-card *ngFor="let incident of incidents" class="incident-card">
+            <mat-card-header>
+              <mat-card-title>
+                <div class="incident-header">
+                  <span>{{ incident.title }}</span>
+                  <div class="incident-badges">
+                    <mat-chip [ngClass]="'severity-' + incident.severity">
+                      {{ incident.severity | titlecase }}
+                    </mat-chip>
+                    <mat-chip [ngClass]="'status-' + incident.status">
+                      {{ incident.status | titlecase }}
+                    </mat-chip>
+                  </div>
+                </div>
+              </mat-card-title>
+              <mat-card-subtitle>
+                {{ incident.id }} • {{ incident.location }} • {{ formatDate(incident.reportedDate) }}
+              </mat-card-subtitle>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <p class="incident-description">{{ incident.description }}</p>
+              
+              <div class="incident-meta">
+                <div class="meta-item">
+                  <mat-icon>person</mat-icon>
+                  <span>Reportado por: {{ incident.reportedBy }}</span>
+                </div>
+                <div class="meta-item">
+                  <mat-icon>category</mat-icon>
+                  <span>Categoría: {{ incident.category }}</span>
+                </div>
+                <div class="meta-item" *ngIf="incident.resolvedDate">
+                  <mat-icon>check_circle</mat-icon>
+                  <span>Resuelto: {{ formatDate(incident.resolvedDate) }}</span>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>
