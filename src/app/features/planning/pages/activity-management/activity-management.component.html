@@ -1,0 +1,76 @@
+<div class="activity-management-container">
+  <div class="page-header">
+    <h1 class="page-title">{{ 'activity-management.title' | translate }}</h1>
+    <button mat-raised-button color="primary" (click)="createActivity()">
+      <mat-icon>add</mat-icon>
+      {{ 'activity-management.new-activity' | translate }}
+    </button>
+  </div>
+
+  <!-- Date Navigator -->
+  <div class="date-nav-section">
+    <app-date-navigator
+      [selectedDate]="selectedDate"
+      (dateChange)="onDateChange($event)">
+    </app-date-navigator>
+  </div>
+
+  <mat-card class="filters-card">
+    <mat-card-content>
+      <div class="filters-container">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>{{ 'activity-management.search.label' | translate }}</mat-label>
+          <input matInput [(ngModel)]="searchQuery" (keyup.enter)="applyFilters()"
+                 [placeholder]="'activity-management.search.placeholder' | translate">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'activity-management.filters.status.label' | translate }}</mat-label>
+          <mat-select [(ngModel)]="statusFilter" (selectionChange)="applyFilters()">
+            <mat-option value="">{{ 'activity-management.filters.status.all' | translate }}</mat-option>
+            <mat-option value="Pendiente">{{ 'activity-management.filters.status.pending' | translate }}</mat-option>
+            <mat-option value="En progreso">{{ 'activity-management.filters.status.in-progress' | translate }}</mat-option>
+            <mat-option value="Finalizada">{{ 'activity-management.filters.status.completed' | translate }}</mat-option>
+            <mat-option value="Cancelada">{{ 'activity-management.filters.status.cancelled' | translate }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-stroked-button color="warn" (click)="clearFilters()"
+                [disabled]="!statusFilter && !searchQuery">
+          <mat-icon>clear</mat-icon>
+          {{ 'activity-management.filters.clear' | translate }}
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="activities-container">
+    <app-activity-list
+      [activities]="filteredActivities"
+      (editActivity)="onEditActivity($event)"
+      (deleteActivity)="onDeleteActivity($event)"
+      (editTask)="onEditTask($event)"
+      (deleteTask)="onDeleteTask($event)"
+      (addTask)="onAddTask($event)">
+    </app-activity-list>
+
+    <mat-paginator
+      [length]="totalActivities"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      [pageIndex]="pageIndex"
+      (page)="onPageChange($event)"
+      aria-label="Seleccionar página"
+      *ngIf="totalActivities > 0">
+    </mat-paginator>
+
+    <div class="no-results" *ngIf="totalActivities === 0">
+      <mat-icon>search_off</mat-icon>
+      <p>{{ 'activity-management.no-results.message' | translate }}</p>
+      <button mat-stroked-button color="primary" (click)="clearFilters()">
+        {{ 'activity-management.no-results.clear' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
