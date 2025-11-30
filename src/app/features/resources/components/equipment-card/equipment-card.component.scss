@@ -1,0 +1,102 @@
+.equipment-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+  height: 100%;
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
+  
+  &.available {
+    border-left: 5px solid var(--success);
+  }
+  
+  &.maintenance {
+    border-left: 5px solid var(--error);
+  }
+  
+  .thumbnail {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    
+    .image-placeholder {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: var(--warning);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+      span {
+        font-size: 2.5rem;
+        color: white;
+        font-weight: bold;
+      }
+    }
+  }
+  
+  .info {
+    padding: 0 1rem 1rem;
+    flex-grow: 1;
+    
+    h3 {
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    
+    p {
+      margin: 0.25rem 0;
+      color: var(--text-secondary);
+      
+      &.model {
+        font-weight: 500;
+      }
+      
+      .available-text {
+        color: var(--success);
+        font-weight: 500;
+      }
+      
+      .maintenance-text {
+        color: var(--error);
+        font-weight: 500;
+      }
+    }
+  }
+  
+  .actions {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    border-top: 1px solid #eee;
+    
+    .button-row {
+      display: flex;
+      gap: 0.5rem;
+      width: 100%;
+      
+      &:first-child {
+        justify-content: space-between;
+        
+        app-button {
+          flex: 1;
+          max-width: calc(50% - 0.25rem);
+        }
+      }
+      
+      &:last-child {
+        app-button {
+          width: 100%;
+        }
+      }
+    }
+  }
+} 
