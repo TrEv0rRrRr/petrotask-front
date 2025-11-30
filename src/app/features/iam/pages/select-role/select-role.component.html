@@ -1,0 +1,23 @@
+<div class="container">
+  <img src="assets/logo-petrotask.png" alt="PetroTask Logo" class="logo" />
+
+  <div class="form">
+    <h1 class="title">PetroTask</h1>
+    <p class="subtitle">Tu operación en orden, en todo momento</p>
+
+    <p class="instruction">Elegí tu rol</p>
+
+    <div class="roles">
+      <label>
+        <input type="radio" name="role" value="supervisor" [(ngModel)]="selectedRole" />
+        Supervisor
+      </label>
+      <label>
+        <input type="radio" name="role" value="operario" [(ngModel)]="selectedRole" />
+        Operario
+      </label>
+    </div>
+
+    <button (click)="onRegister()">Register</button>
+  </div>
+</div>

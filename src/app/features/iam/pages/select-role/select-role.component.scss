@@ -1,0 +1,128 @@
+:root {
+  --primary: #E6801A;
+  --primary-light: #FFD699;
+  --text: #2E2E2E;
+  --bg-light: #FFF5EC;
+  --font: 'Inter', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background-color: var(--bg-light);
+  color: var(--text);
+}
+
+/* Layout principal */
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  height: 100vh;
+  padding: 2rem;
+  background-color: var(--bg-light);
+}
+
+/* Logo */
+.logo {
+  width: 280px;
+  max-width: 100%;
+}
+
+/* Formulario o panel de selección */
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
+}
+
+/* Título */
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid #000;
+  display: inline-block;
+}
+
+/* Subtítulo */
+.subtitle {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Instrucción */
+.instruction {
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+/* Botones de rol u opciones */
+.roles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+}
+
+/* Botones */
+button {
+  background-color: var(--primary);
+  color: black;
+  font-weight: bold;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  background-color: orange;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    height: auto;
+    padding: 2rem 1rem;
+  }
+
+  .logo {
+    margin-bottom: 1rem;
+    width: 180px;
+  }
+
+  .roles {
+    flex-direction: column;
+    gap: 16px;
+    font-size: 1rem;
+  }
+
+  button {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .form {
+    padding: 1.5rem;
+  }
+}
