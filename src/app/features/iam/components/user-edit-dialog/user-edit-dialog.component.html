@@ -1,0 +1,80 @@
+<div class="user-dialog-container">
+  <h2 mat-dialog-title class="dialog-title">
+    <mat-icon class="title-icon">edit</mat-icon>
+    Editar Usuario: {{ getFullName() }}
+  </h2>
+  
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-dialog-content class="dialog-content">
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nombre de usuario</mat-label>
+          <input matInput formControlName="username" placeholder="Ej: juan.perez">
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <mat-error>{{ getErrorMessage('username') }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row two-columns">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="firstName" placeholder="Ej: Juan">
+          <mat-error>{{ getErrorMessage('firstName') }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Apellido</mat-label>
+          <input matInput formControlName="lastName" placeholder="Ej: Pérez">
+          <mat-error>{{ getErrorMessage('lastName') }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="Ej: juan.perez@empresa.com">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error>{{ getErrorMessage('email') }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Roles</mat-label>
+          <mat-select formControlName="roles" multiple>
+            <mat-option *ngFor="let roleOption of roleOptions" [value]="roleOption.value">
+              <div class="role-option">
+                <span class="role-label">{{ roleOption.label }}</span>
+                <span class="role-description">{{ roleOption.description }}</span>
+              </div>
+            </mat-option>
+          </mat-select>
+          <mat-icon matSuffix>security</mat-icon>
+          <mat-error>{{ getErrorMessage('roles') }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-checkbox formControlName="status" color="primary">
+          <span class="checkbox-label">Usuario activo</span>
+          <span class="checkbox-description">El usuario podrá acceder al sistema</span>
+        </mat-checkbox>
+      </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end" class="dialog-actions">
+      <button mat-button type="button" (click)="cancel()" class="cancel-btn">
+        <mat-icon>close</mat-icon>
+        Cancelar
+      </button>
+      <button mat-raised-button 
+              type="submit" 
+              color="primary" 
+              [disabled]="form.invalid || !form.dirty"
+              class="submit-btn">
+        <mat-icon>save</mat-icon>
+        Guardar Cambios
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div> 
