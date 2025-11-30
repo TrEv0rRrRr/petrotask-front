@@ -1,0 +1,117 @@
+.general-container {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    margin: 2rem 0;
+  }
+
+  .information-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 3rem;
+
+    @media (max-width: 1000px) {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .activity-container {
+      display: flex;
+      flex-direction: column;
+      max-width: 40rem;
+      padding: 2rem;
+      border: solid 4px var(--warning);
+      border-radius: 10px;
+      gap: 1rem;
+
+      @media (max-width: 1000px) {
+        width: 90%;
+        max-width: 60rem;
+        margin: 2rem;
+      }
+
+      .fields-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 1rem;
+
+        @media (max-width: 468px) {
+          flex-direction: column;
+        }
+
+        .field {
+          width: 100%;
+          max-width: 10rem;
+
+          @media (max-width: 468px) {
+            max-width: none;
+          }
+
+          p {
+            font-size: 14px;
+            color: #1a1a1a;
+          }
+        }
+      }
+
+      .field {
+        width: 100%;
+
+        p {
+          font-size: 14px;
+          color: #1a1a1a;
+        }
+      }
+
+      .buttons-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 2rem;
+
+        @media (max-width: 1100px) {
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+  }
+
+  .segmented-tasks-container {
+    width: fit-content;
+    min-width: 450px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    border: solid 4px var(--warning);
+    border-radius: 10px;
+    gap: 1rem;
+
+    @media (max-width: 1000px) {
+      width: 90%;
+      max-width: 60rem;
+      margin: 0 2rem;
+    }
+
+    h2 {
+      text-align: center;
+    }
+  }
+}
+
+.input-option {
+  width: 70%;
+  background-color: blue;
+  // sergio tu mismo eres no funciona esta vaina
+}

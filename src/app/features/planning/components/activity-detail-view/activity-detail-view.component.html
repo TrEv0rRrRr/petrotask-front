@@ -1,0 +1,128 @@
+<div class="general-container">
+  <h1>Detalles de la actividad "{{ activity.activityCode }}"</h1>
+  <div class="information-container">
+    <div class="activity-container">
+      <div class="fields-group">
+        <div class="field">
+          <h5>Activity ID</h5>
+          <p>{{ activity.id }}</p>
+        </div>
+        <div class="field">
+          <h5>Activity Code</h5>
+          <p *ngIf="!showInputs">{{ activity.activityCode }}</p>
+          <app-input class="input-option" *ngIf="showInputs"
+            [type]="'text'"
+            [(ngModel)]="activityCodeInput"
+            [placeholder]="activity.activityCode"
+            (valueChange)="onActivityCodeChange($event)"
+          ></app-input>
+        </div>
+        <div class="field">
+          <h5>Location Origin</h5>
+          <p *ngIf="!showInputs">{{ activity.locationOrigin }}</p>
+          <app-input class="input-option" *ngIf="showInputs"
+            [type]="'number'"
+            [(ngModel)]="locationOriginInput"
+            [placeholder]="activity.locationOrigin.toString()"
+            (valueChange)="onLocationOriginChange($event)"
+          ></app-input>
+        </div>
+        <div class="field">
+          <h5>Location Destination</h5>
+          <p *ngIf="!showInputs">{{ activity.locationDestination }}</p>
+          <app-input class="input-option" *ngIf="showInputs"
+            [type]="'number'"
+            [(ngModel)]="locationDestinationInput"
+            [placeholder]="activity.locationDestination.toString()"
+            (valueChange)="onLocationDestinationChange($event)"
+          ></app-input>
+        </div>
+      </div>
+      <div class="fields-group">
+        <div class="field">
+          <h5>Zone Origin</h5>
+          <p *ngIf="!showInputs">{{ activity.zoneOrigin }}</p>
+          <app-input class="input-option" *ngIf="showInputs"
+            [type]="'number'"
+            [(ngModel)]="zoneOriginInput"
+            [placeholder]="activity.zoneOrigin.toString()"
+            (valueChange)="onZoneOriginChange($event)"
+          ></app-input>
+        </div>
+        <div class="field">
+          <h5>Zone Destination</h5>
+          <p *ngIf="!showInputs">{{ activity.zoneDestination }}</p>
+          <app-input class="input-option" *ngIf="showInputs"
+            [type]="'number'"
+            [(ngModel)]="zoneDestinationInput"
+            [placeholder]="activity.zoneDestination.toString()"
+            (valueChange)="onZoneDestinationChange($event)"
+          ></app-input>
+        </div>
+        <div class="field">
+          <h5>Expected Time</h5>
+          <p *ngIf="!showInputs">{{ activity.expectedTime | date: 'longDate' }}</p>
+          <app-input class="input-option" *ngIf="showInputs"
+            [type]="'datetime-local'"
+            [(ngModel)]="expectedTimeInput"
+            [placeholder]="activity.expectedTime.toString()"
+            (valueChange)="onExpectedTimeChange($event)"
+          ></app-input>
+        </div>
+        <div class="field">
+          <h5>Week Number</h5>
+          <p *ngIf="!showInputs">{{ activity.weekNumber }}</p>
+          <app-input class="input-option" *ngIf="showInputs"
+            [type]="'number'"
+            [(ngModel)]="weekNumberInput"
+            [placeholder]="activity.weekNumber.toString()"
+            (valueChange)="onWeekNumberChange($event)"
+          ></app-input>
+        </div>
+        <div class="field">
+          <h5>Status</h5>
+          <p *ngIf="!showInputs">{{ activity.activityStatus }}</p>
+          <app-input class="input-option" *ngIf="showInputs"
+            [type]="'text'"
+            [(ngModel)]="statusInput"
+            [placeholder]="activity.activityStatus"
+            (valueChange)="onStatusChange($event)"
+          ></app-input>
+        </div>
+      </div>
+      <div class="field">
+        <h5>Description</h5>
+        <p *ngIf="!showInputs">{{ activity.description }}</p>
+        <app-input class="input-option" *ngIf="showInputs"
+          [type]="'text'"
+          [(ngModel)]="descriptionInput"
+          [placeholder]="activity.description"
+          (valueChange)="onDescriptionChange($event)"
+        ></app-input>
+      </div>
+      <div class="buttons-container">
+        <app-button class="button"
+          [color]="'primary'"
+          [label]="'Ir a TaskSegmentationView'"
+          (click)="toTaskSegmentationView()"
+        ></app-button>
+        <app-button *ngIf="!showInputs" class="button"
+          [color]="'primary'"
+          [label]="'Editar Actividad'"
+          (click)="onEnableInputs()"
+        ></app-button>
+        <app-button *ngIf="showInputs" class="button"
+          [color]="'primary'"
+          [label]="'Guardar Cambios'"
+          (click)="onEditActivity()"
+        ></app-button>
+      </div>
+    </div>
+    <div class="segmented-tasks-container">
+      <h2>Lista de tareas</h2>
+      <div class="tasks-list" *ngFor="let task of tasks">
+        <app-segmented-task [task]="task"></app-segmented-task>
+      </div>
+    </div>
+  </div>
+</div>
