@@ -1,0 +1,202 @@
+<div class="incident-report-dialog">
+  <h2 mat-dialog-title>
+    <mat-icon color="warn">report_problem</mat-icon>
+    Reportar Incidencia
+  </h2>
+  
+  <mat-dialog-content>
+    <!-- Información de la tarea -->
+    <mat-card class="task-info-card">
+      <mat-card-content>
+        <h3>{{ task.title }}</h3>
+        <p class="task-description">{{ task.description }}</p>
+        <div class="task-details">
+          <div class="detail-item">
+            <mat-icon>location_on</mat-icon>
+            <span>{{ task.location }}</span>
+          </div>
+          <div class="detail-item">
+            <mat-icon>schedule</mat-icon>
+            <span>{{ task.estimatedDuration }} horas estimadas</span>
+          </div>
+          <div class="detail-item">
+            <mat-icon>priority</mat-icon>
+            <span>{{ task.priority | titlecase }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Formulario de incidencia -->
+    <form [formGroup]="incidentForm" class="incident-form">
+      
+      <!-- Tipo de incidencia -->
+      <div class="form-section">
+        <h3>Tipo de Incidencia</h3>
+        <div class="incident-types">
+          <mat-card *ngFor="let type of incidentTypes" 
+                    class="type-card" 
+                    [class.selected]="incidentForm.get('type')?.value === type.value"
+                    (click)="incidentForm.patchValue({ type: type.value })">
+            <mat-card-content>
+              <div class="type-content">
+                <mat-icon [color]="type.color">{{ type.icon }}</mat-icon>
+                <span class="type-label">{{ type.label }}</span>
+                <mat-icon *ngIf="incidentForm.get('type')?.value === type.value" 
+                          color="primary">check_circle</mat-icon>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <mat-error *ngIf="getFieldError('type')">
+          {{ getFieldError('type') }}
+        </mat-error>
+      </div>
+
+      <!-- Severidad -->
+      <div class="form-section">
+        <h3>Nivel de Severidad</h3>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Seleccionar severidad</mat-label>
+          <mat-select formControlName="severity">
+            <mat-option *ngFor="let severity of severityLevels" [value]="severity.value">
+              <div class="severity-option">
+                <span class="severity-label">{{ severity.label }}</span>
+                <span class="severity-description">{{ severity.description }}</span>
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="getFieldError('severity')">
+          {{ getFieldError('severity') }}
+        </mat-error>
+      </div>
+
+      <!-- Descripción detallada -->
+      <div class="form-section">
+        <h3>Descripción Detallada</h3>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Describe la incidencia en detalle</mat-label>
+          <textarea matInput 
+                    formControlName="description"
+                    placeholder="Proporciona una descripción completa de lo que ocurrió, cuándo, dónde y las condiciones en ese momento..."
+                    rows="4"></textarea>
+          <mat-hint>Mínimo 20 caracteres</mat-hint>
+        </mat-form-field>
+        <mat-error *ngIf="getFieldError('description')">
+          {{ getFieldError('description') }}
+        </mat-error>
+      </div>
+
+      <!-- Ubicación específica -->
+      <div class="form-section">
+        <h3>Ubicación Específica</h3>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Ubicación exacta donde ocurrió la incidencia</mat-label>
+          <input matInput 
+                 formControlName="location"
+                 placeholder="Ej: Plataforma Alpha - Sector Norte - Válvula V-001">
+        </mat-form-field>
+        <mat-error *ngIf="getFieldError('location')">
+          {{ getFieldError('location') }}
+        </mat-error>
+      </div>
+
+      <!-- Acción inmediata -->
+      <div class="form-section">
+        <h3>Acción Inmediata Tomada</h3>
+        <div class="immediate-actions">
+          <mat-card *ngFor="let action of immediateActions" 
+                    class="action-card" 
+                    [class.selected]="incidentForm.get('immediateAction')?.value === action"
+                    (click)="onImmediateActionChange(action)">
+            <mat-card-content>
+              <div class="action-content">
+                <mat-checkbox [checked]="incidentForm.get('immediateAction')?.value === action">
+                </mat-checkbox>
+                <span class="action-label">{{ action }}</span>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Acción personalizada (opcional)</mat-label>
+          <input matInput 
+                 formControlName="customAction"
+                 placeholder="Describe cualquier otra acción que hayas tomado...">
+        </mat-form-field>
+      </div>
+
+      <!-- Evidencias fotográficas -->
+      <div class="form-section">
+        <h3>Evidencias Fotográficas</h3>
+        
+        <!-- Preview de fotos -->
+        <div *ngIf="photoPreviews.length > 0" class="photos-preview">
+          <div *ngFor="let preview of photoPreviews; let i = index" class="photo-item">
+            <img [src]="preview" alt="Evidencia" class="photo-thumbnail">
+            <button mat-icon-button (click)="removePhoto(i)" class="remove-photo-btn">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- Input de archivos -->
+        <div class="file-input-section">
+          <input type="file" 
+                 #fileInput 
+                 (change)="onFilesSelected($event)"
+                 accept="image/*" 
+                 multiple
+                 style="display: none;">
+          <button mat-raised-button (click)="fileInput.click()">
+            <mat-icon>camera_alt</mat-icon>
+            {{ photoPreviews.length > 0 ? 'Agregar Más Fotos' : 'Seleccionar Fotos' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Información del reportante -->
+      <div class="form-section">
+        <h3>Información del Reportante</h3>
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Reportado por</mat-label>
+          <input matInput formControlName="reportedBy" readonly>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Fecha y hora</mat-label>
+          <input matInput [value]="currentDate | date:'short'" readonly>
+        </mat-form-field>
+      </div>
+
+      <!-- Confirmaciones de emergencia -->
+      <div class="form-section emergency-section" *ngIf="isEmergency()">
+        <h3 class="emergency-title">
+          <mat-icon color="warn">warning</mat-icon>
+          Protocolo de Emergencia
+        </h3>
+        <div class="emergency-actions">
+          <mat-checkbox formControlName="emergencyContact">
+            He contactado al supervisor de emergencia
+          </mat-checkbox>
+          <mat-checkbox formControlName="supervisorNotified">
+            He notificado al supervisor inmediato
+          </mat-checkbox>
+        </div>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-raised-button 
+            color="warn" 
+            (click)="onSubmit()"
+            [disabled]="!incidentForm.valid">
+      <mat-icon>report_problem</mat-icon>
+      Reportar Incidencia
+    </button>
+  </mat-dialog-actions>
+</div>
