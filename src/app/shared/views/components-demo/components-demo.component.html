@@ -1,0 +1,36 @@
+<app-table
+    [columns]="columns"
+    [dataSource]="tableTestData"
+    [loading]="loadingTest"
+    [showPaginator]="true"
+    [selectable]="false"
+></app-table>
+
+<p>{{ 'demo.components.test' | translate }}</p>
+
+<div>
+    <app-selector
+        [options]="options"
+        [color]="'secondary'"
+        [size]="'medium'"
+    ></app-selector>
+</div>
+
+<div class="button-container">
+    <app-button
+        [label]="'demo.components.click-me' | translate"
+        [color]="'primary'"
+        [disabled]="false"
+    ></app-button>
+</div>
+
+<div class="input-container">
+  <app-input
+    [(ngModel)]="magia"
+    [placeholder]="'demo.components.write-here' | translate"
+  ></app-input>
+</div>
+
+<app-segmented-task></app-segmented-task>
+
+<app-date-navigator></app-date-navigator>

@@ -1,0 +1,143 @@
+<div class="theme-toggle-container">
+    <button mat-icon-button (click)="toggleTheme()" >
+      <mat-icon>{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+  </div>
+
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <h1>Swifties TV</h1>
+      <div class="mat-spacer"></div>
+      @for (option of options; track option.title) {
+        <a mat-button [routerLink]="option.path">{{ option.title }}</a>
+      }
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <router-outlet/>
+
+  <div class="style-demo">
+    <!-- Typography Section -->
+    <section class="typography-demo">
+      <h1>{{ 'demo.styles.typography.title' | translate }}</h1>
+      <div class="typography-grid">
+        <div class="typography-item">
+          <h1>{{ 'demo.styles.typography.h1' | translate }}</h1>
+          <p>{{ 'demo.styles.typography.h1-desc' | translate }}</p>
+        </div>
+        <div class="typography-item">
+          <h2>{{ 'demo.styles.typography.h2' | translate }}</h2>
+          <p>{{ 'demo.styles.typography.h2-desc' | translate }}</p>
+        </div>
+        <div class="typography-item">
+          <h3>{{ 'demo.styles.typography.h3' | translate }}</h3>
+          <p>{{ 'demo.styles.typography.h3-desc' | translate }}</p>
+        </div>
+        <div class="typography-item">
+          <h4>{{ 'demo.styles.typography.h4' | translate }}</h4>
+          <p>{{ 'demo.styles.typography.h4-desc' | translate }}</p>
+        </div>
+        <div class="typography-item">
+          <h5>{{ 'demo.styles.typography.h5' | translate }}</h5>
+          <p>{{ 'demo.styles.typography.h5-desc' | translate }}</p>
+        </div>
+        <div class="typography-item">
+          <h6>{{ 'demo.styles.typography.h6' | translate }}</h6>
+          <p>{{ 'demo.styles.typography.h6-desc' | translate }}</p>
+        </div>
+        <div class="typography-item">
+          <p>{{ 'demo.styles.typography.body' | translate }}</p>
+        </div>
+        <div class="typography-item">
+          <p class="small">{{ 'demo.styles.typography.small' | translate }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Colors Section -->
+    <section class="colors-demo">
+      <h1>{{ 'demo.styles.colors.title' | translate }}</h1>
+      <div class="color-grid">
+        <div class="color-box primary">
+          <span class="color-name">{{ 'demo.styles.colors.primary' | translate }}</span>
+          <span class="color-value">var(--primary)</span>
+        </div>
+        <div class="color-box accent">
+          <span class="color-name">{{ 'demo.styles.colors.accent' | translate }}</span>
+          <span class="color-value">var(--accent)</span>
+        </div>
+        <div class="color-box secondary">
+          <span class="color-name">{{ 'demo.styles.colors.secondary' | translate }}</span>
+          <span class="color-value">var(--secondary)</span>
+        </div>
+        <div class="color-box success">
+          <span class="color-name">{{ 'demo.styles.colors.success' | translate }}</span>
+          <span class="color-value">var(--success)</span>
+        </div>
+        <div class="color-box error">
+          <span class="color-name">{{ 'demo.styles.colors.error' | translate }}</span>
+          <span class="color-value">var(--error)</span>
+        </div>
+        <div class="color-box warning">
+          <span class="color-name">{{ 'demo.styles.colors.warning' | translate }}</span>
+          <span class="color-value">var(--warning)</span>
+        </div>
+        <div class="color-box info">
+          <span class="color-name">{{ 'demo.styles.colors.info' | translate }}</span>
+          <span class="color-value">var(--info)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Components Section -->
+    <section class="components-demo">
+      <h1>{{ 'demo.styles.components.title' | translate }}</h1>
+
+      <div class="buttons-demo">
+        <h2>{{ 'demo.styles.components.buttons.title' | translate }}</h2>
+        <div class="button-group">
+          <button mat-raised-button color="primary">{{ 'demo.styles.components.buttons.primary' | translate }}</button>
+          <button mat-raised-button color="accent">{{ 'demo.styles.components.buttons.accent' | translate }}</button>
+          <button mat-raised-button color="warn">{{ 'demo.styles.components.buttons.warn' | translate }}</button>
+        </div>
+        <div class="button-group">
+          <button mat-stroked-button color="primary">{{ 'demo.styles.components.buttons.stroked-primary' | translate }}</button>
+          <button mat-stroked-button color="accent">{{ 'demo.styles.components.buttons.stroked-accent' | translate }}</button>
+          <button mat-stroked-button color="warn">{{ 'demo.styles.components.buttons.stroked-warn' | translate }}</button>
+        </div>
+        <div class="button-group">
+          <button mat-flat-button color="primary">{{ 'demo.styles.components.buttons.flat-primary' | translate }}</button>
+          <button mat-flat-button color="accent">{{ 'demo.styles.components.buttons.flat-accent' | translate }}</button>
+          <button mat-flat-button color="warn">{{ 'demo.styles.components.buttons.flat-warn' | translate }}</button>
+        </div>
+      </div>
+
+      <div class="cards-demo">
+        <h2>{{ 'demo.styles.components.cards.title' | translate }}</h2>
+        <div class="card-grid">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>{{ 'demo.styles.components.cards.basic.title' | translate }}</mat-card-title>
+              <mat-card-subtitle>{{ 'demo.styles.components.cards.basic.subtitle' | translate }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p>{{ 'demo.styles.components.cards.basic.content' | translate }}</p>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>{{ 'demo.styles.components.cards.actions.title' | translate }}</mat-card-title>
+              <mat-card-subtitle>{{ 'demo.styles.components.cards.actions.subtitle' | translate }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p>{{ 'demo.styles.components.cards.actions.content' | translate }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button color="primary">{{ 'demo.styles.components.cards.actions.action1' | translate }}</button>
+              <button mat-button color="accent">{{ 'demo.styles.components.cards.actions.action2' | translate }}</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </section>
+  </div>

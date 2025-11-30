@@ -1,0 +1,251 @@
+.safety-monitoring-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .header {
+    margin-bottom: 32px;
+    text-align: center;
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 8px;
+      font-size: 2.5rem;
+      font-weight: 300;
+    }
+
+    p {
+      color: #7f8c8d;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+  }
+
+  .safety-tabs {
+    .mat-mdc-tab-group {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    padding: 24px;
+
+    .metric-card {
+      border-radius: 12px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      }
+
+      &.status-safe {
+        border-left: 4px solid #27ae60;
+      }
+
+      &.status-warning {
+        border-left: 4px solid #f39c12;
+      }
+
+      &.status-critical {
+        border-left: 4px solid #e74c3c;
+      }
+
+      .metric-value {
+        display: flex;
+        align-items: baseline;
+        margin-bottom: 16px;
+
+        .value {
+          font-size: 2.5rem;
+          font-weight: 600;
+          color: #2c3e50;
+        }
+
+        .unit {
+          font-size: 1.2rem;
+          color: #7f8c8d;
+          margin-left: 8px;
+        }
+      }
+
+      .trend-indicator {
+        display: flex;
+        align-items: center;
+        margin-top: 12px;
+        font-size: 0.9rem;
+        color: #7f8c8d;
+
+        mat-icon {
+          margin-right: 4px;
+          font-size: 18px;
+
+          &.trend-up {
+            color: #e74c3c;
+          }
+
+          &.trend-down {
+            color: #27ae60;
+          }
+
+          &.trend-stable {
+            color: #3498db;
+          }
+        }
+      }
+    }
+  }
+
+  .alerts-container {
+    padding: 24px;
+
+    .alerts-summary {
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: center;
+
+      mat-chip-set {
+        .critical-chip {
+          background-color: #e74c3c;
+          color: white;
+
+          mat-icon {
+            color: white;
+          }
+        }
+
+        .warning-chip {
+          background-color: #f39c12;
+          color: white;
+
+          mat-icon {
+            color: white;
+          }
+        }
+
+        .info-chip {
+          background-color: #3498db;
+          color: white;
+
+          mat-icon {
+            color: white;
+          }
+        }
+      }
+    }
+
+    .alerts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .alert-card {
+        border-radius: 8px;
+        transition: box-shadow 0.2s ease;
+
+        &:hover {
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        &.alert-critical {
+          border-left: 4px solid #e74c3c;
+        }
+
+        &.alert-warning {
+          border-left: 4px solid #f39c12;
+        }
+
+        &.alert-info {
+          border-left: 4px solid #3498db;
+        }
+
+        .alert-icon-critical {
+          color: #e74c3c;
+        }
+
+        .alert-icon-warning {
+          color: #f39c12;
+        }
+
+        .alert-icon-info {
+          color: #3498db;
+        }
+
+        .alert-actions {
+          display: flex;
+          gap: 12px;
+          margin-top: 16px;
+
+          button {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+          }
+        }
+      }
+    }
+  }
+
+  .incident-history {
+    padding: 24px;
+
+    .incidents-table {
+      width: 100%;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+
+      .alert-icon-critical {
+        color: #e74c3c;
+      }
+
+      .alert-icon-warning {
+        color: #f39c12;
+      }
+
+      .alert-icon-info {
+        color: #3498db;
+      }
+
+      .status-active {
+        background-color: #e74c3c;
+        color: white;
+      }
+
+      .status-acknowledged {
+        background-color: #f39c12;
+        color: white;
+      }
+
+      .status-resolved {
+        background-color: #27ae60;
+        color: white;
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .safety-monitoring-container {
+    padding: 16px;
+
+    .metrics-grid {
+      grid-template-columns: 1fr;
+      padding: 16px;
+    }
+
+    .alerts-container {
+      padding: 16px;
+    }
+
+    .incident-history {
+      padding: 16px;
+    }
+  }
+}

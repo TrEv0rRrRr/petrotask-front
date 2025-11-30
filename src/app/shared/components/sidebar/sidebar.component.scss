@@ -1,0 +1,266 @@
+@use '../../../../styles/variables' as v;
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  height: 100%;
+  background: linear-gradient(135deg, 
+    var(--primary) 0%,
+    color-mix(in srgb, var(--primary) 85%, black) 100%
+  );
+  box-shadow: v.$shadow-lg;
+  transition: all v.$transition-normal;
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
+  }
+
+  @media (max-width: 768px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: v.$z-index-fixed;
+    transform: translateX(0);
+    transition: transform v.$transition-normal, width v.$transition-normal;
+  }
+
+  &--collapsed {
+    width: 60px;
+
+    @media (max-width: 768px) {
+      transform: translateX(-100%);
+    }
+  }
+
+  &__header {
+    padding: v.$spacing-md;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: v.$glass-blur;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    font-weight: v.$font-weight-bold;
+    font-size: v.$font-size-lg;
+    color: var(--text-inverted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.5px;
+  }
+
+  &__content {
+    flex: 1;
+    overflow-y: auto;
+    padding: v.$spacing-sm 0;
+    
+    // Modern scrollbar
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: v.$border-radius-full;
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+
+  &__menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__menu-item {
+    width: 100%;
+    margin-bottom: v.$spacing-sm;
+    padding: 0 v.$spacing-sm;
+  }
+
+  &__menu-link,
+  &__menu-parent-header {
+    display: flex;
+    align-items: center;
+    padding: v.$spacing-sm v.$spacing-md;
+    color: var(--text-inverted);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all v.$transition-fast;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: v.$border-radius-md;
+    font-weight: v.$font-weight-regular;
+    letter-spacing: 0.3px;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      transform: translateX(4px);
+    }
+
+    &.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      font-weight: v.$font-weight-bold;
+      box-shadow: v.$shadow-sm;
+    }
+  }
+
+  &__menu-parent {
+    &.expanded {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: v.$border-radius-md;
+    }
+  }
+
+  &__menu-icon {
+    margin-right: v.$spacing-sm;
+    font-size: 20px;
+    min-width: 20px;
+    opacity: 0.9;
+    transition: transform v.$transition-fast;
+    
+    .active & {
+      transform: scale(1.1);
+    }
+  }
+
+  &__menu-label {
+    flex: 1;
+    font-size: v.$font-size-sm;
+    transition: transform v.$transition-fast;
+  }
+
+  &__menu-expand {
+    font-size: 18px;
+    transition: transform v.$transition-fast;
+    
+    .expanded & {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__submenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height v.$transition-normal;
+
+    .expanded & {
+      max-height: 500px;
+    }
+  }
+
+  &__submenu-item {
+    width: 100%;
+  }
+
+  &__submenu-link {
+    display: flex;
+    align-items: center;
+    padding: v.$spacing-sm v.$spacing-md v.$spacing-sm v.$spacing-lg;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all v.$transition-fast;
+    font-size: v.$font-size-sm;
+    border-radius: v.$border-radius-md;
+    margin: 0 v.$spacing-sm;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateX(4px);
+    }
+
+    &.active {
+      background-color: rgba(255, 255, 255, 0.15);
+      font-weight: v.$font-weight-bold;
+      color: var(--text-inverted);
+    }
+  }
+
+  &__submenu-icon {
+    margin-right: v.$spacing-sm;
+    font-size: 16px;
+    opacity: 0.8;
+  }
+
+  &__footer {
+    padding: v.$spacing-md;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: flex-end;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: v.$glass-blur;
+  }
+
+  &__collapse-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: v.$border-radius-full;
+    color: var(--text-inverted);
+    transition: all v.$transition-fast;
+    background: rgba(255, 255, 255, 0.1);
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: rotate(180deg);
+    }
+  }
+}
+
+// For overlay when sidebar is open on mobile
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--overlay);
+  backdrop-filter: v.$glass-blur;
+  z-index: v.$z-index-modal-backdrop;
+  opacity: 0;
+  transition: opacity v.$transition-normal;
+
+  &.active {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+}

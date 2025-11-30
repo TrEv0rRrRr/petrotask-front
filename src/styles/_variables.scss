@@ -1,0 +1,170 @@
+
+
+// colores de texto
+
+$light-text-colors: (
+  text-primary: #1a1a1a,
+  text-secondary: #6b6b6b,
+  text-inverted: #ffffff
+);
+
+$dark-text-colors: (
+  text-primary: #f5f5f5,
+  text-secondary: #a1a1a1,
+  text-inverted: #000000
+);
+
+// tipografía y espaciado
+
+$font-family-base: 'Roboto', sans-serif;
+
+$font-size-base: 16px;
+$font-size-sm: 14px;
+$font-size-lg: 18px;
+
+$font-weight-regular: 400;
+$font-weight-bold: 600;
+
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 2rem;
+
+// Shadows
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+$shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+
+// Border Radius
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$border-radius-full: 9999px;
+
+// Transitions
+$transition-fast: 150ms ease;
+$transition-normal: 250ms ease;
+$transition-slow: 350ms ease;
+
+// Container
+$container-padding: $spacing-lg;
+$container-max-width: 1440px;
+
+// Z-index layers
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+
+// Glass effect
+$glass-background: rgba(255, 255, 255, 0.1);
+$glass-border: 1px solid rgba(255, 255, 255, 0.2);
+$glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+$glass-blur: blur(8px);
+
+
+$palette-light: (
+  // Colores principales de la nueva paleta
+  primary: #008B64, // Verde Petróleo
+  primary-light: #4CAF50,
+  primary-dark: #006A4E,
+  accent: #ff5c11, // Naranja
+  accent-light: #ff8a65,
+  accent-dark: #e64a19,
+  secondary: #14305b, // Azul Marino
+  secondary-light: #1e4a7c,
+  secondary-dark: #0d1f3a,
+  
+  // Colores de estado
+  success: #66BB6A, // Verde Mantis
+  success-light: #98ee99,
+  success-dark: #338a3e,
+  error: #FF7976, // Rojo
+  error-light: #ffab91,
+  error-dark: #d32f2f,
+  warning: #FFF176, // Amarillo
+  warning-light: #fff59d,
+  warning-dark: #f9a825,
+  info: #2196f3,
+  info-light: #6ec6ff,
+  info-dark: #0069c0,
+  
+  // Colores de fondo y superficie
+  background: #ffffff, // Blanco
+  background-dark: #f5f5f5,
+  bg-light: #f8f9fa,
+  bg-dark: #e9ecef,
+  surface: #9ca3af, // Gris Claro
+  surface-dark: #6b7280, // Gris Medio
+  overlay: rgba(0, 0, 0, 0.04),
+  overlay-light: rgba(255, 255, 255, 0.1),
+  border: #9ca3af, // Gris Claro
+  border-dark: #6b7280, // Gris Medio
+  
+  // Gradientes
+  gradient-main: linear-gradient(90deg, #008B64 0%, #ff5c11 100%),
+  gradient-accent: linear-gradient(135deg, #66BB6A 0%, #ff5c11 100%),
+  
+  // Colores de texto
+  text-primary: #14305b, // Azul Marino
+  text-secondary: #6b7280, // Gris Medio
+  text-inverted: #ffffff, // Blanco
+  text-primary-dark: #0d1f3a,
+  text-secondary-dark: #9ca3af, // Gris Claro
+  text-inverted-dark: #000000
+);
+
+$palette-dark: (
+  // Colores principales de la nueva paleta (modo oscuro)
+  primary: #4CAF50, // Verde Petróleo más claro para modo oscuro
+  primary-light: #66BB6A, // Verde Mantis
+  primary-dark: #008B64, // Verde Petróleo original
+  accent: #ff5c11, // Naranja
+  accent-light: #ff8a65,
+  accent-dark: #e64a19,
+  secondary: #1e4a7c, // Azul Marino más claro
+  secondary-light: #2c5aa0,
+  secondary-dark: #14305b, // Azul Marino original
+  
+  // Colores de estado
+  success: #66BB6A, // Verde Mantis
+  success-light: #98ee99,
+  success-dark: #338a3e,
+  error: #FF7976, // Rojo
+  error-light: #ffab91,
+  error-dark: #d32f2f,
+  warning: #FFF176, // Amarillo
+  warning-light: #fff59d,
+  warning-dark: #f9a825,
+  info: #29b6f6,
+  info-light: #73e8ff,
+  info-dark: #0288d1,
+  
+  // Colores de fondo y superficie (modo oscuro)
+  background: #121212,
+  background-dark: #0d1f3a, // Azul Marino muy oscuro
+  bg-light: #1e4a7c, // Azul Marino claro
+  bg-dark: #0d1f3a,
+  surface: #2c2c2c,
+  surface-dark: #1a1a1a,
+  overlay: rgba(255, 255, 255, 0.04),
+  overlay-light: rgba(0, 0, 0, 0.1),
+  border: #6b7280, // Gris Medio
+  border-dark: #9ca3af, // Gris Claro
+  
+  // Gradientes
+  gradient-main: linear-gradient(90deg, #4CAF50 0%, #ff5c11 100%),
+  gradient-accent: linear-gradient(135deg, #66BB6A 0%, #ff5c11 100%),
+  
+  // Colores de texto (modo oscuro)
+  text-primary: #ffffff, // Blanco
+  text-secondary: #9ca3af, // Gris Claro
+  text-inverted: #14305b, // Azul Marino
+  text-primary-dark: #f5f5f5,
+  text-secondary-dark: #6b7280, // Gris Medio
+  text-inverted-dark: #000000
+);

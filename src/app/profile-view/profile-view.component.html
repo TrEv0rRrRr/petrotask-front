@@ -1,0 +1,42 @@
+<mat-card class="profile-card">
+  <div class="profile-header">
+    <div class="avatar-container">
+      <img [src]="user.photo || 'assets/default-avatar.png'" alt="Foto de perfil" class="avatar">
+      <button mat-icon-button class="edit-avatar-btn">
+        <mat-icon>{{ 'shared.components.profile.change-photo' | translate }}</mat-icon>
+      </button>
+    </div>
+    <h1 class="user-name">{{ user.name }}</h1>
+    <p class="user-role">{{ user.role }}</p>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-content>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
+      <div class="form-section">
+        <h2 class="section-title">
+          <mat-icon>person_outline</mat-icon>
+          Información Personal
+        </h2>
+
+        <div class="form-grid">
+          <app-input formControlName="name" label="Nombre completo" placeholder="Ingrese su nombre" [required]="true" [maxLength]="50"></app-input>
+          <app-input formControlName="email" type="email" label="Correo electrónico" placeholder="ejemplo@empresa.com" [required]="true"></app-input>
+          <app-input formControlName="phone" label="Teléfono" placeholder="+51 999 999 999" type="tel"></app-input>
+          <app-input formControlName="position" label="Cargo" placeholder="Ej: Supervisor logístico" [required]="true" [maxLength]="40"></app-input>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <app-button type="submit" color="primary" [loading]="saving" [disabled]="profileForm.invalid || !profileForm.dirty" label="Guardar Cambios">
+          <mat-icon>save</mat-icon>
+        </app-button>
+
+        <app-button type="button" color="secondary" (click)="resetForm()" [disabled]="!profileForm.dirty" label="Descartar Cambios">
+          <mat-icon>restart_alt</mat-icon>
+        </app-button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

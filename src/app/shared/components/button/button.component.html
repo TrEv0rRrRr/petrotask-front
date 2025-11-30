@@ -1,0 +1,44 @@
+<button
+  [type]="type"
+  [disabled]="disabled || loading"
+  [class]="buttonClasses"
+  [attr.aria-label]="ariaLabel"
+  [title]="tooltip"
+  (click)="onClick($event)"
+>
+  <!-- Loading Spinner -->
+  <mat-spinner 
+    *ngIf="loading" 
+    [diameter]="size === 'small' ? 16 : size === 'large' ? 24 : 20"
+    [strokeWidth]="2"
+    class="loading-spinner">
+  </mat-spinner>
+
+  <!-- Icon Left -->
+  <mat-icon 
+    *ngIf="icon && iconPosition === 'left' && !loading" 
+    class="icon icon-left">
+    {{ icon }}
+  </mat-icon>
+
+  <!-- Button Text -->
+  <span 
+    *ngIf="displayText && !onlyIcon" 
+    class="button-text"
+    [innerHTML]="translateKey ? (translateKey | translate:translateParams) : displayText">
+  </span>
+
+  <!-- Icon Right -->
+  <mat-icon 
+    *ngIf="icon && iconPosition === 'right' && !loading" 
+    class="icon icon-right">
+    {{ icon }}
+  </mat-icon>
+
+  <!-- Only Icon -->
+  <mat-icon 
+    *ngIf="icon && onlyIcon && !loading" 
+    class="icon icon-only">
+    {{ icon }}
+  </mat-icon>
+</button>

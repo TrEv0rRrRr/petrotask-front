@@ -1,0 +1,169 @@
+<div class="position-management">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <h1>{{ 'POSITION_MANAGEMENT.TITLE' | translate }}</h1>
+      <p class="subtitle">{{ 'POSITION_MANAGEMENT.SUBTITLE' | translate }}</p>
+    </div>
+    <div class="header-actions">
+      <app-button
+        [variant]="'solid'"
+        [color]="'primary'"
+        [size]="'medium'"
+        [icon]="'add'"
+        [translateKey]="'POSITION_MANAGEMENT.ADD_POSITION'"
+        (click)="openAddPositionDialog()">
+      </app-button>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <app-input
+        [type]="'text'"
+        [placeholder]="'POSITION_MANAGEMENT.SEARCH_PLACEHOLDER'"
+        [leadingIcon]="'search'"
+        [variant]="'outline'"
+        [ngModel]="searchTerm"
+        (ngModelChange)="onSearch($event)">
+      </app-input>
+    </div>
+    
+    <div class="toolbar-right">
+      <app-button
+        [variant]="'ghost'"
+        [color]="'primary'"
+        [size]="'medium'"
+        [icon]="'refresh'"
+        [translateKey]="'SHARED.REFRESH'"
+        (click)="refreshData()">
+      </app-button>
+      
+      <app-button
+        [variant]="'ghost'"
+        [color]="'primary'"
+        [size]="'medium'"
+        [icon]="viewMode === 'cards' ? 'table_view' : 'view_module'"
+        [translateKey]="viewMode === 'cards' ? 'SHARED.TABLE_VIEW' : 'SHARED.CARD_VIEW'"
+        (click)="toggleViewMode()">
+      </app-button>
+    </div>
+  </div>
+
+  <!-- Loading state -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>{{ 'SHARED.LOADING' | translate }}</p>
+  </div>
+
+  <!-- Cards View -->
+  <div *ngIf="!loading && viewMode === 'cards'" class="cards-container">
+    <div 
+      *ngFor="let position of filteredPositions; trackBy: trackByPositionId" 
+      class="position-card">
+      
+      <div class="card-header">
+        <div class="position-icon">
+          <mat-icon>{{ getPositionIcon(position) }}</mat-icon>
+        </div>
+        <div class="position-info">
+          <h3 class="position-name">{{ position.title }}</h3>
+          <p class="position-description">{{ position.description }}</p>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <app-button
+          [variant]="'ghost'"
+          [color]="'primary'"
+          [size]="'small'"
+          [icon]="'edit'"
+          [translateKey]="'SHARED.EDIT'"
+          (click)="openEditPositionDialog(position)">
+        </app-button>
+        
+        <app-button
+          [variant]="'ghost'"
+          [color]="'danger'"
+          [size]="'small'"
+          [icon]="'delete'"
+          [translateKey]="'SHARED.DELETE'"
+          (click)="deletePosition(position)">
+        </app-button>
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div *ngIf="filteredPositions.length === 0" class="empty-state">
+      <mat-icon>work_off</mat-icon>
+      <h3>{{ 'POSITION_MANAGEMENT.NO_POSITIONS' | translate }}</h3>
+      <p>{{ 'POSITION_MANAGEMENT.NO_POSITIONS_DESCRIPTION' | translate }}</p>
+      <app-button
+        [variant]="'solid'"
+        [color]="'primary'"
+        [size]="'medium'"
+        [icon]="'add'"
+        [translateKey]="'POSITION_MANAGEMENT.ADD_FIRST_POSITION'"
+        (click)="openAddPositionDialog()">
+      </app-button>
+    </div>
+  </div>
+
+  <!-- Table View -->
+  <div *ngIf="!loading && viewMode === 'table'" class="table-container">
+    <table class="positions-table">
+      <thead>
+        <tr>
+          <th>{{ 'POSITION_MANAGEMENT.TABLE.ICON' | translate }}</th>
+          <th>{{ 'POSITION_MANAGEMENT.TABLE.NAME' | translate }}</th>
+          <th>{{ 'POSITION_MANAGEMENT.TABLE.DESCRIPTION' | translate }}</th>
+          <th>{{ 'POSITION_MANAGEMENT.TABLE.ACTIONS' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let position of filteredPositions; trackBy: trackByPositionId">
+          <td class="icon-cell">
+            <mat-icon>{{ getPositionIcon(position) }}</mat-icon>
+          </td>
+          <td class="name-cell">{{ position.title }}</td>
+          <td class="description-cell">{{ position.description }}</td>
+          <td class="actions-cell">
+            <app-button
+              [variant]="'ghost'"
+              [color]="'primary'"
+              [size]="'small'"
+              [icon]="'edit'"
+              [translateKey]="'SHARED.EDIT'"
+              (click)="openEditPositionDialog(position)">
+            </app-button>
+            
+            <app-button
+              [variant]="'ghost'"
+              [color]="'danger'"
+              [size]="'small'"
+              [icon]="'delete'"
+              [translateKey]="'SHARED.DELETE'"
+              (click)="deletePosition(position)">
+            </app-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Empty state for table -->
+    <div *ngIf="filteredPositions.length === 0" class="empty-state">
+      <mat-icon>work_off</mat-icon>
+      <h3>{{ 'POSITION_MANAGEMENT.NO_POSITIONS' | translate }}</h3>
+      <p>{{ 'POSITION_MANAGEMENT.NO_POSITIONS_DESCRIPTION' | translate }}</p>
+      <app-button
+        [variant]="'solid'"
+        [color]="'primary'"
+        [size]="'medium'"
+        [icon]="'add'"
+        [translateKey]="'POSITION_MANAGEMENT.ADD_FIRST_POSITION'"
+        (click)="openAddPositionDialog()">
+      </app-button>
+    </div>
+  </div>
+</div> 

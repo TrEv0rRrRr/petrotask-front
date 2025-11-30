@@ -1,0 +1,139 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.form-input {
+  &__label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2d3748;
+  }
+
+  &__required {
+    color: #e53e3e;
+    margin-left: 4px;
+  }
+
+  &__field {
+    position: relative;
+    width: 100%;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 10px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    background-color: #ffffff;
+    font-size: 14px;
+    color: #2d3748;
+    transition: all 0.2s ease;
+
+    &::placeholder {
+      color: #a0aec0;
+    }
+
+    &:hover {
+      border-color: #cbd5e0;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #4299e1;
+      box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+    }
+
+    &:disabled {
+      background-color: #f7fafc;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    &:read-only {
+      background-color: #f7fafc;
+      cursor: default;
+    }
+  }
+
+  &__error {
+    margin-top: 6px;
+    color: #e53e3e;
+    font-size: 12px;
+  }
+
+  &__help {
+    margin-top: 6px;
+    color: #718096;
+    font-size: 12px;
+  }
+
+  // Estados
+  &--error {
+    .form-input__input {
+      border-color: #e53e3e;
+      background-color: #fff5f5;
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
+      }
+    }
+  }
+
+  &--disabled {
+    opacity: 0.6;
+    pointer-events: none;
+
+    .form-input__input {
+      background-color: #f7fafc;
+      border-color: #e2e8f0;
+    }
+  }
+
+  // Tamaños
+  &--small {
+    .form-input__input {
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+  }
+
+  &--large {
+    .form-input__input {
+      padding: 12px 20px;
+      font-size: 16px;
+    }
+  }
+
+  // Variantes
+  &--filled {
+    .form-input__input {
+      background-color: #f7fafc;
+      border-color: transparent;
+
+      &:hover {
+        background-color: #edf2f7;
+      }
+
+      &:focus {
+        background-color: #ffffff;
+        border-color: #4299e1;
+      }
+    }
+  }
+
+  &--standard {
+    .form-input__input {
+      border-width: 0;
+      border-bottom-width: 2px;
+      border-radius: 0;
+      padding-left: 0;
+
+      &:hover {
+        background-color: rgba(203, 213, 224, 0.1);
+      }
+    }
+  }
+}

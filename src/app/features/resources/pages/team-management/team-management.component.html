@@ -1,0 +1,67 @@
+<div class="team-management-container">
+  <div class="header">
+    <h1>{{ 'Team Management' | translate }}</h1>
+    
+    <div class="actions">
+      <div class="view-controls">
+        <app-button
+          [label]="'Refresh' | translate"
+          [color]="'secondary'"
+          [disabled]="loading"
+          (clicked)="refreshData()"
+        ></app-button>
+        
+        <app-button
+          [label]="'Add Team' | translate"
+          [color]="'primary'"
+          [disabled]="loading"
+          (clicked)="openAddDialog()"
+        ></app-button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="table-view" [class.loading]="loading">
+      <div class="loading-overlay" *ngIf="loading">
+        <div class="spinner"></div>
+        <p>Loading teams...</p>
+      </div>
+      
+      <app-table
+        [columns]="columns"
+        [dataSource]="teams"
+        [showPaginator]="true"
+        [customColumns]="tableActions"
+      ></app-table>
+      
+      <div *ngIf="!loading && teams.length === 0" class="empty-state">
+        <div class="empty-icon">👥</div>
+        <h3>No teams found</h3>
+        <p>No teams have been added yet.</p>
+        <app-button
+          [label]="'Add First Team' | translate"
+          [color]="'primary'"
+          (clicked)="openAddDialog()"
+        ></app-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #tableActions let-column="column" let-row="row">
+  <div *ngIf="column === 'actions'" class="action-buttons">
+    <app-button
+      [label]="'Edit' | translate"
+      [color]="'primary'"
+      [disabled]="loading"
+      (clicked)="openEditDialog(row)"
+    ></app-button>
+    <app-button
+      [label]="'Delete' | translate"
+      [color]="'danger'"
+      [disabled]="loading"
+      (clicked)="deleteTeam(row)"
+    ></app-button>
+  </div>
+</ng-template>

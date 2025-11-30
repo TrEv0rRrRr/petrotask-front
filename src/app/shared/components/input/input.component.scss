@@ -1,0 +1,598 @@
+// Color palette
+$primary: #f9a825;
+$primary-dark: #c17900;
+$primary-light: #ffd95a;
+$secondary: #1a237e;
+$secondary-dark: #10194a;
+$secondary-light: #534bae;
+$danger: #d32f2f;
+$danger-dark: #a31515;
+$danger-light: #ff5f52;
+$neutral: #6c757d;
+$neutral-dark: #495057;
+$neutral-light: #adb5bd;
+$success: #28a745;
+$success-dark: #1e7e34;
+$success-light: #5cb85c;
+$warning: #ffc107;
+$warning-dark: #e0a800;
+$warning-light: #ffed4a;
+
+// Base colors
+$white: #ffffff;
+$black: #000000;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+
+// Design tokens
+$border-radius: 8px;
+$border-radius-sm: 4px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$transition: 0.2s ease-in-out;
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+$shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.input {
+  position: relative;
+  width: 100%;
+
+  &.full-width {
+    width: 100%;
+  }
+
+  // Label styles
+  .input-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: $gray-700;
+    margin-bottom: 6px;
+
+    .required-indicator {
+      color: $danger;
+      margin-left: 2px;
+    }
+  }
+
+  // Input container
+  .input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: $white;
+    border: 2px solid $gray-300;
+    border-radius: $border-radius;
+    transition: all $transition;
+
+    &:hover:not(.disabled):not(.readonly) {
+      border-color: $gray-400;
+    }
+
+    &:focus-within {
+      outline: 2px solid $primary;
+      outline-offset: 2px;
+    }
+
+    .input-icon {
+      color: $gray-500;
+      font-size: 20px;
+      flex-shrink: 0;
+
+      &.leading {
+        margin-left: 12px;
+        margin-right: 8px;
+      }
+
+      &.trailing {
+        margin-left: 8px;
+        margin-right: 12px;
+        cursor: pointer;
+
+        &:hover {
+          color: $gray-700;
+        }
+      }
+    }
+
+    .input-field {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: $gray-900;
+      font-size: 14px;
+      padding: 12px;
+      min-height: 20px;
+
+      &::placeholder {
+        color: $gray-500;
+        font-style: italic;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        color: $gray-500;
+      }
+
+      &:readonly {
+        cursor: default;
+      }
+
+      // Remove browser autofill styling
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0 1000px $white inset;
+        -webkit-text-fill-color: $gray-900;
+        transition: background-color 5000s ease-in-out 0s;
+      }
+    }
+
+    .input-placeholder {
+      position: absolute;
+      left: 12px;
+      color: $gray-500;
+      font-style: italic;
+      pointer-events: none;
+      font-size: 14px;
+    }
+
+    .input-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding-right: 12px;
+
+      .loading-spinner {
+        .spinning {
+          animation: spin 1s linear infinite;
+          color: $gray-500;
+          font-size: 20px;
+        }
+      }
+
+      .clear-button {
+        background: none;
+        border: none;
+        padding: 4px;
+        border-radius: 4px;
+        cursor: pointer;
+        color: $gray-500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all $transition;
+
+        &:hover {
+          background-color: $gray-100;
+          color: $gray-700;
+        }
+
+        mat-icon {
+          font-size: 16px;
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+
+  // Helper text styles
+  .input-helper {
+    margin-top: 4px;
+    font-size: 12px;
+
+    .error-text {
+      color: $danger;
+    }
+
+    .helper-text {
+      color: $gray-600;
+    }
+  }
+
+  // Size variants
+  &.size-small {
+    .input-container {
+      .input-field {
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+
+      .input-icon {
+        font-size: 16px;
+
+        &.leading {
+          margin-left: 8px;
+          margin-right: 6px;
+        }
+
+        &.trailing {
+          margin-left: 6px;
+          margin-right: 8px;
+        }
+      }
+
+      .input-placeholder {
+        left: 12px;
+        font-size: 13px;
+      }
+
+      .input-actions {
+        padding-right: 8px;
+      }
+    }
+  }
+
+  &.size-medium {
+    .input-container {
+      .input-field {
+        padding: 12px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  &.size-large {
+    .input-container {
+      .input-field {
+        padding: 16px;
+        font-size: 16px;
+      }
+
+      .input-icon {
+        font-size: 24px;
+
+        &.leading {
+          margin-left: 16px;
+          margin-right: 12px;
+        }
+
+        &.trailing {
+          margin-left: 12px;
+          margin-right: 16px;
+        }
+      }
+
+      .input-placeholder {
+        left: 16px;
+        font-size: 16px;
+      }
+
+      .input-actions {
+        padding-right: 16px;
+      }
+    }
+  }
+
+  // Color variants
+  @each $color, $value, $dark, $light in (
+    ('primary', $primary, $primary-dark, $primary-light),
+    ('secondary', $secondary, $secondary-dark, $secondary-light),
+    ('danger', $danger, $danger-dark, $danger-light),
+    ('neutral', $neutral, $neutral-dark, $neutral-light),
+    ('success', $success, $success-dark, $success-light),
+    ('warning', $warning, $warning-dark, $warning-light)
+  ) {
+    // Solid variant
+    &.color-#{$color}.variant-solid {
+      .input-container {
+        background-color: $value;
+        border-color: $value;
+
+        .input-field {
+          color: $white;
+
+          &::placeholder {
+            color: rgba($white, 0.7);
+          }
+        }
+
+        .input-placeholder {
+          color: rgba($white, 0.7);
+        }
+
+        .input-icon {
+          color: rgba($white, 0.8);
+
+          &.trailing:hover {
+            color: $white;
+          }
+        }
+
+        .input-actions .clear-button {
+          color: rgba($white, 0.8);
+
+          &:hover {
+            background-color: rgba($white, 0.1);
+            color: $white;
+          }
+        }
+
+        &:hover:not(.disabled):not(.readonly) {
+          background-color: $dark;
+          border-color: $dark;
+        }
+
+        &:focus-within {
+          outline-color: $light;
+        }
+      }
+    }
+
+    // Outline variant
+    &.color-#{$color}.variant-outline {
+      .input-container {
+        background-color: $white;
+        border-color: $value;
+
+        .input-field {
+          color: $value;
+
+          &::placeholder {
+            color: rgba($value, 0.7);
+          }
+        }
+
+        .input-placeholder {
+          color: rgba($value, 0.7);
+        }
+
+        .input-icon {
+          color: $value;
+
+          &.trailing:hover {
+            color: $dark;
+          }
+        }
+
+        &:hover:not(.disabled):not(.readonly) {
+          border-color: $dark;
+          background-color: rgba($value, 0.05);
+        }
+
+        &:focus-within {
+          border-color: $value;
+          box-shadow: 0 0 0 2px rgba($value, 0.2);
+          outline: none;
+        }
+      }
+    }
+
+    // Ghost variant
+    &.color-#{$color}.variant-ghost {
+      .input-container {
+        background-color: rgba($value, 0.08);
+        border-color: transparent;
+
+        .input-field {
+          color: $value;
+
+          &::placeholder {
+            color: rgba($value, 0.7);
+          }
+        }
+
+        .input-placeholder {
+          color: rgba($value, 0.7);
+        }
+
+        .input-icon {
+          color: $value;
+
+          &.trailing:hover {
+            color: $dark;
+          }
+        }
+
+        &:hover:not(.disabled):not(.readonly) {
+          background-color: rgba($value, 0.16);
+        }
+
+        &:focus-within {
+          background-color: rgba($value, 0.12);
+          border-color: rgba($value, 0.3);
+          outline-color: $value;
+        }
+      }
+    }
+  }
+
+  // State modifiers
+  &.disabled {
+    .input-container {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background-color: $gray-100;
+      border-color: $gray-300;
+
+      .input-field {
+        color: $gray-500;
+      }
+
+      .input-icon,
+      .input-actions {
+        pointer-events: none;
+      }
+    }
+  }
+
+  &.readonly {
+    .input-container {
+      background-color: $gray-100;
+      border-color: $gray-300;
+
+      .input-field {
+        cursor: default;
+      }
+
+      .input-actions .clear-button {
+        display: none;
+      }
+    }
+  }
+
+  &.error {
+    .input-container {
+      border-color: $danger;
+
+      &:hover:not(.disabled):not(.readonly) {
+        border-color: $danger-dark;
+      }
+
+      &:focus-within {
+        outline-color: $danger;
+        border-color: $danger;
+        box-shadow: 0 0 0 2px rgba($danger, 0.2);
+      }
+    }
+  }
+
+  &.focused {
+    // Additional styles for focused state if needed
+  }
+
+  &.rounded {
+    .input-container {
+      border-radius: $border-radius-xl;
+    }
+  }
+
+  &.loading {
+    .input-container {
+      pointer-events: none;
+    }
+  }
+
+  // Icon positioning adjustments
+  &.has-leading-icon {
+    .input-container .input-field {
+      padding-left: 8px;
+    }
+
+    .input-placeholder {
+      left: calc(12px + 20px + 8px);
+    }
+
+    &.size-small {
+      .input-placeholder {
+        left: calc(8px + 16px + 6px);
+      }
+    }
+
+    &.size-large {
+      .input-placeholder {
+        left: calc(16px + 24px + 12px);
+      }
+    }
+  }
+
+  &.has-trailing-icon {
+    .input-container .input-field {
+      padding-right: 8px;
+    }
+  }
+}
+
+// Animations
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Dark theme support
+@media (prefers-color-scheme: dark) {
+  .input {
+    .input-label {
+      color: $gray-300;
+    }
+
+    .input-container {
+      background-color: $gray-800;
+      border-color: $gray-600;
+
+      .input-field {
+        color: $white;
+
+        &::placeholder {
+          color: $gray-400;
+        }
+
+        &:disabled {
+          color: $gray-500;
+        }
+
+        // Dark theme autofill
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus {
+          -webkit-box-shadow: 0 0 0 1000px $gray-800 inset;
+          -webkit-text-fill-color: $white;
+        }
+      }
+
+      .input-placeholder {
+        color: $gray-400;
+      }
+
+      .input-icon {
+        color: $gray-400;
+
+        &.trailing:hover {
+          color: $gray-300;
+        }
+      }
+
+      .input-actions .clear-button {
+        color: $gray-400;
+
+        &:hover {
+          background-color: $gray-700;
+          color: $gray-300;
+        }
+      }
+
+      &:hover:not(.disabled):not(.readonly) {
+        border-color: $gray-500;
+      }
+    }
+
+    .input-helper {
+      .helper-text {
+        color: $gray-400;
+      }
+    }
+
+    &.disabled .input-container {
+      background-color: $gray-700;
+      border-color: $gray-600;
+
+      .input-field {
+        color: $gray-500;
+      }
+    }
+
+    &.readonly .input-container {
+      background-color: $gray-700;
+      border-color: $gray-600;
+    }
+  }
+}

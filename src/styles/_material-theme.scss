@@ -1,0 +1,126 @@
+@use 'variables' as v;
+
+@mixin apply-material-themes() {
+  // Aplicar colores personalizados mediante CSS custom properties
+  :root {
+    --mat-primary: #{map-get(v.$palette-light, primary)};
+    --mat-primary-light: #{map-get(v.$palette-light, primary-light)};
+    --mat-primary-dark: #{map-get(v.$palette-light, primary-dark)};
+    --mat-accent: #{map-get(v.$palette-light, accent)};
+    --mat-accent-light: #{map-get(v.$palette-light, accent-light)};
+    --mat-accent-dark: #{map-get(v.$palette-light, accent-dark)};
+    --mat-warn: #{map-get(v.$palette-light, error)};
+    --mat-success: #{map-get(v.$palette-light, success)};
+    --mat-warning: #{map-get(v.$palette-light, warning)};
+  }
+
+  [data-theme="dark"] {
+    --mat-primary: #{map-get(v.$palette-dark, primary)};
+    --mat-primary-light: #{map-get(v.$palette-dark, primary-light)};
+    --mat-primary-dark: #{map-get(v.$palette-dark, primary-dark)};
+    --mat-accent: #{map-get(v.$palette-dark, accent)};
+    --mat-accent-light: #{map-get(v.$palette-dark, accent-light)};
+    --mat-accent-dark: #{map-get(v.$palette-dark, accent-dark)};
+    --mat-warn: #{map-get(v.$palette-dark, error)};
+    --mat-success: #{map-get(v.$palette-dark, success)};
+    --mat-warning: #{map-get(v.$palette-dark, warning)};
+  }
+
+  // Aplicar estilos personalizados a componentes Material
+  .mat-mdc-button.mat-primary {
+    background-color: var(--mat-primary) !important;
+    color: white !important;
+  }
+
+  .mat-mdc-button.mat-accent {
+    background-color: var(--mat-accent) !important;
+    color: white !important;
+  }
+
+  .mat-mdc-raised-button.mat-primary {
+    background-color: var(--mat-primary) !important;
+    color: white !important;
+  }
+
+  .mat-mdc-raised-button.mat-accent {
+    background-color: var(--mat-accent) !important;
+    color: white !important;
+  }
+
+  .mat-mdc-fab.mat-primary {
+    background-color: var(--mat-primary) !important;
+    color: white !important;
+  }
+
+  .mat-mdc-fab.mat-accent {
+    background-color: var(--mat-accent) !important;
+    color: white !important;
+  }
+
+  .mat-mdc-icon-button.mat-primary {
+    color: var(--mat-primary) !important;
+  }
+
+  .mat-mdc-icon-button.mat-accent {
+    color: var(--mat-accent) !important;
+  }
+
+  .mat-mdc-checkbox.mat-primary .mat-mdc-checkbox-frame {
+    border-color: var(--mat-primary) !important;
+  }
+
+  .mat-mdc-checkbox.mat-primary .mat-mdc-checkbox-background {
+    background-color: var(--mat-primary) !important;
+  }
+
+  .mat-mdc-radio-button.mat-primary .mat-mdc-radio-outer-circle {
+    border-color: var(--mat-primary) !important;
+  }
+
+  .mat-mdc-radio-button.mat-primary .mat-mdc-radio-inner-circle {
+    background-color: var(--mat-primary) !important;
+  }
+
+  .mat-mdc-slider.mat-primary .mat-mdc-slider-track-fill {
+    background-color: var(--mat-primary) !important;
+  }
+
+  .mat-mdc-slider.mat-primary .mat-mdc-slider-thumb {
+    background-color: var(--mat-primary) !important;
+  }
+
+  .mat-mdc-progress-bar.mat-primary .mat-mdc-progress-bar-fill::after {
+    background-color: var(--mat-primary) !important;
+  }
+
+  .mat-mdc-progress-spinner.mat-primary circle {
+    stroke: var(--mat-primary) !important;
+  }
+
+  .mat-mdc-tab-group.mat-primary .mat-mdc-tab-header .mat-mdc-tab-label-container .mat-mdc-tab-label {
+    color: var(--mat-primary) !important;
+  }
+
+  .mat-mdc-tab-group.mat-primary .mat-mdc-tab-header .mat-mdc-tab-label-container .mat-mdc-tab-label.mat-mdc-tab-label-active {
+    color: var(--mat-primary) !important;
+  }
+
+  .mat-mdc-tab-group.mat-primary .mat-mdc-tab-header .mat-mdc-ink-bar {
+    background-color: var(--mat-primary) !important;
+  }
+
+  .mat-mdc-snack-bar-container.mat-success {
+    background-color: var(--mat-success) !important;
+    color: white !important;
+  }
+
+  .mat-mdc-snack-bar-container.mat-warning {
+    background-color: var(--mat-warning) !important;
+    color: black !important;
+  }
+
+  .mat-mdc-snack-bar-container.mat-error {
+    background-color: var(--mat-warn) !important;
+    color: white !important;
+  }
+}

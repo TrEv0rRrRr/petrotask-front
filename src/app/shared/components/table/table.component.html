@@ -1,0 +1,152 @@
+<!-- table -->
+<div class="table-container" [class.fixed-size]="fixedSize" [style.max-height]="fixedSize ? fixedHeight : 'none'">
+    <table
+        mat-table
+        [dataSource]="filteredDataSource"
+        matSort
+        [matSortActive]="sort.active"
+        [matSortDirection]="sort.direction"
+        matSortDisableClear
+        class="m-table"
+    >
+        <ng-container
+            *ngFor="let column of columns"
+            [matColumnDef]="column.header.key"
+        >
+            <!-- header -->
+            <th
+                mat-header-cell
+                *matHeaderCellDef
+                class="custom-header"
+            >
+                {{ column.header.label }}
+            </th>
+
+            <!-- cell -->
+            <ng-container [ngSwitch]="column.type">
+                <ng-container *ngSwitchCase="'text'">
+                    <td mat-cell *matCellDef="let row">
+                        <span [matTooltip]="column.settings?.tooltip(row) ?? ''">
+                            {{ [row, column.cell] | callback : getCell }}
+                        </span>
+                    </td>
+                </ng-container>
+                <ng-container *ngSwitchCase="'template'">
+                    <td mat-cell *matCellDef="let row">
+                        <ng-container
+                            [ngTemplateOutlet]="customColumns!"
+                            [ngTemplateOutletContext]="{
+                                column: column.header.key,
+                                row: row
+                            }"
+                        ></ng-container>
+                    </td>
+                </ng-container>
+                <ng-container *ngSwitchCase="'checkbox'">
+                    <td mat-cell *matCellDef="let row">
+                        <input
+                            type="checkbox"
+                            [checked]="[row, column.cell] | callback : getCell"
+                            (change)="onCheckboxChange(row)"
+                        />
+                    </td>
+                </ng-container>
+                <ng-container *ngSwitchCase="'delete_option'">
+                    <td mat-cell *matCellDef="let row">
+                        <div [matTooltip]="column.settings?.tooltip(row) ?? 'Borrar'">
+                            <button
+                                mat-icon-button
+                                [color]="'warn'"
+                                [disabled]="itemsBeingDeleted.has(row.id) || (column.settings?.disable ? column.settings?.disable(row) : false)"
+                                (click)="$event.stopPropagation(); deleteDialog(row)"
+                            >
+                                <mat-icon [svgIcon]="column.settings?.icon ?? 'heroicons_outline:trash'"></mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container *ngSwitchCase="'edit_option'">
+                    <td mat-cell *matCellDef="let row">
+                        <div [matTooltip]="column.settings?.tooltip(row) ?? 'Editar'">
+                            <button
+                                mat-icon-button
+                                [color]="'primary'"
+                                [disabled]="itemsBeingDeleted.has(row.id) || (column.settings?.disable ? column.settings?.disable(row) : false)"
+                                (click)="$event.stopPropagation(); onSelectRow(row)"
+                            >
+                                <mat-icon class="material-icons-outlined">{{ 'shared.components.table.edit' | translate }}</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container *ngSwitchCase="'details'">
+                    <td mat-cell *matCellDef="let row">
+                        <div [matTooltip]="column.settings?.tooltip(row) ?? 'See more'">
+                            <button
+                                mat-icon-button
+                                [color]="'primary'"
+                                [disabled]="itemsBeingDeleted.has(row.id) || (column.settings?.disable ? column.settings?.disable(row) : false)"
+                                (click)="$event.stopPropagation(); onSelectRow(row)"
+                            >
+                                <mat-icon [svgIcon]="'heroicons_outline:eye'"></mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container *ngSwitchCase="'date'">
+                    <td mat-cell *matCellDef="let row">
+                        <p>{{ [row, column.cell] | callback : getCell | date:'dd-MM-yyyy' }}</p>
+                    </td>
+                </ng-container>
+                <ng-container *ngSwitchCase="'translate'">
+                    <td mat-cell *matCellDef="let row">
+                        <p>{{ [row, column.cell] | callback : getCell }}</p>
+                    </td>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+
+        <!-- footer -->
+        <ng-container matColumnDef="noData">
+            <th mat-footer-cell *matFooterCellDef [attr.colspan]="columns.length">
+                <div class="no-data-message">
+                    <mat-icon [svgIcon]="'heroicons_outline:magnifying-glass-circle'"></mat-icon>
+                    <p>{{ 'shared.components.table.no-records' | translate }}</p>
+                </div>
+            </th>
+        </ng-container>
+
+        <ng-container matColumnDef="loading">
+            <th mat-footer-cell *matFooterCellDef [attr.colspan]="columns.length">
+                <div class="loading-wrapper">
+                    <div *ngFor="let i of skeletonRowsArray" class="loading-item">
+                        <div class="animated-background"></div>
+                    </div>
+                </div>
+            </th>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="[columns] | callback : getHeader"></tr>
+
+        <tr
+            mat-row
+            *matRowDef="let row; columns: [columns] | callback : getHeader"
+            [class.selectable]="selectable"
+            [class.loading]="itemsBeingDeleted.has(row.id)"
+            [class]="rowClass ? rowClass(row) : ''"
+            (click)="selectable ? onSelectRow(row) : null"
+        ></tr>
+
+        <tr mat-footer-row *matFooterRowDef="['noData']" [hidden]="resultsLength > 0 || loading"></tr>
+        <tr mat-footer-row *matFooterRowDef="['loading']" [hidden]="resultsLength > 0 || !loading"></tr>
+    </table>
+</div>
+
+<!-- paginator -->
+<mat-paginator
+    [showFirstLastButtons]="true"
+    [length]="resultsLength"
+    [pageSizeOptions]="[10, 25, 100, resultsLength]"
+    (page)="setPageSize($event.pageSize)"
+    [hidden]="!showPaginator || resultsLength === 0 || loading"
+></mat-paginator>

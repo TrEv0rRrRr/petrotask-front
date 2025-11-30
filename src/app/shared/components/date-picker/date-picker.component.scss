@@ -1,0 +1,97 @@
+.app-date-picker {
+  width: 100%;
+  --bg-color: white; // Valor por defecto
+  
+  ::ng-deep {
+    // Personalizar el input
+    .mat-mdc-text-field-wrapper {
+      background-color: var(--bg-color);
+      border-radius: 4px;
+    }
+    
+    // Eliminar el underline
+    .mdc-line-ripple {
+      display: none;
+    }
+    
+    // Ajustar el tamaño del input
+    .mat-mdc-form-field-flex {
+      height: 40px;
+      align-items: center;
+    }
+    
+    // Ocultar el espacio para errores cuando no hay errores
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+    
+    // Estilo para los días del calendario
+    .mat-calendar-body-cell.mat-calendar-body-selected .mat-calendar-body-cell-content {
+      background-color: var(--primary, #3f51b5);
+    }
+    
+    // Estilo para el hover sobre los días
+    .mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+      background-color: rgba(63, 81, 181, 0.3);
+    }
+    
+    // Ajustar el estilo del toggle del datepicker
+    .mat-datepicker-toggle {
+      color: var(--primary, #3f51b5);
+    }
+    
+    // Estilo para el input cuando está en foco
+    .mat-mdc-form-field.mat-focused .mat-mdc-form-field-focus-overlay {
+      background-color: transparent;
+    }
+    
+    // Dar un poco de sombra al form field para que destaque
+    .mat-mdc-form-field {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+// Estilos a nivel global para el popup del datepicker
+::ng-deep {
+  // El contenedor principal del popup
+  .mat-datepicker-content {
+    background-color: var(--bg-color, white) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2) !important;
+    
+    // Asegurar que la cabecera del calendario tenga un fondo sólido
+    .mat-calendar-header {
+      background-color: var(--bg-color, white);
+      padding: 8px 8px 0px 8px;
+    }
+    
+    // Estilos para el cuerpo del calendario
+    .mat-calendar {
+      background-color: var(--bg-color, white);
+    }
+    
+    // Estilos para los botones de navegación en el calendario
+    .mat-calendar-controls {
+      .mat-icon-button {
+        color: var(--primary, #3f51b5);
+      }
+    }
+    
+    // Estilos para el fondo de los días
+    .mat-calendar-body-cell-content {
+      color: rgba(0, 0, 0, 0.87);
+    }
+    
+    // Estilos para la vista de mes y año
+    .mat-calendar-table-header,
+    .mat-calendar-body-label {
+      color: rgba(0, 0, 0, 0.6);
+    }
+    
+    // Fijar sombra y borde al popup
+    .mat-datepicker-content-container {
+      border-radius: 4px;
+      overflow: hidden;
+    }
+  }
+}

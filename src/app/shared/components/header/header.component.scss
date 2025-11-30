@@ -1,0 +1,190 @@
+@use '../../../../styles/variables' as v;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 v.$spacing-lg;
+  height: 64px;
+  background: linear-gradient(135deg, 
+    var(--primary) 0%,
+    color-mix(in srgb, var(--primary) 85%, black) 100%
+  );
+  box-shadow: v.$shadow-lg;
+  position: relative;
+  z-index: v.$z-index-fixed;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: v.$spacing-md;
+  }
+
+  &__menu-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: v.$border-radius-full;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-inverted);
+    transition: all v.$transition-fast;
+    backdrop-filter: v.$glass-blur;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &__title {
+    font-size: v.$font-size-lg;
+    font-weight: v.$font-weight-bold;
+    color: var(--text-inverted);
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform v.$transition-fast;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: v.$spacing-md;
+  }
+
+  &__language-switcher {
+    margin-right: v.$spacing-sm;
+    
+    .language-switcher {
+      border: none;
+      box-shadow: none;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: v.$glass-blur;
+      border-radius: v.$border-radius-md;
+      transition: all v.$transition-fast;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .language-option {
+        min-width: 48px;
+        padding: 8px 12px;
+        font-size: 0.95em;
+        color: var(--text-inverted);
+
+        .flag {
+          font-size: 1.1em;
+        }
+
+        .short-code {
+          font-size: 0.95em;
+          font-weight: v.$font-weight-bold;
+          margin-left: 4px;
+        }
+      }
+    }
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: v.$spacing-sm;
+  }
+
+  &__profile-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: v.$border-radius-full;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-inverted);
+    transition: all v.$transition-fast;
+    backdrop-filter: v.$glass-blur;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    mat-icon {
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  &__logout-button {
+    background: rgba(231, 76, 60, 0.2);
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: v.$border-radius-full;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-inverted);
+    transition: all v.$transition-fast;
+    backdrop-filter: v.$glass-blur;
+
+    &:hover {
+      background-color: rgba(231, 76, 60, 0.3);
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 v.$spacing-md;
+  }
+}

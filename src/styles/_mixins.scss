@@ -1,0 +1,64 @@
+// Responsive breakpoints mixins
+@mixin mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1025px) {
+    @content;
+  }
+}
+
+// Utility mixins
+@mixin spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Flexbox utilities
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// Shadow utilities
+@mixin card-shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+@mixin hover-shadow {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+// Transition utilities
+@mixin smooth-transition {
+  transition: all 0.2s ease;
+}
+
+@mixin button-transition {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+} 

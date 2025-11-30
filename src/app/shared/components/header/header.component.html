@@ -1,0 +1,20 @@
+<header class="header">
+  <div class="header__left">
+    <button class="header__menu-toggle" (click)="onToggleSidebar()" aria-label="Toggle menu">
+      <mat-icon>{{ 'shared.components.header.menu' | translate }}</mat-icon>
+    </button>
+    <div class="header__title">{{ 'shared.components.header.title' | translate }}</div>
+  </div>
+
+  <div class="header__right">
+    <app-language-switcher class="header__language-switcher"></app-language-switcher>
+    <div class="header__user">
+      <button class="header__profile-button" (click)="onProfile()" aria-label="User profile">
+        <mat-icon>{{ 'shared.components.header.account' | translate }}</mat-icon>
+      </button>
+      <button class="header__logout-button" (click)="onLogout()" aria-label="Logout">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+  </div>
+</header>

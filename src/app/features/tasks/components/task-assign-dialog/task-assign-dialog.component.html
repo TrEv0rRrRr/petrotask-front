@@ -1,0 +1,137 @@
+<div class="task-assign-dialog">
+  <h2 mat-dialog-title>Asignar Tarea</h2>
+  
+  <mat-dialog-content>
+    <!-- Información de la tarea -->
+    <mat-card class="task-info-card">
+      <mat-card-content>
+        <h3>{{ data.task?.title }}</h3>
+        <p class="task-description">{{ data.task?.description }}</p>
+        <div class="task-details">
+          <div class="detail-item">
+            <mat-icon>location_on</mat-icon>
+            <span>{{ data.task?.location }}</span>
+          </div>
+          <div class="detail-item">
+            <mat-icon>schedule</mat-icon>
+            <span>{{ data.task?.estimatedDuration }} horas</span>
+          </div>
+          <div class="detail-item">
+            <mat-icon>priority</mat-icon>
+            <span>{{ data.task?.priority | titlecase }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Formulario de asignación -->
+    <form [formGroup]="assignForm" class="assign-form">
+      <!-- Tipo de asignación -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Tipo de asignación</mat-label>
+        <mat-select formControlName="assignmentType">
+          <mat-option value="individual">Asignar a técnico individual</mat-option>
+          <mat-option value="team">Asignar a equipo</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Asignación individual -->
+      <div *ngIf="assignmentType === 'individual'">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Seleccionar técnico</mat-label>
+          <mat-select formControlName="assignedTo">
+            <mat-option *ngFor="let tech of getAvailableTechnicians()" [value]="tech.id">
+              <div class="technician-option">
+                <div class="tech-info">
+                  <span class="tech-name">{{ tech.name }}</span>
+                  <span class="tech-location">{{ tech.location }}</span>
+                </div>
+                <div class="tech-status">
+                  <mat-chip [color]="getAvailabilityColor(tech.availability)" selected>
+                    <mat-icon matChipAvatar>{{ getAvailabilityIcon(tech.availability) }}</mat-icon>
+                    {{ tech.currentTasks }} tareas
+                  </mat-chip>
+                </div>
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Información del técnico seleccionado -->
+        <div *ngIf="assignForm.get('assignedTo')?.value" class="selected-info">
+          <mat-card class="info-card">
+            <mat-card-content>
+              <div class="selected-technician">
+                <mat-icon>person</mat-icon>
+                <div class="tech-details">
+                  <h4>{{ getTechnicianById(assignForm.get('assignedTo')?.value)?.name }}</h4>
+                  <p>Habilidades: {{ getTechnicianById(assignForm.get('assignedTo')?.value)?.skills?.join(', ') }}</p>
+                  <p>Tareas actuales: {{ getTechnicianById(assignForm.get('assignedTo')?.value)?.currentTasks }}</p>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+      <!-- Asignación a equipo -->
+      <div *ngIf="assignmentType === 'team'">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Seleccionar equipo</mat-label>
+          <mat-select formControlName="assignedTeam">
+            <mat-option *ngFor="let team of getAvailableTeams()" [value]="team.id">
+              <div class="team-option">
+                <div class="team-info">
+                  <span class="team-name">{{ team.name }}</span>
+                  <span class="team-specialization">{{ team.specialization }}</span>
+                </div>
+                <div class="team-status">
+                  <mat-chip [color]="getAvailabilityColor(team.availability)" selected>
+                    <mat-icon matChipAvatar>{{ getAvailabilityIcon(team.availability) }}</mat-icon>
+                    {{ team.currentTasks }} tareas
+                  </mat-chip>
+                </div>
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Información del equipo seleccionado -->
+        <div *ngIf="assignForm.get('assignedTeam')?.value" class="selected-info">
+          <mat-card class="info-card">
+            <mat-card-content>
+              <div class="selected-team">
+                <mat-icon>group</mat-icon>
+                <div class="team-details">
+                  <h4>{{ getTeamById(assignForm.get('assignedTeam')?.value)?.name }}</h4>
+                  <p>Especialización: {{ getTeamById(assignForm.get('assignedTeam')?.value)?.specialization }}</p>
+                  <p>Miembros: {{ getTeamById(assignForm.get('assignedTeam')?.value)?.members?.join(', ') }}</p>
+                  <p>Tareas actuales: {{ getTeamById(assignForm.get('assignedTeam')?.value)?.currentTasks }}</p>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+      <!-- Notas adicionales -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Notas adicionales (opcional)</mat-label>
+        <textarea matInput 
+                  formControlName="notes"
+                  placeholder="Instrucciones especiales, consideraciones de seguridad, etc."
+                  rows="3"></textarea>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-raised-button 
+            color="primary" 
+            (click)="onSubmit()"
+            [disabled]="!assignForm.valid">
+      Asignar Tarea
+    </button>
+  </mat-dialog-actions>
+</div>

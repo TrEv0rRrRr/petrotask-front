@@ -1,0 +1,21 @@
+@use 'variables' as v;
+
+body {
+  font-family: v.$font-family-base;
+  font-size: v.$font-size-base;
+  font-weight: v.$font-weight-regular;
+  color: var(--text-primary);
+  background-color: var(--background);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: v.$font-weight-bold;
+  margin: 0 0 0.5em 0;
+}
+
+p {
+  color: var(--text-secondary);
+  margin: 0 0 1em 0;
+}

@@ -1,0 +1,35 @@
+<div class="date-navigator-container">
+  <!-- Date picker and controls -->
+  <div class="date-controls">
+    <button mat-icon-button (click)="navigateToPreviousWeek()" class="nav-button">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    
+    <div class="date-picker-container">
+      <app-date-picker 
+        [(ngModel)]="selectedDate" 
+        (dateSelected)="onDatePickerChange($event)"
+        [appearance]="'outline'"
+        [readonly]="true"
+        [backgroundColor]="'#f5f5f5'"
+      ></app-date-picker>
+    </div>
+    
+    <button mat-icon-button (click)="navigateToNextWeek()" class="nav-button">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+  
+  <!-- Week day selector -->
+  <div class="week-selector">
+    <div 
+      *ngFor="let day of daysOfWeek" 
+      class="day-container" 
+      [class.selected]="day.isSelected"
+      (click)="selectDate(day.date)"
+    >
+      <div class="day-of-week">{{ day.dayOfWeek }}</div>
+      <div class="day-number">{{ day.dayNumber }}</div>
+    </div>
+  </div>
+</div>

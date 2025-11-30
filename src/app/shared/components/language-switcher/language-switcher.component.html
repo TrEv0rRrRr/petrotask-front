@@ -1,0 +1,11 @@
+<mat-button-toggle-group [value]="currentLang" appearance="standard" aria-label="Preferred Language" name="language" class="language-switcher">
+  @for (language of languages; track language.code) {
+    <mat-button-toggle 
+      (click)="useLanguage(language.code)"
+      [aria-label]="language.short"
+      [value]="language.code"
+      class="language-option">
+      <span class="short-code">{{ language.short }}</span>
+    </mat-button-toggle>
+  }
+</mat-button-toggle-group>

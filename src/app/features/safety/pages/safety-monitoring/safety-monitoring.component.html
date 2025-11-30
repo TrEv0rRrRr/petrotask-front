@@ -1,0 +1,143 @@
+<div class="safety-monitoring-container">
+  <div class="header">
+    <h1>{{ 'safety-monitoring.title' | translate }}</h1>
+    <p>{{ 'safety-monitoring.subtitle' | translate }}</p>
+  </div>
+
+  <mat-tab-group [(selectedIndex)]="currentTab" class="safety-tabs">
+    
+    <!-- Tab 1: Métricas en Tiempo Real -->
+    <mat-tab label="{{ 'safety-monitoring.real-time-metrics' | translate }}">
+      <div class="metrics-grid">
+        <mat-card *ngFor="let metric of safetyMetrics" 
+                  class="metric-card"
+                  [ngClass]="'status-' + metric.status">
+          <mat-card-header>
+            <mat-card-title>{{ metric.name }}</mat-card-title>
+            <mat-card-subtitle>{{ metric.status | translate }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="metric-value">
+              <span class="value">{{ metric.value }}</span>
+              <span class="unit">{{ metric.unit }}</span>
+            </div>
+            <mat-progress-bar 
+              [value]="getMetricProgress(metric)"
+              [color]="getMetricColor(metric.status)">
+            </mat-progress-bar>
+            <div class="trend-indicator">
+              <mat-icon [ngClass]="'trend-' + metric.trend">
+                {{ getTrendIcon(metric.trend) }}
+              </mat-icon>
+              <span>{{ metric.trend | translate }}</span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <!-- Tab 2: Alertas Activas -->
+    <mat-tab label="{{ 'safety-monitoring.active-alerts' | translate }}">
+      <div class="alerts-container">
+        <div class="alerts-summary">
+          <mat-chip-set>
+            <mat-chip class="critical-chip">
+              <mat-icon>error</mat-icon>
+              {{ getCriticalAlertsCount() }} {{ 'safety-monitoring.critical' | translate }}
+            </mat-chip>
+            <mat-chip class="warning-chip">
+              <mat-icon>warning</mat-icon>
+              {{ getWarningAlertsCount() }} {{ 'safety-monitoring.warnings' | translate }}
+            </mat-chip>
+            <mat-chip class="info-chip">
+              <mat-icon>info</mat-icon>
+              {{ getInfoAlertsCount() }} {{ 'safety-monitoring.info' | translate }}
+            </mat-chip>
+          </mat-chip-set>
+        </div>
+
+        <div class="alerts-list">
+          <mat-card *ngFor="let alert of activeAlerts" 
+                    class="alert-card"
+                    [ngClass]="'alert-' + alert.type">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon [ngClass]="'alert-icon-' + alert.type">
+                  {{ getAlertIcon(alert.type) }}
+                </mat-icon>
+                {{ alert.title }}
+              </mat-card-title>
+              <mat-card-subtitle>
+                {{ alert.location }} • {{ alert.timestamp | date:'short' }}
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p>{{ alert.description }}</p>
+              <div class="alert-actions">
+                <button mat-button 
+                        color="primary" 
+                        (click)="acknowledgeAlert(alert)"
+                        [disabled]="alert.status !== 'active'">
+                  <mat-icon>check</mat-icon>
+                  {{ 'safety-monitoring.acknowledge' | translate }}
+                </button>
+                <button mat-button 
+                        color="accent" 
+                        (click)="resolveAlert(alert)"
+                        [disabled]="alert.status === 'resolved'">
+                  <mat-icon>done_all</mat-icon>
+                  {{ 'safety-monitoring.resolve' | translate }}
+                </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Tab 3: Historial de Incidentes -->
+    <mat-tab label="{{ 'safety-monitoring.incident-history' | translate }}">
+      <div class="incident-history">
+        <mat-table [dataSource]="incidentHistory" class="incidents-table">
+          <ng-container matColumnDef="type">
+            <mat-header-cell *matHeaderCellDef>{{ 'safety-monitoring.type' | translate }}</mat-header-cell>
+            <mat-cell *matCellDef="let incident">
+              <mat-icon [ngClass]="'alert-icon-' + incident.type">
+                {{ getAlertIcon(incident.type) }}
+              </mat-icon>
+              {{ incident.type | translate }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef>{{ 'safety-monitoring.title' | translate }}</mat-header-cell>
+            <mat-cell *matCellDef="let incident">{{ incident.title }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="location">
+            <mat-header-cell *matHeaderCellDef>{{ 'safety-monitoring.location' | translate }}</mat-header-cell>
+            <mat-cell *matCellDef="let incident">{{ incident.location }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="timestamp">
+            <mat-header-cell *matHeaderCellDef>{{ 'safety-monitoring.timestamp' | translate }}</mat-header-cell>
+            <mat-cell *matCellDef="let incident">{{ incident.timestamp | date:'short' }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef>{{ 'safety-monitoring.status' | translate }}</mat-header-cell>
+            <mat-cell *matCellDef="let incident">
+              <mat-chip [ngClass]="'status-' + incident.status">
+                {{ incident.status | translate }}
+              </mat-chip>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>

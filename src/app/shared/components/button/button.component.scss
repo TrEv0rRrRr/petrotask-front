@@ -1,0 +1,328 @@
+// Color palette
+$primary: #f9a825;
+$primary-dark: #c17900;
+$primary-light: #ffd95a;
+$secondary: #1a237e;
+$secondary-dark: #10194a;
+$secondary-light: #534bae;
+$danger: #d32f2f;
+$danger-dark: #a31515;
+$danger-light: #ff5f52;
+$neutral: #6c757d;
+$neutral-dark: #495057;
+$neutral-light: #adb5bd;
+$success: #28a745;
+$success-dark: #1e7e34;
+$success-light: #5cb85c;
+$warning: #ffc107;
+$warning-dark: #e0a800;
+$warning-light: #ffed4a;
+
+// Base colors
+$white: #ffffff;
+$black: #000000;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+
+// Design tokens
+$border-radius: 8px;
+$border-radius-sm: 4px;
+$border-radius-lg: 12px;
+$border-radius-xl: 16px;
+$transition: 0.2s ease-in-out;
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+$shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+
+:host {
+  display: inline-block;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px solid transparent;
+  border-radius: $border-radius;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  transition: all $transition;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  
+  &:focus-visible {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+  }
+
+  // Base disabled state
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  // Loading state
+  &.loading {
+    pointer-events: none;
+    
+    .loading-spinner {
+      ::ng-deep circle {
+        stroke: currentColor;
+      }
+    }
+  }
+
+  // Sizes
+  &.size-small {
+    padding: 6px 12px;
+    font-size: 13px;
+    min-height: 32px;
+    
+    .icon {
+      font-size: 16px;
+    }
+    
+    &.only-icon {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      min-height: 32px;
+      padding: 0;
+    }
+  }
+
+  &.size-medium {
+    padding: 10px 20px;
+    font-size: 14px;
+    min-height: 40px;
+    
+    .icon {
+      font-size: 18px;
+    }
+    
+    &.only-icon {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      min-height: 40px;
+      padding: 0;
+    }
+  }
+
+  &.size-large {
+    padding: 14px 28px;
+    font-size: 16px;
+    min-height: 48px;
+    
+    .icon {
+      font-size: 20px;
+    }
+    
+    &.only-icon {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      min-height: 48px;
+      padding: 0;
+    }
+  }
+
+  // Colors and variants
+  @each $color, $value, $dark, $light in (
+    ('primary', $primary, $primary-dark, $primary-light),
+    ('secondary', $secondary, $secondary-dark, $secondary-light),
+    ('danger', $danger, $danger-dark, $danger-light),
+    ('neutral', $neutral, $neutral-dark, $neutral-light),
+    ('success', $success, $success-dark, $success-light),
+    ('warning', $warning, $warning-dark, $warning-light)
+  ) {
+    // Solid variant
+    &.color-#{$color}.variant-solid {
+      background-color: $value;
+      color: $white;
+      box-shadow: $shadow-sm;
+      
+      &:hover:not(:disabled):not(.loading) {
+        background-color: $dark;
+        box-shadow: $shadow-md;
+        transform: translateY(-1px);
+      }
+      
+      &:active:not(:disabled):not(.loading) {
+        background-color: $dark;
+        transform: translateY(0);
+        box-shadow: $shadow-sm;
+      }
+    }
+
+    // Outline variant
+    &.color-#{$color}.variant-outline {
+      background-color: transparent;
+      color: $value;
+      border-color: $value;
+      
+      &:hover:not(:disabled):not(.loading) {
+        background-color: $value;
+        color: $white;
+        transform: translateY(-1px);
+        box-shadow: $shadow-sm;
+      }
+      
+      &:active:not(:disabled):not(.loading) {
+        background-color: $dark;
+        border-color: $dark;
+        transform: translateY(0);
+      }
+    }
+
+    // Text variant
+    &.color-#{$color}.variant-text {
+      background-color: transparent;
+      color: $value;
+      border-color: transparent;
+      box-shadow: none;
+      
+      &:hover:not(:disabled):not(.loading) {
+        background-color: rgba($value, 0.08);
+        color: $dark;
+      }
+      
+      &:active:not(:disabled):not(.loading) {
+        background-color: rgba($value, 0.16);
+      }
+    }
+
+    // Ghost variant
+    &.color-#{$color}.variant-ghost {
+      background-color: rgba($value, 0.08);
+      color: $value;
+      border-color: transparent;
+      
+      &:hover:not(:disabled):not(.loading) {
+        background-color: rgba($value, 0.16);
+        color: $dark;
+        transform: translateY(-1px);
+      }
+      
+      &:active:not(:disabled):not(.loading) {
+        background-color: rgba($value, 0.24);
+        transform: translateY(0);
+      }
+    }
+  }
+
+  // Modifiers
+  &.full-width {
+    width: 100%;
+  }
+
+  &.rounded {
+    border-radius: $border-radius-xl;
+    
+    &.only-icon {
+      border-radius: 50%;
+    }
+  }
+
+  &.no-elevation {
+    box-shadow: none !important;
+  }
+
+  &.only-icon {
+    border-radius: 50%;
+    justify-content: center;
+    
+    .button-text {
+      display: none;
+    }
+  }
+
+  // Icon and text styles
+  .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .button-text {
+    display: inline-block;
+    line-height: 1.2;
+    font-weight: inherit;
+  }
+
+  .loading-spinner {
+    flex-shrink: 0;
+  }
+
+  // Icon positioning
+  &.icon-left {
+    .icon-left {
+      margin-right: 4px;
+    }
+  }
+
+  &.icon-right {
+    .icon-right {
+      margin-left: 4px;
+    }
+  }
+}
+
+// Dark theme support
+@media (prefers-color-scheme: dark) {
+  .button {
+    &.color-neutral.variant-solid {
+      background-color: $gray-700;
+      color: $white;
+      
+      &:hover:not(:disabled):not(.loading) {
+        background-color: $gray-600;
+      }
+    }
+    
+    &.color-neutral.variant-outline {
+      color: $gray-300;
+      border-color: $gray-300;
+      
+      &:hover:not(:disabled):not(.loading) {
+        background-color: $gray-300;
+        color: $gray-900;
+      }
+    }
+    
+    &.color-neutral.variant-text {
+      color: $gray-300;
+      
+      &:hover:not(:disabled):not(.loading) {
+        background-color: rgba($gray-300, 0.08);
+        color: $gray-100;
+      }
+    }
+    
+    &.color-neutral.variant-ghost {
+      background-color: rgba($gray-300, 0.08);
+      color: $gray-300;
+      
+      &:hover:not(:disabled):not(.loading) {
+        background-color: rgba($gray-300, 0.16);
+        color: $gray-100;
+      }
+    }
+  }
+}

@@ -1,0 +1,217 @@
+<div class="task-management-container">
+  <!-- Header con estadísticas del dashboard -->
+  <div class="dashboard-header">
+    <h1>Gestión de Tareas Operativas</h1>
+    <div class="stats-grid">
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <div class="stat-content">
+            <mat-icon>assignment</mat-icon>
+            <div class="stat-info">
+              <span class="stat-number">{{ dashboardStats.total }}</span>
+              <span class="stat-label">Total</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      
+      <mat-card class="stat-card pending">
+        <mat-card-content>
+          <div class="stat-content">
+            <mat-icon>schedule</mat-icon>
+            <div class="stat-info">
+              <span class="stat-number">{{ dashboardStats.pending }}</span>
+              <span class="stat-label">Pendientes</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      
+      <mat-card class="stat-card in-progress">
+        <mat-card-content>
+          <div class="stat-content">
+            <mat-icon>play_circle</mat-icon>
+            <div class="stat-info">
+              <span class="stat-number">{{ dashboardStats.inProgress }}</span>
+              <span class="stat-label">En Progreso</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      
+      <mat-card class="stat-card completed">
+        <mat-card-content>
+          <div class="stat-content">
+            <mat-icon>check_circle</mat-icon>
+            <div class="stat-info">
+              <span class="stat-number">{{ dashboardStats.completed }}</span>
+              <span class="stat-label">Completadas</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      
+      <mat-card class="stat-card blocked">
+        <mat-card-content>
+          <div class="stat-content">
+            <mat-icon>block</mat-icon>
+            <div class="stat-info">
+              <span class="stat-number">{{ dashboardStats.blocked }}</span>
+              <span class="stat-label">Bloqueadas</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Controles y filtros -->
+  <div class="controls-section">
+    <div class="filters">
+      <mat-form-field appearance="outline">
+        <mat-label>Estado</mat-label>
+        <mat-select [(value)]="statusFilter">
+          <mat-option value="all">Todos</mat-option>
+          <mat-option value="pending">Pendientes</mat-option>
+          <mat-option value="assigned">Asignadas</mat-option>
+          <mat-option value="in-progress">En Progreso</mat-option>
+          <mat-option value="completed">Completadas</mat-option>
+          <mat-option value="blocked">Bloqueadas</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Prioridad</mat-label>
+        <mat-select [(value)]="priorityFilter">
+          <mat-option value="all">Todas</mat-option>
+          <mat-option value="critical">Crítica</mat-option>
+          <mat-option value="high">Alta</mat-option>
+          <mat-option value="medium">Media</mat-option>
+          <mat-option value="low">Baja</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Asignación</mat-label>
+        <mat-select [(value)]="assignedFilter">
+          <mat-option value="all">Todas</mat-option>
+          <mat-option value="assigned">Asignadas</mat-option>
+          <mat-option value="unassigned">Sin Asignar</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="createTask()">
+        <mat-icon>add</mat-icon>
+        Nueva Tarea
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabla de tareas -->
+  <mat-card class="tasks-table-card">
+    <mat-card-content>
+      <table mat-table [dataSource]="getFilteredTasks()" class="tasks-table">
+        <!-- Columna Título -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Tarea</th>
+          <td mat-cell *matCellDef="let task">
+            <div class="task-title">
+              <strong>{{ task.title }}</strong>
+              <p class="task-description">{{ task.description }}</p>
+              <div class="task-tags">
+                <mat-chip *ngFor="let tag of task.tags" [color]="'primary'" selected>
+                  {{ tag }}
+                </mat-chip>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Columna Prioridad -->
+        <ng-container matColumnDef="priority">
+          <th mat-header-cell *matHeaderCellDef>Prioridad</th>
+          <td mat-cell *matCellDef="let task">
+            <mat-chip [color]="getPriorityColor(task.priority)" selected>
+              <mat-icon matChipAvatar>{{ getPriorityIcon(task.priority) }}</mat-icon>
+              {{ task.priority | titlecase }}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <!-- Columna Estado -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <td mat-cell *matCellDef="let task">
+            <mat-chip [color]="getStatusColor(task.status)" selected>
+              <mat-icon matChipAvatar>{{ getStatusIcon(task.status) }}</mat-icon>
+              {{ task.status | titlecase }}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <!-- Columna Asignado -->
+        <ng-container matColumnDef="assignedTo">
+          <th mat-header-cell *matHeaderCellDef>Asignado a</th>
+          <td mat-cell *matCellDef="let task">
+            <span *ngIf="task.assignedTo; else unassigned">
+              {{ task.assignedTo }}
+            </span>
+            <ng-template #unassigned>
+              <span class="unassigned">Sin asignar</span>
+            </ng-template>
+          </td>
+        </ng-container>
+
+        <!-- Columna Ubicación -->
+        <ng-container matColumnDef="location">
+          <th mat-header-cell *matHeaderCellDef>Ubicación</th>
+          <td mat-cell *matCellDef="let task">
+            <div class="location-info">
+              <mat-icon>location_on</mat-icon>
+              {{ task.location }}
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Columna Fecha Programada -->
+        <ng-container matColumnDef="scheduledDate">
+          <th mat-header-cell *matHeaderCellDef>Fecha Programada</th>
+          <td mat-cell *matCellDef="let task">
+            {{ formatDate(task.scheduledDate) }}
+          </td>
+        </ng-container>
+
+        <!-- Columna Acciones -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let task">
+            <div class="action-buttons">
+              <button mat-icon-button 
+                      *ngIf="!task.assignedTo" 
+                      (click)="assignTask(task)"
+                      matTooltip="Asignar tarea">
+                <mat-icon>assignment_ind</mat-icon>
+              </button>
+              
+              <button mat-icon-button 
+                      (click)="rescheduleTask(task)"
+                      matTooltip="Reprogramar">
+                <mat-icon>schedule</mat-icon>
+              </button>
+              
+              <button mat-icon-button 
+                      matTooltip="Ver detalles">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

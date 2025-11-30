@@ -1,0 +1,191 @@
+@use '../../../../styles/variables' as v;
+
+// Colores institucionales
+$primary-orange: #f9a825;
+$primary-blue: #1a237e;
+$header-bg: $primary-orange;
+$header-text: #fff;
+$row-bg: #fff;
+$row-alt-bg: #f5f6fa;
+$row-hover-bg: #e3f2fd;
+$border-radius: 10px;
+$action-btn-bg: $primary-orange;
+$action-btn-text: #fff;
+$action-btn-hover-bg: darken($primary-orange, 10%);
+
+:host {
+    display: block;
+    width: 100%;
+  }
+  
+  :host ::ng-deep {
+    .m-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 800px;
+      margin-bottom: 32px;
+      border-radius: $border-radius;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(26, 35, 126, 0.06);
+  
+      thead {
+        background: $header-bg;
+        color: $header-text;
+        
+        th {
+          padding: 16px 12px;
+          text-align: center;
+          font-weight: 600;
+          font-size: 16px;
+          position: sticky;
+          top: 0;
+          z-index: 10;
+          background: $header-bg;
+          border: none;
+        }
+      }
+  
+      tbody {
+        tr {
+          background: $row-bg;
+          transition: background 0.2s;
+          font-size: 15px;
+          color: $primary-blue;
+          border: none;
+  
+          &:nth-child(even) {
+            background: $row-alt-bg;
+          }
+          &:hover {
+            background: $row-hover-bg;
+          }
+  
+          &.selectable {
+            cursor: pointer;
+            &:hover {
+              background: $row-hover-bg;
+            }
+          }
+  
+          &.loading {
+            opacity: 0.5;
+            pointer-events: none;
+          }
+  
+          td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 15px;
+            text-align: center;
+            color: $primary-blue;
+            border: none;
+          }
+        }
+      }
+    }
+  
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+  
+      &.fixed-size {
+        overflow-y: auto;
+        position: relative;
+  
+        .m-table {
+          margin-bottom: 0;
+        }
+      }
+    }
+  
+    .no-data-message {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: v.$spacing-lg;
+      color: var(--text-secondary);
+  
+      mat-icon {
+        margin-right: v.$spacing-sm;
+      }
+  
+      p {
+        font-weight: v.$font-weight-bold;
+        font-size: v.$font-size-sm;
+      }
+    }
+  
+    .loading-wrapper {
+      width: 100%;
+    }
+  
+    .loading-item {
+      padding: v.$spacing-sm v.$spacing-md;
+      border-bottom: 1px solid var(--secondary);
+  
+      .animated-background {
+        height: 20px;
+        background: linear-gradient(
+          90deg,
+          var(--surface) 0%,
+          var(--secondary) 50%,
+          var(--surface) 100%
+        );
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+      }
+    }
+  
+    @keyframes loading {
+      0% {
+        background-position: 200% 0;
+      }
+      100% {
+        background-position: -200% 0;
+      }
+    }
+  }
+
+.material-icons-outlined {
+    font-family: 'Material Icons Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+:host ::ng-deep .mat-button, :host ::ng-deep .mat-raised-button, :host ::ng-deep .action-btn {
+  background: $action-btn-bg;
+  color: $action-btn-text;
+  border-radius: 6px;
+  font-weight: 500;
+  box-shadow: none;
+  transition: background 0.2s;
+  &:hover {
+    background: $action-btn-hover-bg;
+  }
+}
+
+:host ::ng-deep .m-table, :host ::ng-deep .m-table thead, :host ::ng-deep .m-table tr {
+  border-radius: $border-radius;
+}
+
+@media (max-width: 900px) {
+  :host ::ng-deep .m-table th, :host ::ng-deep .m-table td {
+    padding: 10px 6px;
+    font-size: 14px;
+  }
+}
+
+:host ::ng-deep .m-table thead th {
+  color: #fff !important;
+}

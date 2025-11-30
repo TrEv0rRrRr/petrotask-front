@@ -1,0 +1,85 @@
+<div [class]="inputClasses">
+  <!-- Label -->
+  <label *ngIf="label || labelTranslateKey" class="input-label">
+    <span *ngIf="labelTranslateKey; else labelText">
+      {{ labelTranslateKey | translate }}
+    </span>
+    <ng-template #labelText>{{ label }}</ng-template>
+    <span *ngIf="required" class="required-indicator">*</span>
+  </label>
+
+  <!-- Input Container -->
+  <div class="input-container">
+    <!-- Leading Icon -->
+    <mat-icon *ngIf="leadingIcon" class="input-icon leading">
+      {{ leadingIcon }}
+    </mat-icon>
+
+    <!-- Input Field -->
+    <input
+      [type]="inputType"
+      [ngModel]="value"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [required]="required"
+      [attr.maxlength]="maxLength"
+      [attr.minlength]="minLength"
+      [attr.min]="min"
+      [attr.max]="max"
+      [attr.step]="step"
+      [attr.pattern]="pattern"
+      [attr.autocomplete]="autocomplete"
+      [attr.aria-label]="label"
+      [attr.placeholder]="
+        placeholderTranslateKey
+          ? (placeholderTranslateKey | translate)
+          : placeholder
+      "
+      class="input-field"
+      (ngModelChange)="onInputChange($event)"
+      (blur)="onInputBlur($event)"
+      (focus)="onInputFocus($event)"
+      (keydown)="onInputKeydown($event)"
+      (keyup)="onInputKeyup($event)"
+    />
+
+    <!-- Trailing Actions -->
+    <div
+      class="input-actions"
+      *ngIf="showClearButton || trailingIcon || loading"
+    >
+      <!-- Loading Spinner -->
+      <div *ngIf="loading" class="loading-spinner">
+        <mat-icon class="spinning">refresh</mat-icon>
+      </div>
+
+      <!-- Clear Button -->
+      <button
+        *ngIf="showClearButton && !loading"
+        type="button"
+        class="clear-button"
+        (click)="onClear()"
+        [attr.aria-label]="'Clear input' | translate"
+      >
+        <mat-icon>clear</mat-icon>
+      </button>
+
+      <!-- Trailing Icon -->
+      <mat-icon
+        *ngIf="trailingIcon && !loading && !showClearButton"
+        class="input-icon trailing"
+        (click)="onTrailingIconClick($event)"
+      >
+        {{ trailingIcon }}
+      </mat-icon>
+    </div>
+  </div>
+
+  <!-- Helper Text or Error Message -->
+  <div *ngIf="helperText || errorMessage" class="input-helper">
+    <span *ngIf="errorMessage" class="error-text">{{ errorMessage }}</span>
+    <span *ngIf="helperText && !errorMessage" class="helper-text">{{
+      helperText
+    }}</span>
+  </div>
+</div>

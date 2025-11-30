@@ -1,0 +1,22 @@
+<mat-form-field [appearance]="appearance" [color]="color" class="app-date-picker" [ngStyle]="{'--bg-color': backgroundColor}">
+  <mat-label *ngIf="showLabel">{{ label }}</mat-label>
+  
+  <mat-icon *ngIf="showCalendarIcon && calendarIconPosition === 'prefix'" matPrefix>calendar_today</mat-icon>
+  
+  <input 
+    matInput 
+    [matDatepicker]="picker"
+    [placeholder]="placeholder"
+    [(ngModel)]="value"
+    [readonly]="readonly"
+    [disabled]="disabled"
+    [required]="required"
+    [min]="minDate"
+    [max]="maxDate"
+    (dateChange)="onDateChange($event)"
+  >
+  
+  <mat-datepicker-toggle *ngIf="showCalendarIcon && calendarIconPosition === 'suffix'" matIconSuffix [for]="picker" [disabled]="disabled"></mat-datepicker-toggle>
+  
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>

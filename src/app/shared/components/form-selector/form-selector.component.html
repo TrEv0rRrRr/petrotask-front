@@ -1,0 +1,88 @@
+<div [class]="getCssClasses()">
+  <label *ngIf="label || labelTranslateKey" class="form-selector__label">
+    {{ labelTranslateKey ? (labelTranslateKey | translate) : label }}
+    <span *ngIf="required" class="form-selector__required">*</span>
+  </label>
+
+  <!-- Selección múltiple con chips -->
+  <div *ngIf="multiple" class="form-selector__multiple-container">
+    <div class="form-selector__selected-chips">
+      <div
+        *ngFor="let selectedValue of getSelectedOptions()"
+        class="form-selector__chip"
+      >
+        <span class="form-selector__chip-text">{{ selectedValue.label }}</span>
+        <button
+          type="button"
+          class="form-selector__chip-remove"
+          (click)="removeSelection(selectedValue.value)"
+          [disabled]="disabled"
+        >
+          ×
+        </button>
+      </div>
+
+      <div
+        class="form-selector__chip form-selector__chip--add"
+        *ngIf="!disabled"
+      >
+        <select
+          class="form-selector__hidden-select"
+          (change)="addSelection($event)"
+          [disabled]="disabled"
+        >
+          <option value="">
+            {{
+              placeholderTranslateKey
+                ? (placeholderTranslateKey | translate)
+                : placeholder || "Seleccionar..."
+            }}
+          </option>
+          <option
+            *ngFor="let option of getAvailableOptions()"
+            [value]="option.value"
+            [disabled]="option.disabled"
+          >
+            {{ option.label }}
+          </option>
+        </select>
+        <span class="form-selector__add-text">+ Agregar</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Selección simple normal -->
+  <div *ngIf="!multiple" class="form-selector__field">
+    <select
+      [value]="value"
+      [disabled]="disabled"
+      class="form-selector__select"
+      (change)="onSelectionChange($event)"
+      (blur)="onBlur()"
+      (focus)="onFocus()"
+    >
+      <option *ngIf="placeholder || placeholderTranslateKey" value="" disabled>
+        {{
+          placeholderTranslateKey
+            ? (placeholderTranslateKey | translate)
+            : placeholder
+        }}
+      </option>
+      <option
+        *ngFor="let option of options"
+        [value]="option.value"
+        [disabled]="option.disabled"
+      >
+        {{ option.label }}
+      </option>
+    </select>
+  </div>
+
+  <div *ngIf="hasError && errorMessage" class="form-selector__error">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="helpText && !hasError" class="form-selector__help">
+    {{ helpText }}
+  </div>
+</div>

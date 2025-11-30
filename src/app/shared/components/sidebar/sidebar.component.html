@@ -1,0 +1,49 @@
+<div class="sidebar" [class.sidebar--collapsed]="!isOpen">
+  <div class="sidebar__header">
+    <div class="sidebar__logo">
+        @if(isOpen) {
+            <span class="logo-full">{{ 'shared.components.sidebar.logo' | translate }}</span>
+        } @else {
+            <span class="logo-icon">{{ 'shared.components.sidebar.logo-short' | translate }}</span>
+        }
+    </div>
+  </div>
+
+  <div class="sidebar__content">
+    <ul class="sidebar__menu">
+      @for (item of menuItems; track item.id) {
+      <li  class="sidebar__menu-item">
+        <div *ngIf="!hasChildren(item)" class="sidebar__menu-link" [routerLink]="item.route" routerLinkActive="active">
+          <span class="sidebar__menu-icon material-icons-outlined" *ngIf="item.icon">{{item.icon}}</span>
+          <span class="sidebar__menu-label" *ngIf="isOpen">{{item.label}}</span>
+        </div>
+
+        <div *ngIf="hasChildren(item)" class="sidebar__menu-parent" (click)="toggleSubmenu(item)" [class.expanded]="item.expanded">
+          <div class="sidebar__menu-parent-header">
+            <span class="sidebar__menu-icon material-icons-outlined" *ngIf="item.icon">{{item.icon}}</span>
+            <span class="sidebar__menu-label" *ngIf="isOpen">{{item.label}}</span>
+            <span class="sidebar__menu-expand material-icons-outlined" *ngIf="isOpen">
+              {{item.expanded ? 'expand_less' : 'expand_more'}}
+            </span>
+          </div>
+
+          <ul class="sidebar__submenu" *ngIf="item.expanded && isOpen">
+            <li *ngFor="let child of item.children" class="sidebar__submenu-item">
+              <a class="sidebar__submenu-link" [routerLink]="child.route" routerLinkActive="active">
+                <span class="sidebar__submenu-icon material-icons-outlined" *ngIf="child.icon">{{child.icon}}</span>
+                <span class="sidebar__submenu-label">{{child.label}}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      }
+    </ul>
+  </div>
+
+  <div class="sidebar__footer">
+    <div class="sidebar__collapse-btn" (click)="isOpen = !isOpen">
+      <span class="material-icons-outlined">{{isOpen ? 'chevron_left' : 'chevron_right'}}</span>
+    </div>
+  </div>
+</div>
