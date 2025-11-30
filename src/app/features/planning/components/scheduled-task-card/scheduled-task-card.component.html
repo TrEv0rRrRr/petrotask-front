@@ -1,0 +1,22 @@
+<div class="scheduled-task"
+  [class.scheduled]="schedule.programmingStatus === 'SCHEDULED'"
+  [class.completed]="schedule.programmingStatus === 'COMPLETED'"
+  [class.pending]="schedule.programmingStatus === 'PENDING'"
+  [class.cancelled]="schedule.programmingStatus === 'CANCELLED'"
+  [style.height.px]="schedule.end && schedule.start ? (schedule.end.getHours() - schedule.start.getHours()) * 60 : 60"
+  [style.top.px]="schedule.start ? (schedule.start.getMinutes() / 60) * 60 : 0"
+  draggable="true"
+  (dragstart)="onDragStart($event)"
+  (click)="onEditScheduling()">
+
+  <div class="task-info">
+    <h4>{{ 'task-planning.task' | translate }} {{ schedule.taskId || 'N/A' }}</h4>
+    <p *ngIf="schedule.start && schedule.end">
+      {{ schedule.start | date:'HH:mm' }} - {{ schedule.end | date:'HH:mm' }}
+    </p>
+    <p>{{ 'task-planning.status' | translate }}: {{ schedule.programmingStatus }}</p>
+    <p *ngIf="schedule.resourceType">
+      {{ 'task-planning.resource' | translate }}: {{ schedule.resourceType }} ({{ schedule.resourceId }})
+    </p>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+.scheduled-task {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  min-height: 30px;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: grab;
+  z-index: 1;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  &.scheduled {
+    background-color: rgba(63, 81, 181, 0.8);
+    color: white;
+    border-left: 4px solid #303f9f;
+  }
+  
+  &.completed {
+    background-color: rgba(76, 175, 80, 0.8);
+    color: white;
+    border-left: 4px solid #388e3c;
+  }
+  
+  &.pending {
+    background-color: rgba(255, 152, 0, 0.8);
+    color: white;
+    border-left: 4px solid #f57c00;
+  }
+  
+  &.cancelled {
+    background-color: rgba(244, 67, 54, 0.8);
+    color: white;
+    border-left: 4px solid #d32f2f;
+  }
+  
+  .task-info {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    
+    h4 {
+      margin: 0 0 5px 0;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 1rem;
+    }
+    
+    p {
+      margin: 0 0 3px 0;
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+    
+    .equipment {
+      font-size: 0.75rem;
+      background: rgba(0, 0, 0, 0.15);
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-top: 4px;
+    }
+  }
+} 
