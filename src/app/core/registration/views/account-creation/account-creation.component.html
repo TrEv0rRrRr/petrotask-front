@@ -1,0 +1,41 @@
+<div class="general-container">
+  <div>
+    <img src="" [alt]="'account-creation.logo' | translate">
+  </div>
+  <div class="right">
+    <div>
+      <img src="" [alt]="'account-creation.small-logo' | translate">
+    </div>
+    <div class="info-input">
+      <div class="input-container">
+        <h5>{{ 'account-creation.email' | translate }}</h5>
+        <app-input
+          [(value)]="email"
+          [placeholder]="'account-creation.email' | translate">
+        </app-input>
+      </div>
+      <div class="input-container">
+        <h5>{{ 'account-creation.name' | translate }}</h5>
+        <app-input
+          [(value)]="name"
+          [placeholder]="'account-creation.name' | translate">
+        </app-input>
+      </div>
+      <div class="input-container">
+        <h5>{{ 'account-creation.password' | translate }}</h5>
+        <app-input
+          [(value)]="password1"
+          [placeholder]="'account-creation.password' | translate">
+        </app-input>
+      </div>
+      <div class="input-container">
+        <h5>{{ 'account-creation.password-repeat' | translate }}</h5>
+        <app-input
+          [(value)]="password2"
+          [placeholder]="'account-creation.password-repeat' | translate">
+        </app-input>
+      </div>
+      <app-button class="button" [color]="'primary'" [label]="'account-creation.register' | translate" (click)="onSaveEvent()"></app-button>
+    </div>
+  </div>
+</div>

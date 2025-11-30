@@ -1,0 +1,11 @@
+.general-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10rem;
+
+  .right {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+}
