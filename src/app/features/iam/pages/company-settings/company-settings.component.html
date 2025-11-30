@@ -1,0 +1,63 @@
+<form [formGroup]="settingsForm" class="settings-card" (ngSubmit)="renewPlan()">
+  <div class="settings-header">
+    <h1>{{ 'settings.title' | translate }}</h1>
+    <p class="subtext">{{ 'settings.subtitle' | translate }}</p>
+  </div>
+
+  <div class="settings-info">
+    <!-- Plan actual -->
+    <div class="info-block" [ngClass]="{ 'has-error': isInvalid('plan') }">
+      <label for="plan" class="label">{{ 'settings.current-plan' | translate }} *</label>
+      <input id="plan" formControlName="plan" type="text" class="value-input" [placeholder]="'settings.payment-placeholder' | translate" />
+      <small *ngIf="isInvalid('plan')" class="input-error">{{ 'settings.required-field' | translate }}</small>
+    </div>
+
+    <!-- Estado -->
+    <div class="info-block" [ngClass]="{ 'has-error': isInvalid('status') }">
+      <label for="status" class="label">{{ 'settings.status' | translate }} *</label>
+      <select id="status" formControlName="status" class="value-input">
+        <option value="">{{ 'settings.select-status' | translate }}</option>
+        <option value="Activo">{{ 'settings.active' | translate }}</option>
+        <option value="Inactivo">{{ 'settings.inactive' | translate }}</option>
+      </select>
+      <small *ngIf="isInvalid('status')" class="input-error">{{ 'settings.select-valid-status' | translate }}</small>
+    </div>
+
+    <!-- Inicio del plan -->
+    <div class="info-block" [ngClass]="{ 'has-error': isInvalid('startDate') }">
+      <label for="startDate" class="label">{{ 'settings.plan-start' | translate }} *</label>
+      <input id="startDate" formControlName="startDate" type="date" class="value-input" />
+      <small *ngIf="isInvalid('startDate')" class="input-error">{{ 'settings.date-required' | translate }}</small>
+    </div>
+
+    <!-- Próximo pago -->
+    <div class="info-block" [ngClass]="{ 'has-error': isInvalid('nextPayment') }">
+      <label for="nextPayment" class="label">{{ 'settings.next-payment' | translate }} *</label>
+      <input id="nextPayment" formControlName="nextPayment" type="date" class="value-input" />
+      <small *ngIf="isInvalid('nextPayment')" class="input-error">{{ 'settings.date-required' | translate }}</small>
+    </div>
+
+    <!-- Método de pago -->
+    <div class="info-block" [ngClass]="{ 'has-error': isInvalid('paymentMethod') }">
+      <label for="paymentMethod" class="label">{{ 'settings.payment-method' | translate }} *</label>
+      <input id="paymentMethod" formControlName="paymentMethod" type="text" class="value-input" [placeholder]="'settings.payment-placeholder' | translate" />
+      <small *ngIf="isInvalid('paymentMethod')" class="input-error">{{ 'settings.required-field' | translate }}</small>
+    </div>
+  </div>
+
+  <!-- Acciones -->
+  <div class="settings-actions">
+    <button class="btn btn-outline" type="button" (click)="viewPlanDetails()">{{ 'settings.view-plan' | translate }}</button>
+    <button class="btn btn-light" type="button" (click)="changePaymentMethod()">{{ 'settings.change-payment' | translate }}</button>
+    <button class="btn btn-primary" type="submit" [disabled]="settingsForm.invalid || loading">
+      <span *ngIf="loading">{{ 'settings.processing' | translate }}</span>
+      <span *ngIf="!loading">{{ 'settings.renew' | translate }}</span>
+    </button>
+    <button class="btn btn-light" type="button" (click)="onHome()">{{ 'settings.back-home' | translate }}</button>
+  </div>
+
+  <!-- Mensaje de error general -->
+  <div *ngIf="settingsForm.invalid && submitted" class="error-msg">
+    {{ 'settings.error-message' | translate }}
+  </div>
+</form>

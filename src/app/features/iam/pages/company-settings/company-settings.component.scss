@@ -1,0 +1,241 @@
+:root {
+  --primary: #E6801A;
+  --primary-light: #FFF1E0;
+  --primary-lighter: #FFE5CC;
+  --primary-border: #FFB774;
+  --text-dark: #2E2E2E;
+  --text-medium: #5C3B10;
+  --bg-light: #FFF9F3;
+  --error: #D32F2F;
+  --bg-error: #FFEBEE;
+  --border-error: #FFCDD2;
+  --font: 'Inter', sans-serif;
+}
+
+.settings-card {
+  background-color: var(--primary-light);
+  color: var(--text-dark);
+  border: 2px solid var(--primary);
+  padding: 48px;
+  border-radius: 24px;
+  font-family: var(--font);
+  max-width: 920px;
+  margin: 40px auto;
+  box-shadow: 0 14px 36px rgba(230, 128, 26, 0.15);
+  transition: box-shadow 0.3s ease;
+}
+
+.settings-card:hover {
+  box-shadow: 0 18px 48px rgba(230, 128, 26, 0.25);
+}
+
+
+.settings-header h1 {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+.subtext {
+  font-size: 16px;
+  color: var(--text-medium);
+  margin-bottom: 32px;
+}
+
+/* ------------------ INFO SECTION ------------------ */
+.settings-info,
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.info-block,
+.info-row {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 18px 24px;
+  border-radius: 16px;
+  border: 2px solid var(--primary-border);
+}
+
+/* Labels & Inputs */
+.label {
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.value-input,
+select,
+input[type="date"] {
+  padding: 12px 14px;
+  border: 2px solid var(--primary-border);
+  border-radius: 12px;
+  font-size: 15px;
+  font-family: inherit;
+  background-color: #FFF9F3;
+  color: var(--text-dark);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.value-input:focus,
+select:focus,
+input[type="date"]:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(230, 128, 26, 0.3);
+}
+
+.value-input.ng-invalid.ng-touched {
+  border-color: var(--error);
+  background-color: var(--bg-error);
+}
+
+.settings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.btn {
+  padding: 14px 30px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #cc6e17;
+  box-shadow: 0 4px 14px rgba(230, 128, 26, 0.4);
+}
+
+.btn-outline {
+  background-color: #fff;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--primary-light);
+  box-shadow: 0 4px 12px rgba(230, 128, 26, 0.2);
+}
+
+.btn-light {
+  background-color: #fdf3e7;
+  color: var(--text-dark);
+}
+
+.btn-light:hover {
+  background-color: #ffe6cc;
+}
+
+/* ------------------ BILLING TABLE ------------------ */
+.billing-history {
+  margin-top: 36px;
+}
+
+.billing-history h2 {
+  font-size: 22px;
+  margin-bottom: 18px;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.billing-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(230, 128, 26, 0.1);
+}
+
+.billing-table th,
+.billing-table td {
+  padding: 16px 20px;
+  text-align: left;
+  font-size: 15px;
+}
+
+.billing-table th {
+  background-color: var(--primary-lighter);
+  color: var(--primary);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.billing-table tr:nth-child(even) {
+  background-color: #fff8f0;
+}
+
+.billing-table tr:hover {
+  background-color: #ffeeda;
+}
+
+.status {
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  display: inline-block;
+}
+
+.status.paid {
+  background-color: #FFE5CC;
+  color: var(--primary);
+}
+
+.status.pending {
+  background-color: #FFF3E0;
+  color: #9C6F00;
+}
+
+.error-msg {
+  color: var(--error);
+  background-color: var(--bg-error);
+  border: 1px solid var(--border-error);
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+
+@media (max-width: 768px) {
+  .settings-card {
+    padding: 28px;
+  }
+
+  .settings-header h1 {
+    font-size: 30px;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .settings-actions {
+    flex-direction: column;
+  }
+
+  .billing-table th,
+  .billing-table td {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
