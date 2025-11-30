@@ -1,0 +1,47 @@
+.general-container {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
+  padding: 0 1rem 1rem 1rem;
+  border: solid 2px var(--warning);
+  border-radius: 10px;
+
+  p {
+    margin-top: 0;
+    font-size: 14px;
+    color: #1a1a1a;
+  }
+}
+
+.general-container:hover {
+  background-color: var(--secondary);
+  border: solid 3px var(--success);
+  border-radius: 10px;
+}
+
+.progress-bar-chart-graph-line {
+  display: flex;
+  flex-direction: row;
+  height: 5px;
+  width: 100%;
+  border-radius: 8px;
+  background-color: var(--error);
+}
+
+.progress-bar-chart-graph-line-portion {
+  height: 100%;
+}
+
+#portion-used {
+  border-radius: 8px;
+  background-color: var(--success);
+}
+
+#portion-available {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: var(--error);
+}
