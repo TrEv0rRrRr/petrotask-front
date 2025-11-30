@@ -1,0 +1,351 @@
+<div class="register-wrapper">
+
+  <div class="register-container">
+    <h1>PetroTask</h1>
+    <p>{{ 'register-container.slogan' | translate }}</p>
+
+    <!-- Sistema de pestañas -->
+    <div class="tabs-container">
+      <div class="tabs-header">
+        @for (tab of tabs; track tab.id) {
+          <div
+            class="tab-item"
+            [class.active]="currentTab === tab.id"
+            [class.completed]="tab.completed"
+            [class.disabled]="tab.id > currentTab && !tabs[tab.id - 1].completed"
+            (click)="goToTab(tab.id)">
+            <span class="tab-icon">{{ tab.icon }}</span>
+            <span class="tab-title">{{ tab.title | translate }}</span>
+            @if (tab.completed) {
+              <span class="tab-check">✓</span>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Indicador de progreso -->
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="((currentTab + 1) / tabs.length) * 100"></div>
+      </div>
+    </div>
+
+    <form (ngSubmit)="onRegister()" #registerForm="ngForm" novalidate>
+
+      <!-- Pestaña 1: Datos Básicos de la Empresa -->
+      <div class="tab-content" [class.active]="currentTab === 0">
+        <div class="tab-section">
+          <label for="ruc">{{ 'register-container.ruc' | translate }} *</label>
+          <input
+            type="text"
+            id="ruc"
+            [placeholder]="'register-container.ruc' | translate"
+            name="ruc"
+            [(ngModel)]="ruc"
+            required
+            #rucInput="ngModel"
+            [class.invalid-input]="rucInput.invalid && (rucInput.touched || submitted)"
+          />
+          @if (rucInput.errors?.['required'] && (rucInput.touched || submitted)) {
+            <small class="error-msg">
+              {{ 'register-container.ruc-required' | translate }}
+            </small>
+          }
+
+          <label for="legalName">{{ 'register-container.legal-name' | translate }} *</label>
+          <input
+            type="text"
+            id="legalName"
+            [placeholder]="'register-container.legal-name' | translate"
+            name="legalName"
+            [(ngModel)]="legalName"
+            required
+            #legalNameInput="ngModel"
+            [class.invalid-input]="legalNameInput.invalid && (legalNameInput.touched || submitted)"
+          />
+          @if (legalNameInput.errors?.['required'] && (legalNameInput.touched || submitted)) {
+            <small class="error-msg">
+              {{ 'register-container.legal-name-required' | translate }}
+            </small>
+          }
+
+          <label for="commercialName">{{ 'register-container.commercial-name' | translate }}</label>
+          <input
+            type="text"
+            id="commercialName"
+            [placeholder]="'register-container.commercial-name' | translate"
+            name="commercialName"
+            [(ngModel)]="commercialName"
+            #commercialNameInput="ngModel"
+          />
+        </div>
+      </div>
+
+      <!-- Pestaña 2: Datos de Contacto de la Empresa -->
+      <div class="tab-content" [class.active]="currentTab === 1">
+        <div class="tab-section">
+          <label for="address">{{ 'register-container.address' | translate }}</label>
+          <input
+            type="text"
+            id="address"
+            [placeholder]="'register-container.address' | translate"
+            name="address"
+            [(ngModel)]="address"
+            #addressInput="ngModel"
+          />
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="city">{{ 'register-container.city' | translate }}</label>
+              <input
+                type="text"
+                id="city"
+                [placeholder]="'register-container.city' | translate"
+                name="city"
+                [(ngModel)]="city"
+                #cityInput="ngModel"
+              />
+            </div>
+            <div class="form-group">
+              <label for="country">{{ 'register-container.country' | translate }}</label>
+              <input
+                type="text"
+                id="country"
+                [placeholder]="'register-container.country' | translate"
+                name="country"
+                [(ngModel)]="country"
+                #countryInput="ngModel"
+              />
+            </div>
+          </div>
+
+          <label for="tenantPhone">{{ 'register-container.phone' | translate }}</label>
+          <input
+            type="tel"
+            id="tenantPhone"
+            [placeholder]="'register-container.phone' | translate"
+            name="tenantPhone"
+            [(ngModel)]="tenantPhone"
+            #tenantPhoneInput="ngModel"
+          />
+
+          <label for="tenantEmail">{{ 'register-container.company-email' | translate }}</label>
+          <input
+            type="email"
+            id="tenantEmail"
+            [placeholder]="'register-container.company-email' | translate"
+            name="tenantEmail"
+            [(ngModel)]="tenantEmail"
+            email
+            #tenantEmailInput="ngModel"
+          />
+
+          <label for="website">{{ 'register-container.website' | translate }}</label>
+          <input
+            type="url"
+            id="website"
+            [placeholder]="'register-container.website' | translate"
+            name="website"
+            [(ngModel)]="website"
+            #websiteInput="ngModel"
+          />
+        </div>
+      </div>
+
+      <!-- Pestaña 3: Datos Básicos del Usuario -->
+      <div class="tab-content" [class.active]="currentTab === 2">
+        <div class="tab-section">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">{{ 'register-container.first-name' | translate }} *</label>
+              <input
+                type="text"
+                id="firstName"
+                [placeholder]="'register-container.first-name' | translate"
+                name="firstName"
+                [(ngModel)]="firstName"
+                required
+                #firstNameInput="ngModel"
+                [class.invalid-input]="firstNameInput.invalid && (firstNameInput.touched || submitted)"
+              />
+              @if (firstNameInput.errors?.['required'] && (firstNameInput.touched || submitted)) {
+                <small class="error-msg">
+                  {{ 'register-container.first-name-required' | translate }}
+                </small>
+              }
+            </div>
+            <div class="form-group">
+              <label for="lastName">{{ 'register-container.last-name' | translate }} *</label>
+              <input
+                type="text"
+                id="lastName"
+                [placeholder]="'register-container.last-name' | translate"
+                name="lastName"
+                [(ngModel)]="lastName"
+                required
+                #lastNameInput="ngModel"
+                [class.invalid-input]="lastNameInput.invalid && (lastNameInput.touched || submitted)"
+              />
+              @if (lastNameInput.errors?.['required'] && (lastNameInput.touched || submitted)) {
+                <small class="error-msg">
+                  {{ 'register-container.last-name-required' | translate }}
+                </small>
+              }
+            </div>
+          </div>
+
+          <label for="email">{{ 'register-container.email' | translate }} *</label>
+          <input
+            type="email"
+            id="email"
+            [placeholder]="'register-container.email' | translate"
+            name="email"
+            [(ngModel)]="email"
+            required
+            email
+            #emailInput="ngModel"
+            [class.invalid-input]="emailInput.invalid && (emailInput.touched || submitted)"
+          />
+          @if (emailInput.errors?.['required'] && (emailInput.touched || submitted)) {
+            <small class="error-msg">
+              {{ 'register-container.email-required' | translate }}
+            </small>
+          }
+          @if (emailInput.errors?.['email'] && (emailInput.touched || submitted)) {
+            <small class="error-msg">
+              {{ 'register-container.email-invalid' | translate }}
+            </small>
+          }
+        </div>
+      </div>
+
+      <!-- Pestaña 4: Credenciales del Usuario -->
+      <div class="tab-content" [class.active]="currentTab === 3">
+        <div class="tab-section">
+          <label for="username">{{ 'register-container.username' | translate }} *</label>
+          <input
+            type="text"
+            id="username"
+            [placeholder]="'register-container.username' | translate"
+            name="username"
+            [(ngModel)]="username"
+            required
+            #usernameInput="ngModel"
+            [class.invalid-input]="usernameInput.invalid && (usernameInput.touched || submitted)"
+          />
+          @if (usernameInput.errors?.['required'] && (usernameInput.touched || submitted)) {
+            <small class="error-msg">
+              {{ 'register-container.username-required' | translate }}
+            </small>
+          }
+
+          <label for="password">{{ 'register-container.password' | translate }} *</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [placeholder]="'register-container.password' | translate"
+            [(ngModel)]="password"
+            required
+            minlength="6"
+            #passwordInput="ngModel"
+            [class.invalid-input]="passwordInput.invalid && (passwordInput.touched || submitted)"
+          />
+          @if (passwordInput.errors?.['required'] && (passwordInput.touched || submitted)) {
+            <small class="error-msg">
+              {{ 'register-container.password-required' | translate }}
+            </small>
+          }
+          @if (passwordInput.errors?.['minlength'] && (passwordInput.touched || submitted)) {
+            <small class="error-msg">
+              {{ 'register-container.password-min' | translate }}
+            </small>
+          }
+
+          <label for="repeatPassword">{{ 'register-container.password-repeat' | translate }} *</label>
+          <input
+            type="password"
+            id="repeatPassword"
+            name="repeatPassword"
+            [placeholder]="'register-container.password-repeat' | translate"
+            [(ngModel)]="repeatPassword"
+            required
+            #repeatPasswordInput="ngModel"
+            [class.invalid-input]="repeatPasswordInput.invalid && (repeatPasswordInput.touched || submitted)"
+          />
+          @if (repeatPasswordInput.errors?.['required'] && (repeatPasswordInput.touched || submitted)) {
+            <small class="error-msg">
+              {{ 'register-container.password-repeat-required' | translate }}
+            </small>
+          }
+          @if (password !== repeatPassword && repeatPasswordInput.touched) {
+            <small class="error-msg">
+              {{ 'register-container.password-mismatch' | translate }}
+            </small>
+          }
+        </div>
+      </div>
+
+      <!-- Pestaña 5: Selección de Rol -->
+      <div class="tab-content" [class.active]="currentTab === 4">
+        <div class="tab-section">
+          <h3>{{ 'register-container.select-role' | translate }}</h3>
+          <p>{{ 'register-container.role-description' | translate }}</p>
+
+          <div class="role-selection">
+            <div class="role-option" [class.selected]="selectedRole === 'supervisor'" (click)="selectedRole = 'supervisor'">
+              <div class="role-icon">👨‍💼</div>
+              <div class="role-info">
+                <h4>{{ 'register-container.supervisor' | translate }}</h4>
+                <p>{{ 'register-container.supervisor-description' | translate }}</p>
+              </div>
+            </div>
+
+            <div class="role-option" [class.selected]="selectedRole === 'operario'" (click)="selectedRole = 'operario'">
+              <div class="role-icon">👷‍♂️</div>
+              <div class="role-info">
+                <h4>{{ 'register-container.operario' | translate }}</h4>
+                <p>{{ 'register-container.operario-description' | translate }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      @if (errorMessage) {
+        <div class="error-msg">
+          {{ errorMessage | translate }}
+        </div>
+      }
+
+      <!-- Navegación entre pestañas -->
+      <div class="tab-navigation">
+        @if (currentTab > 0) {
+          <button type="button" class="nav-btn prev-btn" (click)="prevTab()">
+            ← {{ 'register-container.previous' | translate }}
+          </button>
+        }
+
+        @if (currentTab < tabs.length - 1) {
+          <button type="button" class="nav-btn next-btn" (click)="nextTab()">
+            {{ 'register-container.next' | translate }} →
+          </button>
+        }
+
+        @if (currentTab === tabs.length - 1) {
+          <button type="button" class="register-btn" [disabled]="isLoading" (click)="onRegister()">
+            @if (!isLoading) {
+              <span>📝 {{ 'register-container.register' | translate }}</span>
+            }
+            @if (isLoading) {
+              <span>{{ 'register-container.registering' | translate }}</span>
+            }
+          </button>
+        }
+      </div>
+
+      <a class="login-link" (click)="goToLogin()">
+        🔐 {{ 'register-container.login' | translate }}
+      </a>
+    </form>
+  </div>
+</div>
