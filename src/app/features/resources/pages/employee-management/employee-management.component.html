@@ -1,0 +1,96 @@
+<div class="employee-management-container">
+  <div class="header">
+    <h1>{{ 'Employee Management' | translate }}</h1>
+
+    <div class="actions">
+      <div class="filters">
+        <div class="filter-group">
+          <label>{{ 'Status Filter' | translate }}:</label>
+          <app-selector
+            [options]="statusFilterOptions"
+            [color]="'secondary'"
+            [size]="'medium'"
+            [disabled]="loading"
+            (selectionChange)="onStatusFilterChange($event)"
+          ></app-selector>
+        </div>
+        
+        <div class="filter-group">
+          <label>{{ 'Position Filter' | translate }}:</label>
+          <app-selector
+            [options]="positionFilterOptions"
+            [color]="'secondary'"
+            [size]="'medium'"
+            [disabled]="loading"
+            (selectionChange)="onPositionFilterChange($event)"
+          ></app-selector>
+        </div>
+      </div>
+
+      <div class="view-controls">
+        <app-button
+          [label]="'Refresh' | translate"
+          [color]="'secondary'"
+          [disabled]="loading"
+          (clicked)="refreshData()"
+        ></app-button>
+        
+        <app-button
+          [label]="'Add Employee' | translate"
+          [color]="'primary'"
+          [disabled]="loading"
+          (clicked)="openAddDialog()"
+        ></app-button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="table-view" [class.loading]="loading">
+      <div class="loading-overlay" *ngIf="loading">
+        <div class="spinner"></div>
+        <p>Loading employees...</p>
+      </div>
+      
+      <app-table
+        [columns]="columns"
+        [dataSource]="filteredEmployees"
+        [showPaginator]="true"
+        [customColumns]="tableActions"
+      ></app-table>
+      
+      <div *ngIf="!loading && filteredEmployees.length === 0" class="empty-state">
+        <div class="empty-icon">👥</div>
+        <h3>No employees found</h3>
+        <p *ngIf="statusFilter !== 'all' || positionFilter !== 'all'">
+          Try adjusting your filters or add a new employee.
+        </p>
+        <p *ngIf="statusFilter === 'all' && positionFilter === 'all'">
+          No employees have been added yet.
+        </p>
+        <app-button
+          [label]="'Add First Employee' | translate"
+          [color]="'primary'"
+          (clicked)="openAddDialog()"
+        ></app-button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #tableActions let-column="column" let-row="row">
+  <div *ngIf="column === 'actions'" class="action-buttons">
+    <app-button
+      [label]="'Edit' | translate"
+      [color]="'primary'"
+      [disabled]="loading"
+      (clicked)="openEditDialog(row)"
+    ></app-button>
+    <app-button
+      [label]="'Deactivate' | translate"
+      [color]="'danger'"
+      [disabled]="loading || row.status === 'INACTIVE'"
+      (clicked)="deleteEmployee(row)"
+    ></app-button>
+  </div>
+</ng-template>
