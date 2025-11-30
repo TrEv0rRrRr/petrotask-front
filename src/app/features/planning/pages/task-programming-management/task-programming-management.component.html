@@ -1,0 +1,216 @@
+<div class="task-programming-management">
+  <mat-card class="header-card">
+    <mat-card-header>
+      <mat-card-title>Task Programming Management</mat-card-title>
+      <mat-card-subtitle>Manage and monitor task programming schedules</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="createTaskProgramming()" [disabled]="loading">
+        <mat-icon>add</mat-icon>
+        Create Programming
+      </button>
+      <button mat-raised-button (click)="refreshData()" [disabled]="loading">
+        <mat-icon>refresh</mat-icon>
+        Refresh
+      </button>
+      <button mat-raised-button (click)="exportToCSV()" [disabled]="loading">
+        <mat-icon>download</mat-icon>
+        Export
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- Filters Section -->
+  <mat-card class="filters-card">
+    <mat-card-content>
+      <div class="filters-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Search</mat-label>
+          <input matInput [(ngModel)]="searchQuery" (keyup)="applyFilters()" placeholder="Search by ID, status, etc.">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="statusFilter" (selectionChange)="applyFilters()">
+            <mat-option value="">All Statuses</mat-option>
+            <mat-option *ngFor="let status of statusOptions" [value]="status">
+              {{ status }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Resource Type</mat-label>
+          <mat-select [(ngModel)]="resourceTypeFilter" (selectionChange)="applyFilters()">
+            <mat-option value="">All Types</mat-option>
+            <mat-option *ngFor="let type of resourceTypeOptions" [value]="type">
+              {{ type }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Start Date</mat-label>
+          <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDateFilter" (dateChange)="applyFilters()">
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>End Date</mat-label>
+          <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDateFilter" (dateChange)="applyFilters()">
+          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+          <mat-datepicker #endPicker></mat-datepicker>
+        </mat-form-field>
+
+        <button mat-raised-button (click)="clearFilters()">
+          <mat-icon>clear</mat-icon>
+          Clear Filters
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Data Table -->
+  <mat-card class="table-card">
+    <mat-card-content>
+      <div class="table-container" *ngIf="!loading; else loadingTemplate">
+        <table mat-table [dataSource]="filteredProgrammings" matSort (matSortChange)="onSortChange($event)" class="full-width-table">
+          
+          <!-- Programming ID Column -->
+          <ng-container matColumnDef="taskProgrammingId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Programming ID </th>
+            <td mat-cell *matCellDef="let programming"> {{ programming.taskProgrammingId }} </td>
+          </ng-container>
+
+          <!-- Task ID Column -->
+          <ng-container matColumnDef="taskId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Task ID </th>
+            <td mat-cell *matCellDef="let programming"> 
+              <span class="task-id">{{ programming.taskId || 'N/A' }}</span>
+            </td>
+          </ng-container>
+
+          <!-- Reservation ID Column -->
+          <ng-container matColumnDef="reservationId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Reservation ID </th>
+            <td mat-cell *matCellDef="let programming"> {{ programming.reservationId }} </td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="programmingStatus">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+            <td mat-cell *matCellDef="let programming">
+              <span class="status-chip" [ngClass]="getStatusClass(programming.programmingStatus)">
+                {{ programming.programmingStatus }}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Resource Type Column -->
+          <ng-container matColumnDef="resourceType">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Resource Type </th>
+            <td mat-cell *matCellDef="let programming">
+              <span class="resource-type">
+                <mat-icon [matTooltip]="programming.resourceType">{{ getResourceTypeIcon(programming.resourceType || '') }}</mat-icon>
+                {{ programming.resourceType || 'N/A' }}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Resource ID Column -->
+          <ng-container matColumnDef="resourceId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Resource ID </th>
+            <td mat-cell *matCellDef="let programming"> {{ programming.resourceId || 'N/A' }} </td>
+          </ng-container>
+
+          <!-- Start Time Column -->
+          <ng-container matColumnDef="start">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </th>
+            <td mat-cell *matCellDef="let programming"> 
+              <span class="datetime">{{ formatDateTime(programming.start) }}</span>
+            </td>
+          </ng-container>
+
+          <!-- End Time Column -->
+          <ng-container matColumnDef="end">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> End Time </th>
+            <td mat-cell *matCellDef="let programming"> 
+              <span class="datetime">{{ formatDateTime(programming.end) }}</span>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let programming">
+              <button mat-icon-button [matMenuTriggerFor]="actionsMenu" [matTooltip]="'Actions'">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #actionsMenu="matMenu">
+                <button mat-menu-item (click)="editTaskProgramming(programming)">
+                  <mat-icon>edit</mat-icon>
+                  <span>Edit</span>
+                </button>
+                <button mat-menu-item (click)="updateTimeInterval(programming)">
+                  <mat-icon>schedule</mat-icon>
+                  <span>Update Time</span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="updateProgrammingStatus(programming, 'IN_PROGRESS')" 
+                        [disabled]="programming.programmingStatus === 'IN_PROGRESS'">
+                  <mat-icon>play_arrow</mat-icon>
+                  <span>Start</span>
+                </button>
+                <button mat-menu-item (click)="updateProgrammingStatus(programming, 'COMPLETED')"
+                        [disabled]="programming.programmingStatus === 'COMPLETED'">
+                  <mat-icon>check_circle</mat-icon>
+                  <span>Complete</span>
+                </button>
+                <button mat-menu-item (click)="updateProgrammingStatus(programming, 'CANCELLED')"
+                        [disabled]="programming.programmingStatus === 'CANCELLED'">
+                  <mat-icon>cancel</mat-icon>
+                  <span>Cancel</span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="deleteProgramming(programming)" class="delete-action">
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+        </table>
+
+        <!-- No data message -->
+        <div *ngIf="filteredProgrammings.length === 0" class="no-data">
+          <mat-icon>event_busy</mat-icon>
+          <p>No task programmings found</p>
+          <p class="subtitle">Try adjusting your filters or create a new programming</p>
+        </div>
+      </div>
+
+      <!-- Loading template -->
+      <ng-template #loadingTemplate>
+        <div class="loading-container">
+          <mat-spinner diameter="50"></mat-spinner>
+          <p>Loading task programmings...</p>
+        </div>
+      </ng-template>
+
+      <!-- Pagination -->
+      <mat-paginator
+        [length]="totalProgrammings"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        [pageIndex]="pageIndex"
+        (page)="onPageChange($event)"
+        showFirstLastButtons>
+      </mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div> 
