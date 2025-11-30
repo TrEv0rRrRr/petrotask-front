@@ -1,0 +1,103 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>{{ 'dashboard.title' | translate }}</h1>
+    <app-date-navigator></app-date-navigator>
+  </div>
+
+  <div class="dashboard-grid">
+    <!-- Key Metrics Cards -->
+    <div class="metric-card">
+      <mat-icon>local_shipping</mat-icon>
+      <div class="metric-content">
+        <h3>{{ 'dashboard.metrics.active-shipments.title' | translate }}</h3>
+        <p class="metric-value">{{activeShipments}}</p>
+        <p class="metric-trend" [class.positive]="shipmentTrend > 0">
+          {{shipmentTrend}}% {{ 'dashboard.metrics.active-shipments.trend' | translate }}
+        </p>
+      </div>
+    </div>
+
+    <div class="metric-card">
+      <mat-icon>schedule</mat-icon>
+      <div class="metric-content">
+        <h3>{{ 'dashboard.metrics.on-time-delivery.title' | translate }}</h3>
+        <p class="metric-value">{{onTimeDelivery}}%</p>
+        <p class="metric-trend" [class.positive]="deliveryTrend > 0">
+          {{deliveryTrend}}% {{ 'dashboard.metrics.on-time-delivery.trend' | translate }}
+        </p>
+      </div>
+    </div>
+
+    <div class="metric-card">
+      <mat-icon>inventory_2</mat-icon>
+      <div class="metric-content">
+        <h3>{{ 'dashboard.metrics.resource-utilization.title' | translate }}</h3>
+        <p class="metric-value">{{resourceUtilization}}%</p>
+        <p class="metric-trend" [class.positive]="utilizationTrend > 0">
+          {{utilizationTrend}}% {{ 'dashboard.metrics.resource-utilization.trend' | translate }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Resource Usage Chart -->
+    <div class="chart-container">
+      <h3>{{ 'dashboard.resource-usage.title' | translate }}</h3>
+      <div class="chart-filters">
+        <mat-form-field>
+          <mat-label>{{ 'dashboard.resource-usage.time-period.label' | translate }}</mat-label>
+          <mat-select [(ngModel)]="selectedTimePeriod">
+            <mat-option value="day">{{ 'dashboard.resource-usage.time-period.today' | translate }}</mat-option>
+            <mat-option value="week">{{ 'dashboard.resource-usage.time-period.week' | translate }}</mat-option>
+            <mat-option value="month">{{ 'dashboard.resource-usage.time-period.month' | translate }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="chart-content">
+        <!-- Chart will be rendered here -->
+        <canvas #resourceChart></canvas>
+      </div>
+    </div>
+
+    <!-- Recent Incidents -->
+    <div class="incidents-container">
+      <div class="incidents-header">
+        <h3>{{ 'dashboard.incidents.title' | translate }}</h3>
+        <button mat-button color="primary" (click)="viewAllIncidents()">
+          {{ 'dashboard.incidents.view-all' | translate }}
+        </button>
+      </div>
+      <app-table
+        [columns]="incidentColumns"
+        [dataSource]="recentIncidents"
+        [loading]="loadingIncidents"
+        (selecteChange)="onIncidentSelect($event)"
+      ></app-table>
+    </div>
+
+    <!-- Team Performance -->
+    <div class="team-performance">
+      <h3>{{ 'dashboard.team-performance.title' | translate }}</h3>
+      <div class="performance-metrics">
+        <div class="performance-card" *ngFor="let team of teamPerformance">
+          <h4>{{team.name}}</h4>
+          <div class="performance-stats">
+            <div class="stat">
+              <span class="label">{{ 'dashboard.team-performance.metrics.tasks-completed' | translate }}</span>
+              <span class="value">{{team.completedTasks}}</span>
+            </div>
+            <div class="stat">
+              <span class="label">{{ 'dashboard.team-performance.metrics.efficiency' | translate }}</span>
+              <span class="value">{{team.efficiency}}%</span>
+            </div>
+            <div class="stat">
+              <span class="label">{{ 'dashboard.team-performance.metrics.trend' | translate }}</span>
+              <span class="value" [class.positive]="team.trend > 0" [class.negative]="team.trend < 0">
+                {{team.trend > 0 ? '+' : ''}}{{team.trend}}%
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
