@@ -1,16 +1,16 @@
+import { NgForOf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgForOf } from '@angular/common';
-import { TranslatePipe } from '@ngx-translate/core';
-import { UserService } from '../../services/user.service';
-import { User } from '../../models/user.entity';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslatePipe } from '@ngx-translate/core';
+import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { UserCreateDialogComponent } from '../../components/user-create-dialog/user-create-dialog.component';
 import { UserEditDialogComponent } from '../../components/user-edit-dialog/user-edit-dialog.component';
-import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { Roles } from '../../models/roles.enum';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import { User } from '../../models/user.entity';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-user-management',
@@ -21,9 +21,9 @@ import { MatButtonModule } from '@angular/material/button';
     TranslatePipe,
     ConfirmationDialogComponent,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
   ],
-  styleUrls: ['./user-management.component.scss']
+  styleUrls: ['./user-management.component.scss'],
 })
 export class UserManagementComponent implements OnInit {
   users: User[] = [];
@@ -48,7 +48,7 @@ export class UserManagementComponent implements OnInit {
   loadUsers() {
     this.isLoading = true;
     this.userService.getAllUsers().subscribe({
-      next: users => {
+      next: (users) => {
         this.users = users;
         this.filterUsers();
         this.isLoading = false;
@@ -56,15 +56,19 @@ export class UserManagementComponent implements OnInit {
       error: () => {
         this.errorMessage = 'user-management.error-loading';
         this.isLoading = false;
-      }
+      },
     });
   }
 
   filterUsers(): void {
-    this.filteredUsers = this.users.filter(user =>
-      (!this.selectedRole || user.roles.includes(this.selectedRole as Roles)) &&
-      (this.getFullName(user).toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        user.email.toLowerCase().includes(this.searchTerm.toLowerCase()))
+    this.filteredUsers = this.users.filter(
+      (user) =>
+        (!this.selectedRole ||
+          user.roles.includes(this.selectedRole as Roles)) &&
+        (this.getFullName(user)
+          .toLowerCase()
+          .includes(this.searchTerm.toLowerCase()) ||
+          user.email.toLowerCase().includes(this.searchTerm.toLowerCase()))
     );
     this.currentPage = 1;
     this.updatePagination();
@@ -75,18 +79,20 @@ export class UserManagementComponent implements OnInit {
   }
 
   getRolesDisplay(user: User): string {
-    return user.roles.map(role => this.getRoleLabel(role)).join(', ');
+    return user.roles.map((role) => this.getRoleLabel(role)).join(', ');
   }
 
   getRoleLabel(roleValue: Roles): string {
-    const roleLabels: {[key in Roles]: string} = {
-      [Roles.Admin]: 'Administrador',
-      [Roles.FieldSupervisor]: 'Supervisor de Campo',
-      [Roles.FieldPlanner]: 'Planificador de Campo',
-      [Roles.FieldTechnician]: 'Técnico de Campo',
-      [Roles.FieldOperator]: 'Operario de Campo'
-    };
-    return roleLabels[roleValue] || roleValue;
+    switch (roleValue) {
+      case Roles.Admin:
+        return 'Administrador';
+      case Roles.LogisticSupervisor:
+        return 'Supervisor Logístico';
+      case Roles.LogisticOperator:
+        return 'Operador Logístico';
+      default:
+        return roleValue;
+    }
   }
 
   updatePagination(): void {
@@ -112,22 +118,21 @@ export class UserManagementComponent implements OnInit {
 
   openCreateModal(): void {
     const dialogRef = this.dialog.open(UserCreateDialogComponent, {
-      width: '500px'
+      width: '500px',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-      
         const newUser = new User(
-          undefined, 
+          undefined,
           result.username,
           result.email,
           result.firstName,
           result.lastName,
           result.roles,
-          result.status === 'active' 
+          result.status === 'active'
         );
-        
+
         // Llamar al servicio con el usuario y la contraseña
         this.userService.createUser(newUser, result.password).subscribe({
           next: () => {
@@ -136,7 +141,7 @@ export class UserManagementComponent implements OnInit {
           error: (error) => {
             console.error('Error al crear usuario:', error);
             this.errorMessage = 'user-management.error-creating';
-          }
+          },
         });
       }
     });
@@ -145,10 +150,10 @@ export class UserManagementComponent implements OnInit {
   editUser(user: User): void {
     const dialogRef = this.dialog.open(UserEditDialogComponent, {
       width: '500px',
-      data: user
+      data: user,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.userService.updateUser(result).subscribe(() => this.loadUsers());
       }
@@ -165,11 +170,11 @@ export class UserManagementComponent implements OnInit {
       width: '400px',
       data: {
         title: 'Confirmar eliminación',
-        message: '¿Está seguro que desea eliminar este usuario?'
-      }
+        message: '¿Está seguro que desea eliminar este usuario?',
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.userService.deleteUser(user.id).subscribe(() => this.loadUsers());
       }
@@ -178,6 +183,8 @@ export class UserManagementComponent implements OnInit {
 
   toggleEstado(user: User): void {
     const updatedUser = { ...user, status: !user.status };
-    this.userService.toggleUserStatus(updatedUser).subscribe(() => this.loadUsers());
+    this.userService
+      .toggleUserStatus(updatedUser)
+      .subscribe(() => this.loadUsers());
   }
 }
