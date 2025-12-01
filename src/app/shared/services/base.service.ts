@@ -1,8 +1,11 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
-import {inject} from '@angular/core';
-import {catchError, Observable, retry, throwError} from 'rxjs';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { catchError, Observable, retry, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 /**
  * Abstract base service class providing common CRUD operations for REST API endpoints.
@@ -10,9 +13,11 @@ import {catchError, Observable, retry, throwError} from 'rxjs';
  */
 export abstract class BaseService<T> {
   /** HTTP headers configuration for JSON communication */
-  protected httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
+  protected httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
   /** Base URL for the server API */
-  protected serverBaseUrl: string =  `${environment.serverBaseUrl}`;
+  protected serverBaseUrl: string = `${environment.apiBaseUrl}`;
   /** Endpoint path for the specific resource */
   protected resourceEndpoint: string = '/resources';
   /** HTTP client for making API requests */
@@ -24,12 +29,44 @@ export abstract class BaseService<T> {
    * @returns An Observable error with a user-friendly message
    */
   protected handleError(error: HttpErrorResponse) {
+    let errorMessage = 'errors.unexpected';
+
     if (error.error instanceof ErrorEvent) {
-      console.error(`An error occurred: ${error.error.message}`);
+      // Client-side error
+      errorMessage = `Error: ${error.error.message}`;
+      console.error('Client-side error:', error.error.message);
     } else {
-      console.error(`Backend returned code ${error.status}, body was: ${error.error}`);
+      // Server-side error
+      console.error(`Server error ${error.status}:`, error.error);
+
+      switch (error.status) {
+        case 400:
+          errorMessage = 'errors.invalid-request';
+          break;
+        case 401:
+          errorMessage = 'errors.unauthorized';
+          break;
+        case 403:
+          errorMessage = 'errors.forbidden';
+          break;
+        case 404:
+          errorMessage = 'errors.not-found';
+          break;
+        case 409:
+          errorMessage = 'errors.conflict';
+          break;
+        case 500:
+          errorMessage = 'errors.server-error';
+          break;
+        case 503:
+          errorMessage = 'errors.service-unavailable';
+          break;
+        default:
+          errorMessage = `errors.server-error-code`;
+      }
     }
-    return throwError(() => new Error('Something bad happened; please try again later.'));
+
+    return throwError(() => new Error(errorMessage));
   }
 
   protected generateId(): number {
@@ -50,7 +87,8 @@ export abstract class BaseService<T> {
    * @returns An Observable of the created resource
    */
   public create(resource: T): Observable<T> {
-    return this.http.post<T>(this.resourcePath(), JSON.stringify(resource), this.httpOptions)
+    return this.http
+      .post<T>(this.resourcePath(), JSON.stringify(resource), this.httpOptions)
       .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -60,7 +98,8 @@ export abstract class BaseService<T> {
    * @returns An Observable of the deletion result
    */
   public delete(id: any): Observable<any> {
-    return this.http.delete(`${this.resourcePath()}/${id}`, this.httpOptions)
+    return this.http
+      .delete(`${this.resourcePath()}/${id}`, this.httpOptions)
       .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -71,7 +110,12 @@ export abstract class BaseService<T> {
    * @returns An Observable of the updated resource
    */
   public update(id: any, resource: T): Observable<T> {
-    return this.http.put<T>(`${this.resourcePath()}/${id}`, JSON.stringify(resource), this.httpOptions)
+    return this.http
+      .put<T>(
+        `${this.resourcePath()}/${id}`,
+        JSON.stringify(resource),
+        this.httpOptions
+      )
       .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -80,7 +124,8 @@ export abstract class BaseService<T> {
    * @returns An Observable array of all resources
    */
   public getAll(): Observable<Array<T>> {
-    return this.http.get<Array<T>>(this.resourcePath(), this.httpOptions)
+    return this.http
+      .get<Array<T>>(this.resourcePath(), this.httpOptions)
       .pipe(retry(2), catchError(this.handleError));
   }
 
@@ -90,7 +135,8 @@ export abstract class BaseService<T> {
    * @returns An Observable of the requested resource
    */
   public getById(id: any): Observable<T> {
-    return this.http.get<T>(`${this.resourcePath()}/${id}`, this.httpOptions)
+    return this.http
+      .get<T>(`${this.resourcePath()}/${id}`, this.httpOptions)
       .pipe(retry(2), catchError(this.handleError));
   }
 }

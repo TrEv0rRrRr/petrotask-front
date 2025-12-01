@@ -1,16 +1,15 @@
 import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { map, Observable, of } from 'rxjs';
-import { SidebarMenuItem } from '../components/sidebar/sidebar.component';
-import { AuthenticationService } from 'src/app/features/iam/services/authentication.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { Roles } from 'src/app/features/iam/models/roles.enum';
-import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/features/iam/services/authentication.service';
+import { SidebarMenuItem } from '../components/sidebar/sidebar.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MenuService {
-
   router = inject(Router);
   authService = inject(AuthenticationService);
   localStorageService = inject(LocalStorageService);
@@ -18,249 +17,255 @@ export class MenuService {
   private adminMenuItems: SidebarMenuItem[] = [
     {
       id: 'home',
-      label: 'Inicio',
+      label: 'menu.home',
       icon: 'home',
       route: '/petrotask/home',
     },
     {
       id: 'task-planning',
-      label: 'Planificación de Tareas',
+      label: 'menu.task-planning',
       icon: 'schedule',
-      route: '/petrotask/task-planning'
+      route: '/petrotask/task-planning',
     },
     {
       id: 'task-management',
-      label: 'Gestión de Tareas',
+      label: 'menu.task-management',
       icon: 'assignment',
       children: [
         {
           id: 'activities-list',
-          label: 'Lista de Tareas',
+          label: 'menu.tasks-list',
           icon: 'list_alt',
-          route: '/petrotask/activities-list'
+          route: '/petrotask/activities-list',
         },
         {
           id: 'task-assignment',
-          label: 'Asignación de Tareas',
+          label: 'menu.task-assignment',
           icon: 'assignment_ind',
-          route: '/petrotask/task-assignment'
-        }
-      ]
+          route: '/petrotask/task-assignment',
+        },
+      ],
+    },
+    {
+      id: 'critical-tasks',
+      label: 'menu.critical-tasks',
+      icon: 'warning',
+      route: '/petrotask/activity-management',
     },
     {
       id: 'alert-management',
-      label: 'Gestión de Alertas',
+      label: 'menu.alert-management',
       icon: 'notifications',
       children: [
         {
           id: 'safety-monitoring',
-          label: 'Monitoreo de Seguridad',
+          label: 'menu.safety-monitoring',
           icon: 'security',
-          route: '/petrotask/safety-monitoring'
+          route: '/petrotask/safety-monitoring',
         },
         {
           id: 'alert-history',
-          label: 'Historial de Alertas',
+          label: 'menu.alert-history',
           icon: 'history',
-          route: '/petrotask/alert-history'
-        }
-      ]
+          route: '/petrotask/alert-history',
+        },
+      ],
     },
     {
       id: 'reports',
-      label: 'Reportes',
+      label: 'menu.reports',
       icon: 'assessment',
-      route: '/petrotask/reports'
+      route: '/petrotask/reports',
     },
     {
       id: 'execution-history',
-      label: 'Historial de Ejecución',
+      label: 'menu.execution-history',
       icon: 'history',
-      route: '/petrotask/execution-history'
+      route: '/petrotask/execution-history',
     },
     {
       id: 'system-management',
-      label: 'Gestión del Sistema',
+      label: 'menu.system-management',
       icon: 'admin_panel_settings',
       children: [
         {
           id: 'users',
-          label: 'Usuarios',
+          label: 'menu.users',
           icon: 'groups',
-          route: '/petrotask/users'
+          route: '/petrotask/users',
         },
         {
           id: 'equipments-management',
-          label: 'Gestión de Equipos',
+          label: 'menu.equipments-management',
           icon: 'precision_manufacturing',
-          route: '/petrotask/equipments-management'
+          route: '/petrotask/equipments-management',
         },
         {
           id: 'employee-management',
-          label: 'Personal de Campo',
+          label: 'menu.employee-management',
           icon: 'engineering',
-          route: '/petrotask/employee-management'
+          route: '/petrotask/employee-management',
+        },
+        {
+          id: 'position-management',
+          label: 'menu.position-management',
+          icon: 'work',
+          route: '/petrotask/position-management',
         },
         {
           id: 'location-management',
-          label: 'Ubicaciones',
+          label: 'menu.location-management',
           icon: 'location_on',
-          route: '/petrotask/location-management'
+          route: '/petrotask/location-management',
         },
         {
           id: 'teams-management',
-          label: 'Equipos de Trabajo',
+          label: 'menu.teams-management',
           icon: 'group',
-          route: '/petrotask/teams-management'
+          route: '/petrotask/teams-management',
         },
         {
           id: 'settings',
-          label: 'Configuración',
+          label: 'menu.settings',
           icon: 'settings',
-          route: '/petrotask/company-settings'
-        }
-      ]
-    }
+          route: '/petrotask/company-settings',
+        },
+      ],
+    },
   ];
 
   private operarioMenuItems: SidebarMenuItem[] = [
     {
       id: 'home',
-      label: 'Inicio',
+      label: 'menu.home',
       icon: 'home',
       route: '/petrotask/home',
     },
     {
       id: 'my-tasks',
-      label: 'Mis Tareas',
+      label: 'menu.my-tasks',
       icon: 'assignment',
-      route: '/petrotask/my-tasks'
+      route: '/petrotask/my-tasks',
     },
     {
       id: 'incident-reporting',
-      label: 'Reporte de Incidencias',
+      label: 'menu.incident-reporting',
       icon: 'report_problem',
-      route: '/petrotask/incident-reporting'
+      route: '/petrotask/incident-reporting',
     },
     {
       id: 'photo-evidence',
-      label: 'Evidencias Fotográficas',
+      label: 'menu.photo-evidence',
       icon: 'camera_alt',
-      route: '/petrotask/photo-evidence'
+      route: '/petrotask/photo-evidence',
+    },
+    {
+      id: 'critical-tasks',
+      label: 'menu.critical-tasks',
+      icon: 'warning',
+      route: '/petrotask/activity-management',
     },
     {
       id: 'safety-alerts',
-      label: 'Alertas de Seguridad',
+      label: 'menu.safety-alerts',
       icon: 'warning',
-      route: '/petrotask/safety-alerts'
-    }
+      route: '/petrotask/safety-alerts',
+    },
   ];
 
   private supervisorMenuItems: SidebarMenuItem[] = [
     {
       id: 'home',
-      label: 'Inicio',
+      label: 'menu.home',
       icon: 'home',
-      route: '/petrotask/home'
+      route: '/petrotask/home',
     },
     {
       id: 'dashboard',
-      label: 'Panel de Control',
+      label: 'menu.dashboard',
       icon: 'dashboard',
-      route: '/petrotask/dashboard'
+      route: '/petrotask/dashboard',
     },
     {
       id: 'task-planning',
-      label: 'Planificación de Tareas',
+      label: 'menu.task-planning',
       icon: 'schedule',
-      route: '/petrotask/task-planning'
+      route: '/petrotask/task-planning',
     },
     {
       id: 'team-management',
-      label: 'Gestión de Equipos',
+      label: 'menu.team-management',
       icon: 'group',
-      route: '/petrotask/teams-management'
+      route: '/petrotask/teams-management',
     },
     {
       id: 'equipments-management',
-      label: 'Equipos Petroleros',
+      label: 'menu.petroleum-equipment',
       icon: 'precision_manufacturing',
-      route: '/petrotask/equipments-management'
+      route: '/petrotask/equipments-management',
     },
     {
       id: 'location-management',
-      label: 'Ubicaciones Petroleras',
+      label: 'menu.petroleum-locations',
       icon: 'location_on',
-      route: '/petrotask/location-management'
+      route: '/petrotask/location-management',
     },
     {
       id: 'critical-tasks',
-      label: 'Tareas Críticas',
+      label: 'menu.critical-tasks',
       icon: 'warning',
-      route: '/petrotask/activity-management'
+      route: '/petrotask/activity-management',
     },
     {
       id: 'safety-monitoring',
-      label: 'Monitoreo de Seguridad',
+      label: 'menu.safety-monitoring',
       icon: 'security',
-      route: '/petrotask/safety-monitoring'
+      route: '/petrotask/safety-monitoring',
     },
     {
       id: 'incident-management',
-      label: 'Gestión de Incidencias',
+      label: 'menu.incident-management',
       icon: 'report_problem',
-      route: '/petrotask/incident-management'
+      route: '/petrotask/incident-management',
     },
     {
       id: 'reports',
-      label: 'Reportes',
+      label: 'menu.reports',
       icon: 'assessment',
-      route: '/petrotask/reports'
-    }
+      route: '/petrotask/reports',
+    },
   ];
 
   constructor() {}
 
   getMenuItems(): Observable<SidebarMenuItem[]> {
-    console.log('Getting menu items...');
-    if(this.localStorageService.hasKey('menuItems')){
-      const menuItems : SidebarMenuItem[] = this.localStorageService.getItem('menuItems');
-      console.log('Menu items from localStorage:', menuItems);
+    if (this.localStorageService.hasKey('menuItems')) {
+      const menuItems: SidebarMenuItem[] =
+        this.localStorageService.getItem('menuItems');
       return of(menuItems);
     }
-    console.log('No menu items in localStorage, getting from roles...');
     return this.authService.currentRoles.pipe(
-      map(roles => {
-        console.log('Current roles:', roles);
+      map((roles) => {
         if (!roles || roles.length === 0) {
-          console.log('No roles found, returning empty menu');
           return [];
         }
         const firstRole = roles[0];
-        let menuItems : SidebarMenuItem[] = [];
+        let menuItems: SidebarMenuItem[] = [];
         switch (firstRole) {
           case Roles.Admin:
-            console.log('Loading admin menu items');
             menuItems = this.adminMenuItems;
             break;
+          case Roles.LogisticOperator:
           case Roles.FieldOperator:
-            console.log('Loading operario menu items');
-            menuItems =  this.operarioMenuItems;
-            break;
-          case Roles.FieldSupervisor:
-            console.log('Loading supervisor menu items (same as admin)');
-            menuItems =  this.adminMenuItems; // El supervisor usa el mismo menú que el admin
-            break;
-          case Roles.FieldPlanner:
-            console.log('Loading planner menu items');
-            menuItems =  this.supervisorMenuItems; // Los planificadores usan el mismo menú que supervisores
-            break;
           case Roles.FieldTechnician:
-            console.log('Loading technician menu items');
-            menuItems =  this.operarioMenuItems; // Los técnicos usan el mismo menú que operarios
+            menuItems = this.operarioMenuItems;
+            break;
+          case Roles.LogisticSupervisor:
+          case Roles.FieldSupervisor:
+          case Roles.FieldPlanner:
+            menuItems = this.supervisorMenuItems;
             break;
           default:
-            console.log('No matching role found, returning empty menu');
             menuItems = [];
         }
         this.localStorageService.setItem('menuItems', menuItems);
@@ -269,9 +274,7 @@ export class MenuService {
     );
   }
 
-  handleRoleError(): void {
-
-  }
+  handleRoleError(): void {}
   getSupervisorMenuItems(): Observable<SidebarMenuItem[]> {
     return of(this.supervisorMenuItems);
   }

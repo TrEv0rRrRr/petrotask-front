@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MenuService } from '../../services/menu.service';
-import { Subject, takeUntil } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
+import { Subject, takeUntil } from 'rxjs';
+import { MenuService } from '../../services/menu.service';
 
 export interface SidebarMenuItem {
   id: string;
@@ -17,13 +17,9 @@ export interface SidebarMenuItem {
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    TranslatePipe
-  ],
+  imports: [CommonModule, RouterModule, TranslatePipe],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+  styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   @Input() isOpen = true;
@@ -34,17 +30,16 @@ export class SidebarComponent implements OnInit, OnDestroy {
   constructor(private menuService: MenuService) {}
 
   ngOnInit(): void {
-    console.log('Sidebar component initialized');
-    this.menuService.getMenuItems()
+    this.menuService
+      .getMenuItems()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (items) => {
-          console.log('Menu items loaded:', items);
           this.menuItems = items;
         },
         error: (error) => {
           console.error('Error loading menu items:', error);
-        }
+        },
       });
   }
 

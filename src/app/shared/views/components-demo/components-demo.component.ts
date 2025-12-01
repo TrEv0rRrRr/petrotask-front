@@ -1,50 +1,39 @@
 import { Component } from '@angular/core';
-import { TableComponent } from '../../components/table/table.component';
-import { SelectorComponent } from '../../components/selector/selector.component';
-import { Columns } from '../../components/table/table.models';
-import { CallbackPipe } from '../../pipes/callback.pipe';
+import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
+import { SegmentedTaskComponent } from '../../../features/planning/components/segmented-task/segmented-task.component';
 import { ButtonComponent } from '../../components/button/button.component';
-import {InputComponent} from '../../components/input/input.component';
-import {FormsModule} from '@angular/forms';
-import {TranslatePipe} from '@ngx-translate/core';
-import {
-  TaskExecutionViewComponent
-} from '../../../features/planning/components/task-execution-view/task-execution-view.component';
-import {
-  TaskSchedulingDialogComponent
-} from '../../../features/planning/components/task-scheduling-dialog/task-scheduling-dialog.component';
-import {SegmentedTaskComponent} from '../../../features/planning/components/segmented-task/segmented-task.component';
 import { DateNavigatorComponent } from '../../components/date-navigator/date-navigator.component';
+import { InputComponent } from '../../components/input/input.component';
+import { SelectorComponent } from '../../components/selector/selector.component';
+import { TableComponent } from '../../components/table/table.component';
+import { Columns } from '../../components/table/table.models';
 
 @Component({
   selector: 'app-components-demo',
   standalone: true,
   imports: [
     TableComponent,
-    CallbackPipe,
     SelectorComponent,
     ButtonComponent,
     InputComponent,
     FormsModule,
-    TaskExecutionViewComponent,
-    TaskSchedulingDialogComponent,
     SegmentedTaskComponent,
     DateNavigatorComponent,
-    TranslatePipe
+    TranslatePipe,
   ],
   templateUrl: './components-demo.component.html',
-  styleUrl: './components-demo.component.scss'
+  styleUrl: './components-demo.component.scss',
 })
 export class ComponentsDemoComponent {
-
   namna = (value: any) => {
     return value + 'ñamña';
-  }
+  };
   options = ['Option 1', 'Option 2', 'Option 3'];
   magia: string = '';
 
   loadingTest = false;
-  tableTestData : any[] = [
+  tableTestData: any[] = [
     {
       name: 'John Doe',
       age: 30,
@@ -67,8 +56,8 @@ export class ComponentsDemoComponent {
       email: 'john.doe@example.com',
       phone: '123-456-7890',
       address: '123 Main St, Anytown, USA',
-    }
-  ]
+    },
+  ];
   columns: Columns[] = [
     {
       header: {
@@ -81,7 +70,7 @@ export class ComponentsDemoComponent {
       hide: {
         visible: true,
         label: 'Name',
-      }
+      },
     },
     {
       header: {
@@ -94,7 +83,7 @@ export class ComponentsDemoComponent {
       hide: {
         visible: true,
         label: 'Age',
-      }
+      },
     },
     {
       header: {
@@ -107,7 +96,7 @@ export class ComponentsDemoComponent {
       hide: {
         visible: true,
         label: 'Email',
-      }
-    }
+      },
+    },
   ];
 }
