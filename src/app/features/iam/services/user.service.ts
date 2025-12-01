@@ -15,10 +15,31 @@ export class UserService {
   };
 
   private handleError(error: any) {
-    console.error('An error occurred:', error);
-    return throwError(
-      () => new Error('Something bad happened; please try again later.')
-    );
+    console.error('Error completo:', error);
+    console.error('Status:', error.status);
+    console.error('Message:', error.message);
+    console.error('Error body:', error.error);
+
+    let errorMessage = 'Something bad happened; please try again later.';
+
+    if (error.error?.message) {
+      errorMessage = error.error.message;
+    } else if (error.message) {
+      errorMessage = error.message;
+    } else if (error.status === 0) {
+      errorMessage =
+        'No se puede conectar al servidor. Verifica que el backend esté activo.';
+    } else if (error.status === 404) {
+      errorMessage = 'Recurso no encontrado (404)';
+    } else if (error.status === 400) {
+      errorMessage = 'Solicitud inválida (400)';
+    } else if (error.status === 401) {
+      errorMessage = 'No autorizado (401)';
+    } else if (error.status === 500) {
+      errorMessage = 'Error interno del servidor (500)';
+    }
+
+    return throwError(() => new Error(errorMessage));
   }
 
   getAllUsers(): Observable<User[]> {
@@ -70,8 +91,6 @@ export class UserService {
 
   toggleUserStatus(user: User): Observable<boolean> {
     const request = UserAssembler.toUpdateStatusRequest(user);
-    console.log(`${this.baseUrl}/${user.id}/status`);
-    console.log(request);
     return this.http
       .put<any>(`${this.baseUrl}/${user.id}/status`, request)
       .pipe(

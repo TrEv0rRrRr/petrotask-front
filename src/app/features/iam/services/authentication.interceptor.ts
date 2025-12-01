@@ -25,14 +25,12 @@ export const authenticationInterceptor: HttpInterceptorFn = (
     ? request.clone({headers: request.headers.set('Authorization', `Bearer ${token}`)})
     : request;
   
-  console.log('Request intercepted:', handledRequest.url, token);
   
   // Return the handled request with error handling
   return next(handledRequest).pipe(
     catchError((error) => {
       // Handle 401 Unauthorized errors
       if (error.status === 401) {
-        console.log('Unauthorized request, redirecting to login');
         localStorage.removeItem('token');
         router.navigate(['/login']);
       }

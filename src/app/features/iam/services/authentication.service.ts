@@ -87,7 +87,6 @@ export class AuthenticationService {
    * @returns Observable of {@link SignInResponse} object containing the user's id, username, and token.
    */
   signIn(signInRequest: SignInRequest): Observable<SignInResponse> {
-    console.log('Signing in with:', signInRequest);
     return this.http.post<SignInResponse>(
       `${this.basePath}/authentication/sign-in`,
       signInRequest,
@@ -109,9 +108,6 @@ export class AuthenticationService {
     this.localStorageService.setItem('token', response.token);
     this.localStorageService.setItem('userSession', response);
     this.localStorageService.removeItem('menuItems');
-    console.log(
-      `Signed in as ${response.username} with token ${response.token}`
-    );
     this.router.navigate(['/petrotask/home']).then();
   }
 
@@ -122,7 +118,6 @@ export class AuthenticationService {
    * @param response The sign up response.
    */
   handleSuccessfulSignUp(response: SignUpResponse): void {
-    console.log(`Signed up as ${response.username} with id ${response.id}`);
     this.router.navigate(['/login']).then();
   }
 
