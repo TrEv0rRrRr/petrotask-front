@@ -1,10 +1,17 @@
-import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
-import { Equipment } from '../../models/equipment.entity';
-import { BaseFormComponent, FormConfig } from '../../../../shared/components/base-form/base-form.component';
 import { UiService } from '../../../../core/services/ui.service';
+import {
+  BaseFormComponent,
+  FormConfig,
+} from '../../../../shared/components/base-form/base-form.component';
+import { Equipment } from '../../models/equipment.entity';
 
 export interface EquipmentDialogData {
   equipment: Equipment;
@@ -15,14 +22,9 @@ export interface EquipmentDialogData {
 @Component({
   selector: 'app-equipment-form-dialog',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    TranslateModule,
-    BaseFormComponent
-  ],
+  imports: [CommonModule, MatDialogModule, TranslateModule, BaseFormComponent],
   templateUrl: './equipment-form-dialog.component.html',
-  styleUrl: './equipment-form-dialog.component.scss'
+  styleUrl: './equipment-form-dialog.component.scss',
 })
 export class EquipmentFormDialogComponent implements OnInit {
   formConfig: FormConfig = { fields: [] };
@@ -47,7 +49,7 @@ export class EquipmentFormDialogComponent implements OnInit {
       plate: this.data.equipment.plate || '',
       capacityLoad: this.data.equipment.capacityLoad || 0,
       capacityPax: this.data.equipment.capacityPax || 0,
-      status: this.data.equipment.status || 'AVAILABLE'
+      status: this.data.equipment.status || 'Available',
     };
   }
 
@@ -63,8 +65,8 @@ export class EquipmentFormDialogComponent implements OnInit {
           required: true,
           validation: {
             minLength: 2,
-            maxLength: 100
-          }
+            maxLength: 100,
+          },
         },
         {
           key: 'code',
@@ -76,11 +78,12 @@ export class EquipmentFormDialogComponent implements OnInit {
           validation: {
             minLength: 3,
             maxLength: 20,
-            pattern: '^[A-Z0-9\\-]+$'
+            pattern: '^[A-Z0-9\\-]+$',
           },
           customErrorMessages: {
-            pattern: 'Code must contain only uppercase letters, numbers and hyphens'
-          }
+            pattern:
+              'Code must contain only uppercase letters, numbers and hyphens',
+          },
         },
         {
           key: 'plate',
@@ -92,11 +95,12 @@ export class EquipmentFormDialogComponent implements OnInit {
           validation: {
             minLength: 6,
             maxLength: 10,
-            pattern: '^[A-Z0-9\\-]+$'
+            pattern: '^[A-Z0-9\\-]+$',
           },
           customErrorMessages: {
-            pattern: 'Plate must contain only uppercase letters, numbers and hyphens'
-          }
+            pattern:
+              'Plate must contain only uppercase letters, numbers and hyphens',
+          },
         },
         {
           key: 'capacityLoad',
@@ -107,8 +111,8 @@ export class EquipmentFormDialogComponent implements OnInit {
           required: true,
           validation: {
             min: 0,
-            max: 50000
-          }
+            max: 50000,
+          },
         },
         {
           key: 'capacityPax',
@@ -119,8 +123,8 @@ export class EquipmentFormDialogComponent implements OnInit {
           required: true,
           validation: {
             min: 1,
-            max: 100
-          }
+            max: 100,
+          },
         },
         {
           key: 'status',
@@ -129,24 +133,24 @@ export class EquipmentFormDialogComponent implements OnInit {
           label: 'Status',
           required: true,
           options: [
-            { value: 'AVAILABLE', label: 'Available' },
-            { value: 'MAINTENANCE', label: 'Maintenance' },
-            { value: 'OUT_OF_SERVICE', label: 'Out of Service' },
-            { value: 'RESERVED', label: 'Reserved' }
-          ]
-        }
+            { value: 'Available', label: 'Disponible' },
+            { value: 'Vacation', label: 'En Vacaciones' },
+            { value: 'Reserved', label: 'Reservado' },
+            { value: 'Unavailable', label: 'No Disponible' },
+          ],
+        },
       ],
       submitButtonTextKey: this.data.isEdit ? 'common.update' : 'common.create',
       cancelButtonTextKey: 'common.cancel',
       showCancelButton: true,
       layout: 'vertical',
-      size: 'medium'
+      size: 'medium',
     };
   }
 
   onFormSubmit(formValue: any): void {
     this.isSubmitting = true;
-    
+
     const equipmentData: Equipment = new Equipment({
       id: this.data.isEdit ? this.data.equipment.id : 0,
       tenantId: this.data.equipment.tenantId || 1, // Default tenant ID
@@ -155,7 +159,7 @@ export class EquipmentFormDialogComponent implements OnInit {
       code: formValue.code,
       plate: formValue.plate,
       capacityLoad: formValue.capacityLoad,
-      capacityPax: formValue.capacityPax
+      capacityPax: formValue.capacityPax,
     });
 
     // Simulate async operation
