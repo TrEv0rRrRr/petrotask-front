@@ -10,7 +10,9 @@
         <div class="field">
           <h5>Activity Code</h5>
           <p *ngIf="!showInputs">{{ activity.activityCode }}</p>
-          <app-input class="input-option" *ngIf="showInputs"
+          <app-input
+            class="input-option"
+            *ngIf="showInputs"
             [type]="'text'"
             [(ngModel)]="activityCodeInput"
             [placeholder]="activity.activityCode"
@@ -20,7 +22,9 @@
         <div class="field">
           <h5>Location Origin</h5>
           <p *ngIf="!showInputs">{{ activity.locationOrigin }}</p>
-          <app-input class="input-option" *ngIf="showInputs"
+          <app-input
+            class="input-option"
+            *ngIf="showInputs"
             [type]="'number'"
             [(ngModel)]="locationOriginInput"
             [placeholder]="activity.locationOrigin.toString()"
@@ -30,7 +34,9 @@
         <div class="field">
           <h5>Location Destination</h5>
           <p *ngIf="!showInputs">{{ activity.locationDestination }}</p>
-          <app-input class="input-option" *ngIf="showInputs"
+          <app-input
+            class="input-option"
+            *ngIf="showInputs"
             [type]="'number'"
             [(ngModel)]="locationDestinationInput"
             [placeholder]="activity.locationDestination.toString()"
@@ -42,7 +48,9 @@
         <div class="field">
           <h5>Zone Origin</h5>
           <p *ngIf="!showInputs">{{ activity.zoneOrigin }}</p>
-          <app-input class="input-option" *ngIf="showInputs"
+          <app-input
+            class="input-option"
+            *ngIf="showInputs"
             [type]="'number'"
             [(ngModel)]="zoneOriginInput"
             [placeholder]="activity.zoneOrigin.toString()"
@@ -52,7 +60,9 @@
         <div class="field">
           <h5>Zone Destination</h5>
           <p *ngIf="!showInputs">{{ activity.zoneDestination }}</p>
-          <app-input class="input-option" *ngIf="showInputs"
+          <app-input
+            class="input-option"
+            *ngIf="showInputs"
             [type]="'number'"
             [(ngModel)]="zoneDestinationInput"
             [placeholder]="activity.zoneDestination.toString()"
@@ -61,8 +71,12 @@
         </div>
         <div class="field">
           <h5>Expected Time</h5>
-          <p *ngIf="!showInputs">{{ activity.expectedTime | date: 'longDate' }}</p>
-          <app-input class="input-option" *ngIf="showInputs"
+          <p *ngIf="!showInputs">
+            {{ activity.expectedTime | date : "longDate" }}
+          </p>
+          <app-input
+            class="input-option"
+            *ngIf="showInputs"
             [type]="'datetime-local'"
             [(ngModel)]="expectedTimeInput"
             [placeholder]="activity.expectedTime.toString()"
@@ -72,7 +86,9 @@
         <div class="field">
           <h5>Week Number</h5>
           <p *ngIf="!showInputs">{{ activity.weekNumber }}</p>
-          <app-input class="input-option" *ngIf="showInputs"
+          <app-input
+            class="input-option"
+            *ngIf="showInputs"
             [type]="'number'"
             [(ngModel)]="weekNumberInput"
             [placeholder]="activity.weekNumber.toString()"
@@ -82,7 +98,9 @@
         <div class="field">
           <h5>Status</h5>
           <p *ngIf="!showInputs">{{ activity.activityStatus }}</p>
-          <app-input class="input-option" *ngIf="showInputs"
+          <app-input
+            class="input-option"
+            *ngIf="showInputs"
             [type]="'text'"
             [(ngModel)]="statusInput"
             [placeholder]="activity.activityStatus"
@@ -93,7 +111,9 @@
       <div class="field">
         <h5>Description</h5>
         <p *ngIf="!showInputs">{{ activity.description }}</p>
-        <app-input class="input-option" *ngIf="showInputs"
+        <app-input
+          class="input-option"
+          *ngIf="showInputs"
           [type]="'text'"
           [(ngModel)]="descriptionInput"
           [placeholder]="activity.description"
@@ -101,17 +121,22 @@
         ></app-input>
       </div>
       <div class="buttons-container">
-        <app-button class="button"
+        <app-button
+          class="button"
           [color]="'primary'"
           [label]="'Ir a TaskSegmentationView'"
           (click)="toTaskSegmentationView()"
         ></app-button>
-        <app-button *ngIf="!showInputs" class="button"
+        <app-button
+          *ngIf="!showInputs"
+          class="button"
           [color]="'primary'"
           [label]="'Editar Actividad'"
           (click)="onEnableInputs()"
         ></app-button>
-        <app-button *ngIf="showInputs" class="button"
+        <app-button
+          *ngIf="showInputs"
+          class="button"
           [color]="'primary'"
           [label]="'Guardar Cambios'"
           (click)="onEditActivity()"
@@ -119,7 +144,7 @@
       </div>
     </div>
     <div class="segmented-tasks-container">
-      <h2>Lista de tareas</h2>
+      <h2>{{ "menu.tasks-list" | translate }}</h2>
       <div class="tasks-list" *ngFor="let task of tasks">
         <app-segmented-task [task]="task"></app-segmented-task>
       </div>
