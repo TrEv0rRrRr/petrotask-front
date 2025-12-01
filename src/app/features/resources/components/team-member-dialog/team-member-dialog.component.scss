@@ -1,0 +1,112 @@
+.team-member-dialog {
+  min-width: 500px;
+  max-width: 600px;
+
+  mat-dialog-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .add-member-section {
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 20px;
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .member-form {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+
+      mat-form-field {
+        flex: 1;
+      }
+
+      button {
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+
+    .no-employees {
+      color: #666;
+      font-style: italic;
+      margin: 12px 0 0 0;
+    }
+  }
+
+  .current-members-section {
+    h3 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    mat-list {
+      padding: 0;
+    }
+
+    mat-list-item {
+      height: auto;
+      padding: 0;
+      border-bottom: 1px solid #f0f0f0;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    .member-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 12px 0;
+
+      .member-name {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+
+        mat-icon {
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+          color: #666;
+        }
+      }
+    }
+
+    .no-members {
+      color: #666;
+      font-style: italic;
+      margin: 0;
+    }
+  }
+
+  .loading-indicator {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  mat-dialog-actions {
+    padding: 16px 24px;
+    margin: 0;
+  }
+}

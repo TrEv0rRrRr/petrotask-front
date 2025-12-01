@@ -1,0 +1,80 @@
+<div class="team-member-dialog">
+  <h2 mat-dialog-title>Manage Team Members - {{ team.name }}</h2>
+
+  <mat-dialog-content>
+    <!-- Add Member Form -->
+    <div class="add-member-section">
+      <h3>Add New Member</h3>
+      <form [formGroup]="memberForm" class="member-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Select Employee</mat-label>
+          <mat-select formControlName="employeeId" [disabled]="loading">
+            <mat-option
+              *ngFor="let employee of availableEmployees"
+              [value]="employee.id"
+            >
+              {{ employee.name }} {{ employee.lastName }} - {{ employee.email }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="memberForm.get('employeeId')?.hasError('required')">
+            Employee is required
+          </mat-error>
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="addMember()"
+          [disabled]="memberForm.invalid || loading"
+        >
+          <mat-icon>person_add</mat-icon>
+          Add Member
+        </button>
+      </form>
+
+      <p
+        *ngIf="availableEmployees.length === 0 && !loading"
+        class="no-employees"
+      >
+        No available employees to add. All employees are already members of this
+        team.
+      </p>
+    </div>
+
+    <!-- Current Members List -->
+    <div class="current-members-section">
+      <h3>Current Members ({{ currentMembers.length }})</h3>
+
+      <mat-list *ngIf="currentMembers.length > 0">
+        <mat-list-item *ngFor="let member of currentMembers">
+          <div class="member-item">
+            <span class="member-name">
+              <mat-icon>person</mat-icon>
+              {{ member.employeeName }}
+            </span>
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="removeMember(member)"
+              [disabled]="loading"
+              matTooltip="Remove member"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-list-item>
+      </mat-list>
+
+      <p *ngIf="currentMembers.length === 0 && !loading" class="no-members">
+        This team has no members yet.
+      </p>
+    </div>
+
+    <div *ngIf="loading" class="loading-indicator">Loading...</div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="close()">Close</button>
+  </mat-dialog-actions>
+</div>
