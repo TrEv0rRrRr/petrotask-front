@@ -1,7 +1,7 @@
 <div class="team-management-container">
   <div class="header">
-    <h1>{{ 'Team Management' | translate }}</h1>
-    
+    <h1>{{ "Team Management" | translate }}</h1>
+
     <div class="actions">
       <div class="view-controls">
         <app-button
@@ -10,7 +10,7 @@
           [disabled]="loading"
           (clicked)="refreshData()"
         ></app-button>
-        
+
         <app-button
           [label]="'Add Team' | translate"
           [color]="'primary'"
@@ -27,14 +27,14 @@
         <div class="spinner"></div>
         <p>Loading teams...</p>
       </div>
-      
+
       <app-table
         [columns]="columns"
         [dataSource]="teams"
         [showPaginator]="true"
         [customColumns]="tableActions"
       ></app-table>
-      
+
       <div *ngIf="!loading && teams.length === 0" class="empty-state">
         <div class="empty-icon">👥</div>
         <h3>No teams found</h3>
@@ -51,6 +51,12 @@
 
 <ng-template #tableActions let-column="column" let-row="row">
   <div *ngIf="column === 'actions'" class="action-buttons">
+    <app-button
+      [label]="'Manage Members' | translate"
+      [color]="'primary'"
+      [disabled]="loading"
+      (clicked)="openMembersDialog(row)"
+    ></app-button>
     <app-button
       [label]="'Edit' | translate"
       [color]="'primary'"
