@@ -1,17 +1,26 @@
-import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatStepperModule } from '@angular/material/stepper';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
 import { TranslateModule } from '@ngx-translate/core';
 
 export interface TaskExecutionData {
@@ -42,10 +51,10 @@ export interface PhotoData {
     MatCheckboxModule,
     MatProgressBarModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
   ],
   templateUrl: './task-execution-dialog.component.html',
-  styleUrls: ['./task-execution-dialog.component.scss']
+  styleUrls: ['./task-execution-dialog.component.scss'],
 })
 export class TaskExecutionDialogComponent {
   executionForm: FormGroup;
@@ -53,24 +62,17 @@ export class TaskExecutionDialogComponent {
   task: any;
   selectedFile: File | null = null;
   photoPreview: string | null = null;
-  
+
   // Opciones para categorías de fotos
   photoCategories = [
     { value: 'before', label: 'Antes de iniciar' },
     { value: 'during', label: 'Durante la ejecución' },
     { value: 'after', label: 'Después de completar' },
-    { value: 'incident', label: 'Evidencia de incidencia' }
+    { value: 'incident', label: 'Evidencia de incidencia' },
   ];
 
   // Checklist de seguridad
-  safetyChecklist = [
-    { id: 'helmet', label: 'Casco de seguridad', checked: false },
-    { id: 'gloves', label: 'Guantes de protección', checked: false },
-    { id: 'goggles', label: 'Gafas de protección', checked: false },
-    { id: 'boots', label: 'Botas de seguridad', checked: false },
-    { id: 'gas_detector', label: 'Detector de gases', checked: false },
-    { id: 'radio', label: 'Radio de comunicación', checked: false }
-  ];
+  safetyChecklist: Array<{ id: string; label: string; checked: boolean }> = [];
 
   constructor(
     private fb: FormBuilder,
@@ -79,13 +81,13 @@ export class TaskExecutionDialogComponent {
   ) {
     this.action = data.action;
     this.task = data.task;
-    
+
     this.executionForm = this.fb.group({
       notes: [''],
       photoDescription: [''],
       photoCategory: ['during'],
       safetyConfirmed: [false, Validators.requiredTrue],
-      equipmentChecked: [false, Validators.requiredTrue]
+      equipmentChecked: [false, Validators.requiredTrue],
     });
   }
 
@@ -93,7 +95,7 @@ export class TaskExecutionDialogComponent {
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
-      
+
       // Crear preview de la imagen
       const reader = new FileReader();
       reader.onload = (e: any) => {
@@ -109,19 +111,21 @@ export class TaskExecutionDialogComponent {
   }
 
   onSafetyItemChange(itemId: string, checked: boolean): void {
-    const item = this.safetyChecklist.find(i => i.id === itemId);
+    const item = this.safetyChecklist.find((i) => i.id === itemId);
     if (item) {
       item.checked = checked;
     }
   }
 
   getSafetyProgress(): number {
-    const checkedItems = this.safetyChecklist.filter(item => item.checked).length;
+    const checkedItems = this.safetyChecklist.filter(
+      (item) => item.checked
+    ).length;
     return (checkedItems / this.safetyChecklist.length) * 100;
   }
 
   allSafetyItemsChecked(): boolean {
-    return this.safetyChecklist.every(item => item.checked);
+    return this.safetyChecklist.every((item) => item.checked);
   }
 
   onSubmit(): void {
@@ -132,7 +136,7 @@ export class TaskExecutionDialogComponent {
         notes: formData.notes,
         safetyConfirmed: formData.safetyConfirmed,
         equipmentChecked: formData.equipmentChecked,
-        safetyChecklist: this.safetyChecklist.filter(item => item.checked)
+        safetyChecklist: this.safetyChecklist.filter((item) => item.checked),
       };
 
       if (this.action === 'photo' && this.selectedFile) {
@@ -140,14 +144,14 @@ export class TaskExecutionDialogComponent {
         result.photo = {
           url: this.photoPreview,
           description: formData.photoDescription,
-          category: formData.photoCategory
+          category: formData.photoCategory,
         };
       }
 
       this.dialogRef.close(result);
     } else {
       // Marcar todos los campos como tocados para mostrar errores
-      Object.keys(this.executionForm.controls).forEach(key => {
+      Object.keys(this.executionForm.controls).forEach((key) => {
         this.executionForm.get(key)?.markAsTouched();
       });
     }
@@ -159,28 +163,40 @@ export class TaskExecutionDialogComponent {
 
   getActionTitle(): string {
     switch (this.action) {
-      case 'start': return 'Iniciar Tarea';
-      case 'complete': return 'Completar Tarea';
-      case 'photo': return 'Agregar Evidencia Fotográfica';
-      default: return 'Ejecutar Tarea';
+      case 'start':
+        return 'Iniciar Tarea';
+      case 'complete':
+        return 'Completar Tarea';
+      case 'photo':
+        return 'Agregar Evidencia Fotográfica';
+      default:
+        return 'Ejecutar Tarea';
     }
   }
 
   getActionIcon(): string {
     switch (this.action) {
-      case 'start': return 'play_arrow';
-      case 'complete': return 'check_circle';
-      case 'photo': return 'camera_alt';
-      default: return 'assignment';
+      case 'start':
+        return 'play_arrow';
+      case 'complete':
+        return 'check_circle';
+      case 'photo':
+        return 'camera_alt';
+      default:
+        return 'assignment';
     }
   }
 
   getActionColor(): string {
     switch (this.action) {
-      case 'start': return 'primary';
-      case 'complete': return 'accent';
-      case 'photo': return 'primary';
-      default: return 'primary';
+      case 'start':
+        return 'primary';
+      case 'complete':
+        return 'accent';
+      case 'photo':
+        return 'primary';
+      default:
+        return 'primary';
     }
   }
 }
