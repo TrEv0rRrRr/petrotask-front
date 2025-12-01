@@ -1,14 +1,27 @@
-import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
+import { of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { UiService } from '../../../../core/services/ui.service';
 import { Employee } from '../../models/employee.entity';
 import { Position } from '../../models/position.entity';
 import { PositionService } from '../../services/position.service';
-import { BaseFormComponent, FormConfig, FormField } from '../../../../shared/components/base-form/base-form.component';
-import { UiService } from '../../../../core/services/ui.service';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
 
 export interface EmployeeDialogData {
   employee: Employee;
@@ -21,153 +34,106 @@ export interface EmployeeDialogData {
   standalone: true,
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
     TranslateModule,
-    BaseFormComponent
   ],
   templateUrl: './employee-form-dialog.component.html',
-  styleUrl: './employee-form-dialog.component.scss'
+  styleUrl: './employee-form-dialog.component.scss',
 })
 export class EmployeeFormDialogComponent implements OnInit {
-  formConfig: FormConfig = { fields: [] };
-  initialValues: any = {};
-  isSubmitting = false;
+  employeeForm: FormGroup;
   positions: Position[] = [];
+  isSubmitting = false;
+
+  statusOptions = [
+    { value: 'Available', label: 'Disponible' },
+    { value: 'Vacation', label: 'En Vacaciones' },
+    { value: 'Reserved', label: 'Reservado' },
+    { value: 'Unavailable', label: 'No Disponible' },
+  ];
 
   constructor(
+    private fb: FormBuilder,
     public dialogRef: MatDialogRef<EmployeeFormDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: EmployeeDialogData,
     private positionService: PositionService,
     private uiService: UiService
-  ) {}
+  ) {
+    this.employeeForm = this.fb.group({
+      name: [
+        this.data.employee.name || '',
+        [Validators.required, Validators.minLength(2)],
+      ],
+      lastName: [
+        this.data.employee.lastName || '',
+        [Validators.required, Validators.minLength(2)],
+      ],
+      email: [
+        this.data.employee.email || '',
+        [Validators.required, Validators.email],
+      ],
+      phoneNumber: [
+        this.data.employee.phoneNumber || '',
+        [Validators.required],
+      ],
+      positionId: [
+        this.data.employee.positionId || null,
+        [Validators.required],
+      ],
+      status: [this.data.employee.status || 'Available', [Validators.required]],
+    });
+  }
 
   ngOnInit(): void {
     this.loadPositions();
-    this.setupForm();
   }
 
   private loadPositions(): void {
-    this.positionService.getAllPositions()
+    this.positionService
+      .getAllPositions()
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           console.error('Error loading positions:', error);
           this.uiService.showSnackbar({
-            message: 'Error loading positions',
-            type: 'error'
+            message: `Error cargando posiciones: ${
+              error.status || 'Sin conexión'
+            } - ${error.message || 'Verifica que el backend esté activo'}`,
+            type: 'error',
           });
           return of([]);
         })
       )
-      .subscribe(positions => {
+      .subscribe((positions) => {
+        console.log('Positions loaded:', positions);
+        if (positions.length === 0) {
+          this.uiService.showSnackbar({
+            message:
+              'No hay posiciones registradas. Por favor, crea posiciones primero.',
+            type: 'warning',
+          });
+        }
         this.positions = positions;
-        this.updateFormConfig();
       });
   }
 
-  private setupForm(): void {
-    this.initialValues = {
-      name: this.data.employee.name || '',
-      lastName: this.data.employee.lastName || '',
-      email: this.data.employee.email || '',
-      phoneNumber: this.data.employee.phoneNumber || '',
-      positionId: this.data.employee.positionId || null,
-      status: this.data.employee.status || 'ACTIVE'
-    };
-  }
+  onSubmit(): void {
+    if (this.employeeForm.invalid) {
+      this.employeeForm.markAllAsTouched();
+      return;
+    }
 
-  private updateFormConfig(): void {
-    const positionOptions = this.positions.map(position => ({
-      value: position.id,
-      label: position.title
-    }));
-
-    this.formConfig = {
-      fields: [
-        {
-          key: 'name',
-          type: 'text',
-          labelKey: 'employee.form.name',
-          label: 'Name',
-          placeholderKey: 'employee.form.placeholders.name',
-          required: true,
-          validation: {
-            minLength: 2,
-            maxLength: 50
-          }
-        },
-        {
-          key: 'lastName',
-          type: 'text',
-          labelKey: 'employee.form.lastName',
-          label: 'Last Name',
-          placeholderKey: 'employee.form.placeholders.lastName',
-          required: true,
-          validation: {
-            minLength: 2,
-            maxLength: 50
-          }
-        },
-        {
-          key: 'email',
-          type: 'email',
-          labelKey: 'employee.form.email',
-          label: 'Email',
-          placeholderKey: 'employee.form.placeholders.email',
-          required: true,
-          validation: {
-            maxLength: 100
-          }
-        },
-        {
-          key: 'phoneNumber',
-          type: 'text',
-          labelKey: 'employee.form.phoneNumber',
-          label: 'Phone Number',
-          placeholderKey: 'employee.form.placeholders.phoneNumber',
-          required: true,
-          validation: {
-            pattern: '^[+]?[0-9\\s\\-\\(\\)]{8,20}$'
-          },
-          customErrorMessages: {
-            pattern: 'Please enter a valid phone number'
-          }
-        },
-        {
-          key: 'positionId',
-          type: 'select',
-          labelKey: 'employee.form.position',
-          label: 'Position',
-          placeholderKey: 'employee.form.placeholders.position',
-          required: true,
-          options: positionOptions
-        },
-        {
-          key: 'status',
-          type: 'select',
-          labelKey: 'employee.form.status',
-          label: 'Status',
-          required: true,
-          options: [
-            { value: 'ACTIVE', label: 'Active' },
-            { value: 'INACTIVE', label: 'Inactive' },
-            { value: 'ON_LEAVE', label: 'On Leave' }
-          ]
-        }
-      ],
-      submitButtonTextKey: this.data.isEdit ? 'common.update' : 'common.create',
-      cancelButtonTextKey: 'common.cancel',
-      showCancelButton: true,
-      layout: 'vertical',
-      size: 'medium'
-    };
-  }
-
-  onFormSubmit(formValue: any): void {
+    console.log('Form submitted with values:', this.employeeForm.value);
     this.isSubmitting = true;
-    
+
+    const formValue = this.employeeForm.value;
     const employeeData: Employee = new Employee(
       this.data.isEdit ? this.data.employee.id : 0,
-      this.data.employee.tenantId || 1, // Default tenant ID
+      this.data.employee.tenantId || 1,
       formValue.name,
       formValue.lastName,
       formValue.positionId,
@@ -177,19 +143,17 @@ export class EmployeeFormDialogComponent implements OnInit {
       formValue.phoneNumber
     );
 
-    // Simulate async operation
-    setTimeout(() => {
-      this.isSubmitting = false;
-      this.dialogRef.close(employeeData);
-    }, 1000);
+    console.log('Employee data created:', employeeData);
+    this.isSubmitting = false;
+    this.dialogRef.close(employeeData);
   }
 
-  onFormCancel(): void {
+  onCancel(): void {
     this.dialogRef.close();
   }
 
   private getPositionTitle(positionId: number): string {
-    const position = this.positions.find(p => p.id === positionId);
+    const position = this.positions.find((p) => p.id === positionId);
     return position ? position.title : '';
   }
 }
