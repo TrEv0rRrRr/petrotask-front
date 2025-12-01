@@ -1,16 +1,27 @@
-import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatIconModule } from '@angular/material/icon';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { Activity } from '../../../planning/model/activity.entity';
+import { ActivityService } from '../../../planning/services/activity.service';
 
 @Component({
   selector: 'app-task-create-dialog',
@@ -27,117 +38,56 @@ import { TranslateModule } from '@ngx-translate/core';
     MatChipsModule,
     MatIconModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
   ],
   templateUrl: './task-create-dialog.component.html',
-  styleUrls: ['./task-create-dialog.component.scss']
+  styleUrls: ['./task-create-dialog.component.scss'],
 })
 export class TaskCreateDialogComponent {
   taskForm: FormGroup;
-  
-  // Opciones para los selects
-  priorityOptions = [
-    { value: 'low', label: 'Baja' },
-    { value: 'medium', label: 'Media' },
-    { value: 'high', label: 'Alta' },
-    { value: 'critical', label: 'Crítica' }
-  ];
+  activities: Activity[] = [];
 
-  locationOptions = [
-    'Plataforma Alpha - Sector Norte',
-    'Plataforma Alpha - Sector Sur',
-    'Planta de Procesamiento - Área 1',
-    'Planta de Procesamiento - Área 2',
-    'Planta de Procesamiento - Área 3',
-    'Campo Beta - Pozo 10',
-    'Campo Beta - Pozo 15',
-    'Campo Beta - Pozo 20',
-    'Estación de Bombeo Central',
-    'Almacén de Materiales',
-    'Taller de Mantenimiento'
+  statusOptions = [
+    { value: 'Pending', label: 'Pendiente' },
+    { value: 'InProgress', label: 'En Progreso' },
+    { value: 'Completed', label: 'Completada' },
+    { value: 'Cancelled', label: 'Cancelada' },
   ];
-
-  resourceOptions = [
-    'Multímetro',
-    'Kit de herramientas',
-    'EPP (Equipo de Protección Personal)',
-    'Manómetros',
-    'Válvulas de prueba',
-    'Herramientas especializadas',
-    'Filtros nuevos',
-    'Cables de conexión',
-    'Detector de gases',
-    'Termómetro digital',
-    'Cámara de inspección',
-    'Bomba de vacío'
-  ];
-
-  tagOptions = [
-    'Seguridad',
-    'Mantenimiento',
-    'Crítico',
-    'Preventivo',
-    'Correctivo',
-    'Verificación',
-    'Inspección',
-    'Calibración',
-    'Limpieza',
-    'Reparación',
-    'Instalación',
-    'Prueba'
-  ];
-
-  selectedResources: string[] = [];
-  selectedTags: string[] = [];
 
   constructor(
     private fb: FormBuilder,
+    private activityService: ActivityService,
     public dialogRef: MatDialogRef<TaskCreateDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.taskForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(5)]],
-      description: ['', [Validators.required, Validators.minLength(10)]],
-      priority: ['medium', Validators.required],
-      location: ['', Validators.required],
-      scheduledDate: [new Date(), Validators.required],
-      estimatedDuration: [1, [Validators.required, Validators.min(0.5), Validators.max(24)]]
+      title: ['', [Validators.required, Validators.minLength(3)]],
+      description: ['', [Validators.required, Validators.minLength(5)]],
+      activityId: ['', Validators.required],
+      employeeId: [0, [Validators.required, Validators.min(0)]],
+      status: ['Pending', Validators.required],
     });
+
+    this.loadActivities();
   }
 
-  onResourceAdd(resource: string): void {
-    if (resource && !this.selectedResources.includes(resource)) {
-      this.selectedResources.push(resource);
-    }
-  }
-
-  onResourceRemove(resource: string): void {
-    this.selectedResources = this.selectedResources.filter(r => r !== resource);
-  }
-
-  onTagAdd(tag: string): void {
-    if (tag && !this.selectedTags.includes(tag)) {
-      this.selectedTags.push(tag);
-    }
-  }
-
-  onTagRemove(tag: string): void {
-    this.selectedTags = this.selectedTags.filter(t => t !== tag);
+  loadActivities(): void {
+    this.activityService.getAllActivities().subscribe({
+      next: (activities) => {
+        this.activities = activities;
+      },
+      error: (error) => {
+        console.error('Error loading activities:', error);
+        this.activities = [];
+      },
+    });
   }
 
   onSubmit(): void {
     if (this.taskForm.valid) {
-      const formData = this.taskForm.value;
-      const taskData = {
-        ...formData,
-        resources: this.selectedResources,
-        tags: this.selectedTags
-      };
-      
-      this.dialogRef.close(taskData);
+      this.dialogRef.close(this.taskForm.value);
     } else {
-      // Marcar todos los campos como tocados para mostrar errores
-      Object.keys(this.taskForm.controls).forEach(key => {
+      Object.keys(this.taskForm.controls).forEach((key) => {
         this.taskForm.get(key)?.markAsTouched();
       });
     }

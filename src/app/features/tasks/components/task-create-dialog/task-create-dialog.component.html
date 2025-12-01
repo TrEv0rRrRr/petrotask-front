@@ -1,143 +1,90 @@
 <div class="task-create-dialog">
   <h2 mat-dialog-title>Crear Nueva Tarea</h2>
-  
+
   <mat-dialog-content>
     <form [formGroup]="taskForm" class="task-form">
       <!-- Título de la tarea -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Título de la tarea</mat-label>
-        <input matInput 
-               formControlName="title" 
-               placeholder="Ej: Inspección de válvulas de seguridad"
-               maxlength="100">
+        <input
+          matInput
+          formControlName="title"
+          placeholder="Ej: Inspección de válvulas de seguridad"
+          maxlength="255"
+        />
         <mat-error *ngIf="getFieldError('title')">
-          {{ getFieldError('title') }}
+          {{ getFieldError("title") }}
         </mat-error>
       </mat-form-field>
 
       <!-- Descripción -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Descripción detallada</mat-label>
-        <textarea matInput 
-                  formControlName="description" 
-                  placeholder="Describe las actividades específicas a realizar..."
-                  rows="4"
-                  maxlength="500"></textarea>
+        <mat-label>Descripción</mat-label>
+        <textarea
+          matInput
+          formControlName="description"
+          placeholder="Describe las actividades a realizar..."
+          rows="3"
+          maxlength="255"
+        ></textarea>
         <mat-error *ngIf="getFieldError('description')">
-          {{ getFieldError('description') }}
+          {{ getFieldError("description") }}
         </mat-error>
       </mat-form-field>
 
-      <!-- Prioridad y Ubicación -->
-      <div class="form-row">
-        <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Prioridad</mat-label>
-          <mat-select formControlName="priority">
-            <mat-option *ngFor="let option of priorityOptions" [value]="option.value">
-              {{ option.label }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+      <!-- Actividad asociada (REQUERIDO) -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Actividad asociada *</mat-label>
+        <mat-select formControlName="activityId">
+          <mat-option *ngFor="let activity of activities" [value]="activity.id">
+            {{ activity.activityCode }} - {{ activity.description }}
+          </mat-option>
+        </mat-select>
+        <mat-hint>La actividad es obligatoria para crear una tarea</mat-hint>
+        <mat-error *ngIf="getFieldError('activityId')">
+          {{ getFieldError("activityId") }}
+        </mat-error>
+      </mat-form-field>
 
-        <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Ubicación</mat-label>
-          <mat-select formControlName="location">
-            <mat-option *ngFor="let location of locationOptions" [value]="location">
-              {{ location }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+      <!-- Employee ID -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>ID del Empleado</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="employeeId"
+          placeholder="0 para sin asignar"
+          min="0"
+        />
+        <mat-hint>Deja en 0 para crear sin asignar</mat-hint>
+        <mat-error *ngIf="getFieldError('employeeId')">
+          {{ getFieldError("employeeId") }}
+        </mat-error>
+      </mat-form-field>
 
-      <!-- Fecha programada y Duración estimada -->
-      <div class="form-row">
-        <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Fecha programada</mat-label>
-          <input matInput 
-                 [matDatepicker]="picker" 
-                 formControlName="scheduledDate">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Duración estimada (horas)</mat-label>
-          <input matInput 
-                 type="number" 
-                 formControlName="estimatedDuration"
-                 min="0.5" 
-                 max="24" 
-                 step="0.5">
-          <mat-error *ngIf="getFieldError('estimatedDuration')">
-            {{ getFieldError('estimatedDuration') }}
-          </mat-error>
-        </mat-form-field>
-      </div>
-
-      <!-- Recursos necesarios -->
-      <div class="form-section">
-        <h3>Recursos necesarios</h3>
-        <div class="chips-container">
-          <mat-chip-set>
-            <mat-chip *ngFor="let resource of selectedResources" 
-                      (removed)="onResourceRemove(resource)"
-                      [color]="'primary'">
-              {{ resource }}
-              <button matChipRemove>
-                <mat-icon>cancel</mat-icon>
-              </button>
-            </mat-chip>
-          </mat-chip-set>
-        </div>
-        
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Agregar recurso</mat-label>
-          <mat-select (selectionChange)="onResourceAdd($event.value)" [value]="''">
-            <mat-option *ngFor="let resource of resourceOptions" 
-                        [value]="resource"
-                        [disabled]="selectedResources.includes(resource)">
-              {{ resource }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <!-- Tags/Etiquetas -->
-      <div class="form-section">
-        <h3>Etiquetas</h3>
-        <div class="chips-container">
-          <mat-chip-set>
-            <mat-chip *ngFor="let tag of selectedTags" 
-                      (removed)="onTagRemove(tag)"
-                      [color]="'accent'">
-              {{ tag }}
-              <button matChipRemove>
-                <mat-icon>cancel</mat-icon>
-              </button>
-            </mat-chip>
-          </mat-chip-set>
-        </div>
-        
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Agregar etiqueta</mat-label>
-          <mat-select (selectionChange)="onTagAdd($event.value)" [value]="''">
-            <mat-option *ngFor="let tag of tagOptions" 
-                        [value]="tag"
-                        [disabled]="selectedTags.includes(tag)">
-              {{ tag }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+      <!-- Estado -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Estado inicial</mat-label>
+        <mat-select formControlName="status">
+          <mat-option
+            *ngFor="let option of statusOptions"
+            [value]="option.value"
+          >
+            {{ option.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </form>
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
     <button mat-button (click)="onCancel()">Cancelar</button>
-    <button mat-raised-button 
-            color="primary" 
-            (click)="onSubmit()"
-            [disabled]="!taskForm.valid">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+      [disabled]="!taskForm.valid"
+    >
       Crear Tarea
     </button>
   </mat-dialog-actions>
