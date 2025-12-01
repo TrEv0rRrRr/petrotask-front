@@ -167,19 +167,15 @@ export class RegisterComponent {
   }
 
   onRegister(): void {
-    console.log('🚀 onRegister() llamado - BOTÓN FUNCIONA!');
     alert('¡Método onRegister ejecutado!');
 
     this.submitted = true;
 
-    console.log('Validando formulario...');
     if (!this.validateAllTabs()) {
-      console.log('Validación falló:', this.errorMessage);
       alert('Error de validación: ' + this.errorMessage);
       return;
     }
 
-    console.log('Validación exitosa, iniciando registro...');
     this.isLoading = true;
 
     const signUpRequest = new SignUpRequest({
@@ -202,7 +198,6 @@ export class RegisterComponent {
 
     this.authService.signUp(signUpRequest).subscribe({
       next: (response) => {
-        console.log('Registro exitoso:', response);
         // Pasar el rol seleccionado al método de manejo
         (response as any).role = this.selectedRole;
         this.authService.handleSuccessfulSignUp(response);
