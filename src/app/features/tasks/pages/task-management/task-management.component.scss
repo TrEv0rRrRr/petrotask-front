@@ -8,7 +8,7 @@
   margin-bottom: 32px;
 
   h1 {
-    color: var(--primary);
+    color: #1976d2;
     margin-bottom: 24px;
     font-size: 2rem;
     font-weight: 500;
@@ -57,7 +57,7 @@
     font-size: 2.5rem;
     width: 2.5rem;
     height: 2.5rem;
-    color: var(--primary);
+    color: #1976d2;
   }
 }
 
@@ -68,13 +68,13 @@
   .stat-number {
     font-size: 2rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: #212121;
     line-height: 1;
   }
 
   .stat-label {
     font-size: 0.875rem;
-    color: var(--text-secondary);
+    color: #757575;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
@@ -115,23 +115,23 @@
 
   th {
     font-weight: 600;
-    color: var(--text-primary);
-    border-bottom: 2px solid var(--border);
+    color: #212121;
+    border-bottom: 2px solid #e0e0e0;
   }
 
   td {
-    border-bottom: 1px solid var(--border-light);
+    border-bottom: 1px solid #f5f5f5;
     padding: 16px 8px;
   }
 
   tr:hover {
-    background-color: var(--bg-light);
+    background-color: #fafafa;
   }
 }
 
 .task-title {
   .task-description {
-    color: var(--text-secondary);
+    color: #757575;
     font-size: 0.875rem;
     margin: 4px 0 8px 0;
     line-height: 1.4;
@@ -148,7 +148,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--text-secondary);
+  color: #757575;
   font-size: 0.875rem;
 
   mat-icon {
@@ -159,7 +159,7 @@
 }
 
 .unassigned {
-  color: var(--text-secondary);
+  color: #9e9e9e;
   font-style: italic;
 }
 
@@ -168,10 +168,10 @@
   gap: 4px;
 
   button {
-    color: var(--text-secondary);
+    color: #757575;
 
     &:hover {
-      color: var(--primary);
+      color: #1976d2;
     }
   }
 }
@@ -214,5 +214,55 @@ mat-chip {
     font-size: 1rem;
     width: 1rem;
     height: 1rem;
+  }
+}
+
+// Loading, Error and Empty states
+.loading-container,
+.error-container,
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  text-align: center;
+  min-height: 400px;
+
+  mat-icon {
+    font-size: 4rem;
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0 0 8px 0;
+    color: #424242;
+  }
+
+  p {
+    color: #757575;
+    margin: 0 0 24px 0;
+    max-width: 400px;
+  }
+
+  button {
+    margin-top: 8px;
+  }
+}
+
+.error-container {
+  mat-icon {
+    color: #f44336;
+  }
+}
+
+.empty-container {
+  mat-icon {
+    color: #9e9e9e;
   }
 }
