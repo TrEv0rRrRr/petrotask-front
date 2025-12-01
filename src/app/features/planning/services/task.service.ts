@@ -9,6 +9,7 @@ import {
   TaskResource,
   UpdateEmployeeIdResource,
   UpdateTaskDescriptionResource,
+  UpdateTaskResource,
   UpdateTaskStatusResource,
 } from '../model/task.resource';
 
@@ -134,6 +135,10 @@ export class TaskService {
         )
       ),
       catchError((error) => {
+        if (error.status === 400 || error.status === 404) {
+          console.log('No tasks found (empty database)');
+          return of([]);
+        }
         console.error('Error getting all tasks:', error);
         return throwError(() => error);
       })
@@ -157,5 +162,38 @@ export class TaskService {
           return throwError(() => error);
         })
       );
+  }
+
+  /**
+   * Update task (full update)
+   */
+  updateTask(taskId: number, task: Task): Observable<Task> {
+    const updateResource: UpdateTaskResource = {
+      title: task.title,
+      description: task.description,
+      status: task.status,
+      employeeId: task.employeeId,
+    };
+    return this.http
+      .put<TaskResource>(`${this.baseUrl}/${taskId}`, updateResource)
+      .pipe(
+        map((resource) => TaskAssembler.toEntityFromResource(resource)),
+        catchError((error) => {
+          console.error(`Error updating task ${taskId}:`, error);
+          return throwError(() => error);
+        })
+      );
+  }
+
+  /**
+   * Delete task
+   */
+  deleteTask(taskId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${taskId}`).pipe(
+      catchError((error) => {
+        console.error(`Error deleting task ${taskId}:`, error);
+        return throwError(() => error);
+      })
+    );
   }
 }
