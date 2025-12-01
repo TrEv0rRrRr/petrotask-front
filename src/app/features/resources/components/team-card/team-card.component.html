@@ -3,8 +3,8 @@
   (opened)="isExpanded = true"
   (closed)="isExpanded = false"
   class="team-card"
-  [ngClass]="{'inactive': team.status === 'INACTIVE'}">
-
+  [ngClass]="{ inactive: team.status === 'INACTIVE' }"
+>
   <mat-expansion-panel-header>
     <mat-panel-title>
       {{ team.name }}
@@ -13,7 +13,7 @@
       </mat-chip-listbox>
     </mat-panel-title>
     <mat-panel-description>
-      <span class="zone-badge">{{ team.zone.name }}</span>
+      <span class="zone-badge">{{ team.zone?.name }}</span>
       <span class="members-badge">
         <mat-icon>people</mat-icon> {{ memberCount }}
       </span>
@@ -22,28 +22,35 @@
 
   <div class="team-content">
     <div class="team-info">
-      <p><strong>{{ 'team-card.date' | translate }}</strong> {{ formatDate(team.date) }}</p>
-      <p><strong>Zona:</strong> {{ team.zone.name }}</p>
-      <p *ngIf="team.zone.locations && team.zone.locations.length > 0">
-        <strong>{{ 'team-card.location' | translate }}</strong> {{ team.zone.locations[0].name }}
+      <p *ngIf="team.date">
+        <strong>{{ "team-card.date" | translate }}</strong>
+        {{ formatDate(team.date) }}
       </p>
-      <p><strong>{{ 'team-card.status' | translate }}</strong> {{ statusBadge }}</p>
+      <p><strong>Zona:</strong> {{ team.zone?.name }}</p>
+      <p *ngIf="team.zone?.locations?.length">
+        <strong>{{ "team-card.location" | translate }}</strong>
+        {{ team.zone?.locations?.[0]?.name || 'Sin ubicación' }}
+      </p>
+      <p>
+        <strong>{{ "team-card.status" | translate }}</strong> {{ statusBadge }}
+      </p>
     </div>
 
     <div class="team-members">
-      <h3>{{ 'team-card.members' | translate }}</h3>
+      <h3>{{ "team-card.members" | translate }}</h3>
       <mat-divider></mat-divider>
 
       <div class="member-list">
-        <div *ngIf="team.members?.length === 0" class="no-members">
-          {{ 'team-card.no-members' | translate }}
+        <div *ngIf="team.members.length === 0" class="no-members">
+          {{ "team-card.no-members" | translate }}
         </div>
 
         <div *ngFor="let member of team.members" class="member-item">
           <div class="member-info">
-            <div class="member-name">{{ member.employee.fullName }}</div>
+            <div class="member-name">{{ member.employee?.fullName }}</div>
             <div class="member-position">
-              <strong>{{ 'team-card.position' | translate }}</strong> {{ member.position.name }}
+              <strong>{{ "team-card.position" | translate }}</strong>
+              {{ member.position?.name }}
             </div>
           </div>
         </div>
@@ -54,25 +61,29 @@
       <app-button
         [label]="'team-card.edit' | translate"
         [color]="'primary'"
-        (clicked)="onEdit()">
+        (clicked)="onEdit()"
+      >
       </app-button>
 
       <app-button
         [label]="'team-card.edit-m' | translate"
         [color]="'primary'"
-        (clicked)="onEditMembers()">
+        (clicked)="onEditMembers()"
+      >
       </app-button>
 
       <app-button
         [label]="statusActionLabel"
         [color]="buttonStatusColor"
-        (clicked)="onToggleStatus()">
+        (clicked)="onToggleStatus()"
+      >
       </app-button>
 
       <app-button
         [label]="'common.delete' | translate"
         [color]="'danger'"
-        (clicked)="onDelete()">
+        (clicked)="onDelete()"
+      >
       </app-button>
     </div>
   </div>

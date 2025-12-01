@@ -1,17 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatDividerModule } from '@angular/material/divider';
-import { Team } from '../../models/team.entity';
-import { TeamMember } from '../../models/team-member.entity';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
-import {TranslatePipe} from '@ngx-translate/core';
+import { Team } from '../../models/team.entity';
 
 @Component({
   selector: 'app-team-card',
@@ -27,10 +26,10 @@ import {TranslatePipe} from '@ngx-translate/core';
     MatBadgeModule,
     MatDividerModule,
     ButtonComponent,
-    TranslatePipe
+    TranslatePipe,
   ],
   templateUrl: './team-card.component.html',
-  styleUrl: './team-card.component.scss'
+  styleUrl: './team-card.component.scss',
 })
 export class TeamCardComponent {
   @Input() team!: Team;
@@ -60,14 +59,14 @@ export class TeamCardComponent {
   }
 
   // Helper method to format the date
-  formatDate(date: Date): string {
+  formatDate(date: Date | string): string {
     if (!date) return '';
 
-    const d = new Date(date);
+    const d = typeof date === 'string' ? new Date(date) : date;
     return d.toLocaleDateString('es-ES', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
   }
 
