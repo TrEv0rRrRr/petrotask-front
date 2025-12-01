@@ -1,4 +1,10 @@
-import { Task } from "./task.entity";
+import { Task } from './task.entity';
+
+export type ActivityStatus =
+  | 'PLANNED'
+  | 'IN_PROGRESS'
+  | 'COMPLETED'
+  | 'CANCELLED';
 
 export class Activity {
   id: number;
@@ -6,12 +12,14 @@ export class Activity {
   description: string;
   expectedTime: Date;
   weekNumber: number;
-  activityStatus: string;
+  activityStatus: ActivityStatus;
   zoneOrigin: number;
   locationOrigin: number;
   zoneDestination: number;
   locationDestination: number;
-  tasks?: Task[]; // Keep for frontend logic
+  tasks?: Task[];
+  createdAt?: Date;
+  updatedAt?: Date;
 
   constructor(
     id: number = 0,
@@ -19,7 +27,7 @@ export class Activity {
     description: string = '',
     expectedTime: Date = new Date(),
     weekNumber: number = 1,
-    activityStatus: string = 'PENDING',
+    activityStatus: ActivityStatus = 'PLANNED',
     zoneOrigin: number = 0,
     locationOrigin: number = 0,
     zoneDestination: number = 0,
@@ -38,4 +46,3 @@ export class Activity {
     this.tasks = [];
   }
 }
-

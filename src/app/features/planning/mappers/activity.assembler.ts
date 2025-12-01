@@ -1,8 +1,10 @@
 import { Activity } from '../model/activity.entity';
-import { ActivityResource, CreateActivityResource } from '../model/activity.resource';
+import {
+  ActivityResource,
+  CreateActivityResource,
+} from '../model/activity.resource';
 
 export class ActivityAssembler {
-  
   /**
    * Converts an ActivityResource (from API) to an Activity entity
    */
@@ -13,7 +15,7 @@ export class ActivityAssembler {
       resource.description,
       new Date(resource.expectedTime),
       resource.weekNumber,
-      resource.activityStatus,
+      this.mapStatusFromBackend(resource.activityStatus) as any,
       resource.zoneOrigin,
       resource.locationOrigin,
       resource.zoneDestination,
@@ -35,7 +37,7 @@ export class ActivityAssembler {
       zoneOrigin: entity.zoneOrigin,
       locationOrigin: entity.locationOrigin,
       zoneDestination: entity.zoneDestination,
-      locationDestination: entity.locationDestination
+      locationDestination: entity.locationDestination,
     };
   }
 
@@ -48,11 +50,37 @@ export class ActivityAssembler {
       description: entity.description,
       expectedTime: entity.expectedTime.toISOString(),
       weekNumber: entity.weekNumber,
-      activityStatus: entity.activityStatus,
+      activityStatus: this.mapStatusToBackend(entity.activityStatus),
       zoneOrigin: entity.zoneOrigin,
       locationOrigin: entity.locationOrigin,
       zoneDestination: entity.zoneDestination,
-      locationDestination: entity.locationDestination
+      locationDestination: entity.locationDestination,
     };
+  }
+
+  /**
+   * Maps frontend ActivityStatus to backend string format
+   */
+  private static mapStatusToBackend(status: string): string {
+    const statusMap: Record<string, string> = {
+      PLANNED: 'Planned',
+      IN_PROGRESS: 'InProgress',
+      COMPLETED: 'Completed',
+      CANCELLED: 'Cancelled',
+    };
+    return statusMap[status] || 'Planned';
+  }
+
+  /**
+   * Maps backend string to frontend ActivityStatus
+   */
+  private static mapStatusFromBackend(status: string): string {
+    const statusMap: Record<string, string> = {
+      Planned: 'PLANNED',
+      InProgress: 'IN_PROGRESS',
+      Completed: 'COMPLETED',
+      Cancelled: 'CANCELLED',
+    };
+    return statusMap[status] || 'PLANNED';
   }
 }

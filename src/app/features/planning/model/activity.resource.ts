@@ -27,4 +27,16 @@ export interface CreateActivityResource {
 
 export interface UpdateActivityStatusResource {
   status: string;
-} 
+}
+
+export interface UpdateActivityResource {
+  activityCode: string;
+  description: string;
+  expectedTime: string;
+  weekNumber: number;
+  activityStatus: string;
+  zoneOrigin: number;
+  locationOrigin: number;
+  zoneDestination: number;
+  locationDestination: number;
+}
