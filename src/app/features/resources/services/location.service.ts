@@ -22,7 +22,7 @@ export class LocationService {
    */
   getAllLocations(): Observable<Location[]> {
     return this.http
-      .get<LocationResource[]>(`${this.baseUrl}/zones/locations`)
+      .get<LocationResource[]>(`${this.baseUrl}/locations`)
       .pipe(
         map((resources) =>
           resources.map((resource) =>
@@ -83,7 +83,7 @@ export class LocationService {
     const updateResource: UpdateLocationStatusResource = { status };
     return this.http
       .patch<LocationResource>(
-        `${this.baseUrl}/locations/${locationId}/status`,
+        `${this.baseUrl}/${locationId}/status`,
         updateResource
       )
       .pipe(

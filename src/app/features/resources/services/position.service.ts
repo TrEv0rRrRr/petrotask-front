@@ -7,6 +7,7 @@ import { Position } from '../models/position.entity';
 import {
   CreatePositionResource,
   PositionResource,
+  UpdatePositionResource,
 } from '../models/position.resource';
 
 @Injectable({
@@ -47,6 +48,31 @@ export class PositionService {
       map((resource) => PositionAssembler.toEntityFromResource(resource)),
       catchError((error) => {
         console.error('Error creating position:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  updatePosition(id: number, position: Position): Observable<Position> {
+    const updateResource: UpdatePositionResource = {
+      title: position.title,
+      description: position.description,
+    };
+    return this.http
+      .put<PositionResource>(`${this.baseUrl}/${id}`, updateResource)
+      .pipe(
+        map((resource) => PositionAssembler.toEntityFromResource(resource)),
+        catchError((error) => {
+          console.error(`Error updating position ${id}:`, error);
+          return throwError(() => error);
+        })
+      );
+  }
+
+  deletePosition(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`).pipe(
+      catchError((error) => {
+        console.error(`Error deleting position ${id}:`, error);
         return throwError(() => error);
       })
     );

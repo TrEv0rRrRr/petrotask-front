@@ -5,7 +5,9 @@ import { environment } from '../../../../environments/environment';
 import { EmployeeAssembler } from '../mappers/employee.assembler';
 import { Employee } from '../models/employee.entity';
 import {
+  CreateEmployeeResource,
   EmployeeResource,
+  UpdateEmployeeResource,
   UpdateEmployeeStatusResource,
 } from '../models/employee.resource';
 
@@ -67,5 +69,25 @@ export class EmployeeService {
           )
         )
       );
+  }
+
+  updateEmployee(id: number, employee: Employee): Observable<Employee> {
+    const updateResource: UpdateEmployeeResource = {
+      name: employee.name,
+      lastName: employee.lastName,
+      positionId: employee.positionId,
+      employeeStatus: employee.status,
+      email: employee.email,
+      phoneNumber: employee.phoneNumber,
+    };
+    return this.http
+      .put<EmployeeResource>(`${this.baseUrl}/${id}`, updateResource)
+      .pipe(
+        map((resource) => EmployeeAssembler.toEntityFromResource(resource))
+      );
+  }
+
+  deleteEmployee(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

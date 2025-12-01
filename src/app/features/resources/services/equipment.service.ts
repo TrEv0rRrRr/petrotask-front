@@ -6,6 +6,7 @@ import { EquipmentAssembler } from '../mappers/equipment.assembler';
 import { Equipment } from '../models/equipment.entity';
 import {
   EquipmentResource,
+  UpdateEquipmentResource,
   UpdateEquipmentStatusResource,
 } from '../models/equipment.resource';
 
@@ -65,5 +66,25 @@ export class EquipmentService {
           )
         )
       );
+  }
+
+  updateEquipment(id: number, equipment: Equipment): Observable<Equipment> {
+    const updateResource: UpdateEquipmentResource = {
+      name: equipment.name,
+      status: equipment.status,
+      code: equipment.code,
+      plate: equipment.plate,
+      capacityLoad: equipment.capacityLoad,
+      capacityPax: equipment.capacityPax,
+    };
+    return this.http
+      .put<EquipmentResource>(`${this.baseUrl}/${id}`, updateResource)
+      .pipe(
+        map((resource) => EquipmentAssembler.toEntityFromResource(resource))
+      );
+  }
+
+  deleteEquipment(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

@@ -7,8 +7,12 @@ import { ZoneAssembler } from '../mappers/zone.assembler';
 import { Location } from '../models/location.entity';
 import { Zone } from '../models/zone.entity';
 import {
+  CreateLocationResource,
+  CreateZoneResource,
   LocationResource,
+  UpdateLocationResource,
   UpdateLocationStatusResource,
+  UpdateZoneResource,
   ZoneResource,
 } from '../models/zone.resource';
 
@@ -37,6 +41,10 @@ export class ZoneService {
         )
       ),
       catchError((error) => {
+        if (error.status === 404) {
+          console.log('No zones found (empty database)');
+          return of([]);
+        }
         console.error('Error in getAllZones:', error);
         return throwError(() => error);
       })
@@ -108,13 +116,35 @@ export class ZoneService {
     );
   }
 
+  updateZone(id: number, zone: Zone): Observable<Zone> {
+    const updateResource: UpdateZoneResource = {
+      name: zone.name,
+    };
+    return this.http
+      .put<ZoneResource>(`${this.baseUrl}/${id}`, updateResource)
+      .pipe(
+        map((resource) => ZoneAssembler.toEntityFromResource(resource)),
+        catchError((error) => {
+          console.error(`Error updating zone ${id}:`, error);
+          return throwError(() => error);
+        })
+      );
+  }
+
+  deleteZone(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`).pipe(
+      catchError((error) => {
+        console.error(`Error deleting zone ${id}:`, error);
+        return throwError(() => error);
+      })
+    );
+  }
+
   // Location operations
   getAllLocations(): Observable<Location[]> {
-    // Correct API endpoint for all locations
+    // Backend has endpoint at /zones/zones/locations (typo in backend)
     return this.http
-      .get<LocationResource[]>(
-        `${environment.apiBaseUrl}/zones/zones/locations`
-      )
+      .get<LocationResource[]>(`${this.baseUrl}/zones/locations`)
       .pipe(
         map((resources) =>
           resources.map((resource) =>
@@ -122,6 +152,10 @@ export class ZoneService {
           )
         ),
         catchError((error) => {
+          if (error.status === 404) {
+            console.log('No locations found (empty database)');
+            return of([]);
+          }
           console.error('Error in getAllLocations:', error);
           return throwError(() => error);
         })
@@ -130,7 +164,7 @@ export class ZoneService {
 
   getLocationById(id: number): Observable<Location> {
     return this.http
-      .get<LocationResource>(`${environment.apiBaseUrl}/locations/${id}`)
+      .get<LocationResource>(`${this.baseUrl}/locations/${id}`)
       .pipe(
         map((resource) => LocationAssembler.toEntityFromResource(resource)),
         catchError((error) => {
@@ -141,8 +175,9 @@ export class ZoneService {
   }
 
   getLocationsByZoneId(zoneId: number): Observable<Location[]> {
+    // Backend has endpoint at /zones/zones/{zoneId} (typo in backend)
     return this.http
-      .get<LocationResource[]>(`${this.baseUrl}/${zoneId}/locations`)
+      .get<LocationResource[]>(`${this.baseUrl}/zones/${zoneId}`)
       .pipe(
         map((resources) =>
           resources.map((resource) =>
@@ -150,6 +185,10 @@ export class ZoneService {
           )
         ),
         catchError((error) => {
+          if (error.status === 404) {
+            console.log(`No locations found for zone ${zoneId} (empty)`);
+            return of([]);
+          }
           console.error(`Error getting locations for zone ${zoneId}:`, error);
           return throwError(() => error);
         })
@@ -175,10 +214,7 @@ export class ZoneService {
   updateLocationStatus(id: number, status: string): Observable<Location> {
     const updateResource: UpdateLocationStatusResource = { status };
     return this.http
-      .patch<LocationResource>(
-        `${environment.apiBaseUrl}/locations/${id}/status`,
-        updateResource
-      )
+      .patch<LocationResource>(`${this.baseUrl}/${id}/status`, updateResource)
       .pipe(
         map((resource) => LocationAssembler.toEntityFromResource(resource)),
         catchError((error) => {
@@ -190,9 +226,7 @@ export class ZoneService {
 
   getLocationsByStatus(status: string): Observable<Location[]> {
     return this.http
-      .get<LocationResource[]>(
-        `${environment.apiBaseUrl}/locations/status/${status}`
-      )
+      .get<LocationResource[]>(`${this.baseUrl}/status/${status}`)
       .pipe(
         map((resources) =>
           resources.map((resource) =>
@@ -204,5 +238,34 @@ export class ZoneService {
           return throwError(() => error);
         })
       );
+  }
+
+  updateLocation(id: number, location: Location): Observable<Location> {
+    const updateResource: UpdateLocationResource = {
+      street: location.street,
+      city: location.city,
+      country: location.country,
+      latitude: location.latitude,
+      longitude: location.longitude,
+      status: location.status,
+    };
+    return this.http
+      .put<LocationResource>(`${this.baseUrl}/locations/${id}`, updateResource)
+      .pipe(
+        map((resource) => LocationAssembler.toEntityFromResource(resource)),
+        catchError((error) => {
+          console.error(`Error updating location ${id}:`, error);
+          return throwError(() => error);
+        })
+      );
+  }
+
+  deleteLocation(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/locations/${id}`).pipe(
+      catchError((error) => {
+        console.error(`Error deleting location ${id}:`, error);
+        return throwError(() => error);
+      })
+    );
   }
 }
