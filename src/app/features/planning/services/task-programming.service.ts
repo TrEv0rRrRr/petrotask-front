@@ -152,6 +152,10 @@ export class TaskProgrammingService {
         )
       ),
       catchError((error) => {
+        if (error.status === 404) {
+          console.log('No task programmings found (empty database)');
+          return of([]);
+        }
         console.error('Error getting all task programmings:', error);
         return throwError(() => error);
       })
