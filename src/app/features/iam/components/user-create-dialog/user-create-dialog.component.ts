@@ -145,7 +145,6 @@ export class UserCreateDialogComponent {
     this.isSubmitting = true;
     
     // Procesar datos del formulario
-    console.log('Datos del formulario:', formValue);
     
     // Simular envío
     setTimeout(() => {
@@ -161,7 +160,6 @@ export class UserCreateDialogComponent {
 
   // Manejar cambios del formulario (opcional)
   onFormChange(formValue: any): void {
-    console.log('Formulario cambió:', formValue);
   }
 
 
