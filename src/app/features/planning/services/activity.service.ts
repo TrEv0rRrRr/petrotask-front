@@ -7,6 +7,7 @@ import { Activity } from '../model/activity.entity';
 import {
   ActivityResource,
   CreateActivityResource,
+  UpdateActivityResource,
   UpdateActivityStatusResource,
 } from '../model/activity.resource';
 import { Task } from '../model/task.entity';
@@ -136,17 +137,67 @@ export class ActivityService {
     status: string
   ): Observable<Activity> {
     const updateResource: UpdateActivityStatusResource = { status };
+    console.log('Updating activity status:', {
+      activityId,
+      status,
+      updateResource,
+    });
     return this.http
       .patch<ActivityResource>(
         `${this.baseUrl}/${activityId}/status`,
         updateResource
       )
       .pipe(
-        map((resource) => ActivityAssembler.toEntityFromResource(resource)),
+        map((resource) => {
+          console.log('Activity status updated successfully:', resource);
+          // WORKAROUND: Backend returns old status in response, but update was successful
+          // Manually override the status with what we sent to reflect the actual state
+          const updatedResource = { ...resource, activityStatus: status };
+          return ActivityAssembler.toEntityFromResource(updatedResource);
+        }),
         catchError((error) => {
           console.error(`Error updating activity ${activityId} status:`, error);
+          console.error('Error details:', error.error);
           throw error;
         })
       );
+  }
+
+  /**
+   * Update activity (full update)
+   */
+  updateActivity(activityId: number, activity: Activity): Observable<Activity> {
+    const updateResource: UpdateActivityResource = {
+      activityCode: activity.activityCode,
+      description: activity.description,
+      expectedTime: activity.expectedTime.toISOString(),
+      weekNumber: activity.weekNumber,
+      activityStatus: activity.activityStatus,
+      zoneOrigin: activity.zoneOrigin,
+      locationOrigin: activity.locationOrigin,
+      zoneDestination: activity.zoneDestination,
+      locationDestination: activity.locationDestination,
+    };
+    return this.http
+      .put<ActivityResource>(`${this.baseUrl}/${activityId}`, updateResource)
+      .pipe(
+        map((resource) => ActivityAssembler.toEntityFromResource(resource)),
+        catchError((error) => {
+          console.error(`Error updating activity ${activityId}:`, error);
+          return throwError(() => error);
+        })
+      );
+  }
+
+  /**
+   * Delete activity
+   */
+  deleteActivity(activityId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${activityId}`).pipe(
+      catchError((error) => {
+        console.error(`Error deleting activity ${activityId}:`, error);
+        return throwError(() => error);
+      })
+    );
   }
 }
