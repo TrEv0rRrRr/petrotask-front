@@ -1,15 +1,82 @@
-<div class="employee-dialog">
-  <div class="dialog-header">
-    <h2 mat-dialog-title>{{ data.title | translate }}</h2>
-  </div>
+<h2 mat-dialog-title>{{ data.title }}</h2>
 
-  <div class="dialog-content" mat-dialog-content>
-    <app-base-form
-      [config]="formConfig"
-      [initialValues]="initialValues"
-      [isSubmitting]="isSubmitting"
-      (formSubmit)="onFormSubmit($event)"
-      (formCancel)="onFormCancel()"
-    ></app-base-form>
-  </div>
-</div>
+<form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" required />
+      <mat-error *ngIf="employeeForm.get('name')?.hasError('required')">
+        El nombre es requerido
+      </mat-error>
+      <mat-error *ngIf="employeeForm.get('name')?.hasError('minlength')">
+        Mínimo 2 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Apellido</mat-label>
+      <input matInput formControlName="lastName" required />
+      <mat-error *ngIf="employeeForm.get('lastName')?.hasError('required')">
+        El apellido es requerido
+      </mat-error>
+      <mat-error *ngIf="employeeForm.get('lastName')?.hasError('minlength')">
+        Mínimo 2 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" required />
+      <mat-error *ngIf="employeeForm.get('email')?.hasError('required')">
+        El email es requerido
+      </mat-error>
+      <mat-error *ngIf="employeeForm.get('email')?.hasError('email')">
+        Email inválido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Teléfono</mat-label>
+      <input matInput formControlName="phoneNumber" required />
+      <mat-error *ngIf="employeeForm.get('phoneNumber')?.hasError('required')">
+        El teléfono es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Posición</mat-label>
+      <mat-select formControlName="positionId" required>
+        <mat-option *ngFor="let position of positions" [value]="position.id">
+          {{ position.title }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="employeeForm.get('positionId')?.hasError('required')">
+        La posición es requerida
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="status" required>
+        <mat-option *ngFor="let status of statusOptions" [value]="status.value">
+          {{ status.label }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="employeeForm.get('status')?.hasError('required')">
+        El estado es requerido
+      </mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Cancelar</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="employeeForm.invalid || isSubmitting"
+    >
+      {{ data.isEdit ? "Actualizar" : "Crear" }}
+    </button>
+  </mat-dialog-actions>
+</form>
