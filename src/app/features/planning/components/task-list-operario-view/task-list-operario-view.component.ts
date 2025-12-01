@@ -1,32 +1,25 @@
+import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import {Employee} from '../../../resources/models/employee.entity';
-import {TableComponent} from "../../../../shared/components/table/table.component";
-import {Columns} from '../../../../shared/components/table/table.models';
-import {Task} from '../../model/task.entity';
-import {MatProgressBar} from '@angular/material/progress-bar';
-import {NgIf} from '@angular/common';
-import {MatIconButton} from '@angular/material/button';
-import {MatDialog} from '@angular/material/dialog';
-import {TaskExecutionViewComponent} from '../task-execution-view/task-execution-view.component';
+import { MatIconButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { TableComponent } from '../../../../shared/components/table/table.component';
+import { Columns } from '../../../../shared/components/table/table.models';
+import { Employee } from '../../../resources/models/employee.entity';
+import { Task } from '../../model/task.entity';
+import { TaskExecutionViewComponent } from '../task-execution-view/task-execution-view.component';
 
 @Component({
   selector: 'app-task-list-operario-view',
-  imports: [
-    TableComponent,
-    MatProgressBar,
-    NgIf,
-    MatIconButton,
-  ],
+  imports: [TableComponent, NgIf, MatIconButton],
   templateUrl: './task-list-operario-view.component.html',
-  styleUrl: './task-list-operario-view.component.scss'
+  styleUrl: './task-list-operario-view.component.scss',
 })
 export class TaskListOperarioViewComponent {
-
   constructor(private dialog: MatDialog) {}
 
   operario: Employee = new Employee();
-
-  tasks: Task[] = [ new Task(), new Task(), new Task()];
+  tasks: Task[] = [];
 
   columns: Columns[] = [
     {
@@ -40,7 +33,7 @@ export class TaskListOperarioViewComponent {
       hide: {
         visible: true,
         label: 'Activity',
-      }
+      },
     },
     {
       header: {
@@ -53,7 +46,7 @@ export class TaskListOperarioViewComponent {
       hide: {
         visible: true,
         label: 'Task ID',
-      }
+      },
     },
     {
       header: {
@@ -66,7 +59,7 @@ export class TaskListOperarioViewComponent {
       hide: {
         visible: true,
         label: 'Name',
-      }
+      },
     },
     {
       header: {
@@ -79,7 +72,7 @@ export class TaskListOperarioViewComponent {
       hide: {
         visible: false,
         label: 'Schedule',
-      }
+      },
     },
     {
       header: {
@@ -92,7 +85,7 @@ export class TaskListOperarioViewComponent {
       hide: {
         visible: true,
         label: 'Equipment',
-      }
+      },
     },
     {
       header: {
@@ -105,17 +98,17 @@ export class TaskListOperarioViewComponent {
       hide: {
         visible: true,
         label: 'Ejecutar',
-      }
-    }
+      },
+    },
   ];
 
   loadingTest = false;
-  tableData : any[] = this.tasks.map(tasks => ({
+  tableData: any[] = this.tasks.map((tasks) => ({
     activity: tasks.activityId,
     name: tasks.title,
     taskId: tasks.taskId,
     schedule: tasks.status,
-    equipment: tasks.employeeId
+    equipment: tasks.employeeId,
   }));
 
   onEjectTask(row: any) {
@@ -123,8 +116,7 @@ export class TaskListOperarioViewComponent {
       width: '500px', // Puedes ajustar el tamaño
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('El diálogo se cerró');
+    dialogRef.afterClosed().subscribe((result) => {
       // Aquí puedes manejar lo que ocurre después de cerrar el diálogo, si es necesario
     });
   }
