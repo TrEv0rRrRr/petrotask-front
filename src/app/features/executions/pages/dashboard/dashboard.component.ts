@@ -1,16 +1,23 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { FormsModule } from '@angular/forms';
-import { Chart } from 'chart.js/auto';
-import { TableComponent } from '../../../../shared/components/table/table.component';
-import { DateNavigatorComponent } from '../../../../shared/components/date-navigator/date-navigator.component';
-import { Columns } from '../../../../shared/components/table/table.models';
-import { ActivityService } from 'src/app/features/planning/services/activity.service';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { Chart } from 'chart.js/auto';
+import { ActivityService } from 'src/app/features/planning/services/activity.service';
+import { DateNavigatorComponent } from '../../../../shared/components/date-navigator/date-navigator.component';
+import { TableComponent } from '../../../../shared/components/table/table.component';
+import { Columns } from '../../../../shared/components/table/table.models';
 
 interface TeamPerformance {
   name: string;
@@ -43,8 +50,8 @@ interface Incident {
     TableComponent,
     DateNavigatorComponent,
     TranslateModule,
-    TranslatePipe
-  ]
+    TranslatePipe,
+  ],
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChild('resourceChart') resourceChartRef!: ElementRef;
@@ -73,29 +80,29 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       cell: 'description',
       type: 'text',
       sortable: true,
-      hide: { label: 'Description', visible: true }
+      hide: { label: 'Description', visible: true },
     },
     {
       header: { key: 'severity', label: 'Severity' },
       cell: 'severity',
       type: 'status',
       sortable: true,
-      hide: { label: 'Severity', visible: true }
+      hide: { label: 'Severity', visible: true },
     },
     {
       header: { key: 'status', label: 'Status' },
       cell: 'status',
       type: 'status',
       sortable: true,
-      hide: { label: 'Status', visible: true }
+      hide: { label: 'Status', visible: true },
     },
     {
       header: { key: 'location', label: 'Location' },
       cell: 'location',
       type: 'text',
       sortable: true,
-      hide: { label: 'Location', visible: true }
-    }
+      hide: { label: 'Location', visible: true },
+    },
   ];
 
   constructor() {}
@@ -122,54 +129,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.utilizationTrend = -1;
 
       // Team performance
-      this.teamPerformance = [
-        {
-          name: 'Warehouse Team',
-          completedTasks: 245,
-          efficiency: 92,
-          trend: 5
-        },
-        {
-          name: 'Transport Team',
-          completedTasks: 189,
-          efficiency: 88,
-          trend: -2
-        },
-        {
-          name: 'Operations Team',
-          completedTasks: 312,
-          efficiency: 95,
-          trend: 8
-        }
-      ];
+      this.teamPerformance = [];
 
       // Recent incidents
-      this.recentIncidents = [
-        {
-          id: '1',
-          description: 'Delay in shipment processing',
-          severity: 'medium',
-          status: 'in-progress',
-          timestamp: new Date(),
-          location: 'Main Warehouse'
-        },
-        {
-          id: '2',
-          description: 'Vehicle maintenance required',
-          severity: 'high',
-          status: 'open',
-          timestamp: new Date(),
-          location: 'Transport Hub'
-        },
-        {
-          id: '3',
-          description: 'Inventory discrepancy',
-          severity: 'low',
-          status: 'resolved',
-          timestamp: new Date(),
-          location: 'Storage Area B'
-        }
-      ];
+      this.recentIncidents = [];
     }, 1000);
   }
 
@@ -187,46 +150,44 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             borderColor: '#2196F3',
             backgroundColor: 'rgba(33, 150, 243, 0.1)',
             tension: 0.4,
-            fill: true
-          }
-        ]
+            fill: true,
+          },
+        ],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            display: false
+            display: false,
           },
           tooltip: {
             mode: 'index',
-            intersect: false
-          }
+            intersect: false,
+          },
         },
         scales: {
           y: {
             beginAtZero: true,
             max: 100,
             ticks: {
-              callback: (value) => `${value}%`
-            }
-          }
+              callback: (value) => `${value}%`,
+            },
+          },
         },
         animation: {
           duration: 1000,
-          easing: 'easeInOutQuart'
-        }
-      }
+          easing: 'easeInOutQuart',
+        },
+      },
     });
   }
 
   viewAllIncidents() {
     // Implement navigation to incidents page
-    console.log('View all incidents');
   }
 
   onIncidentSelect(incident: Incident) {
     // Handle incident selection
-    console.log('Selected incident:', incident);
   }
 }
