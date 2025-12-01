@@ -58,7 +58,6 @@ export class CompanySettingsComponent implements OnInit {
     setTimeout(() => {
       this.loading = false;
       alert(' Suscripción renovada con éxito.');
-      console.log(' Datos enviados:', this.settingsForm.value);
     }, 1500);
   }
 
