@@ -1,27 +1,31 @@
-import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import {
+  TranslateModule,
+  TranslatePipe,
+  TranslateService,
+} from '@ngx-translate/core';
 import { LocalStorageService } from '../../../../core/services/local-storage.service';
-import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core';
 
-import { Activity } from '../../model/activity.entity';
-import { Task } from '../../model/task.entity';
-import { ActivityListComponent } from '../../components/activity-list/activity-list.component';
 import { DateNavigatorComponent } from '../../../../shared/components/date-navigator/date-navigator.component';
-import { ActivityService } from '../../services/activity.service';
-import { TaskService } from '../../services/task.service';
 import { DialogService } from '../../../../shared/services/dialog.service';
 import { ActivityDialogComponent } from '../../components/activity-dialog/activity-dialog.component';
+import { ActivityListComponent } from '../../components/activity-list/activity-list.component';
 import { TaskDialogComponent } from '../../components/task-dialog/task-dialog.component';
+import { Activity } from '../../model/activity.entity';
+import { Task } from '../../model/task.entity';
+import { ActivityService } from '../../services/activity.service';
+import { TaskService } from '../../services/task.service';
 
 interface StorageState {
   activities: Activity[];
@@ -59,10 +63,10 @@ interface StorageState {
     ActivityListComponent,
     DateNavigatorComponent,
     TranslateModule,
-    TranslatePipe
+    TranslatePipe,
   ],
   templateUrl: './activity-management.component.html',
-  styleUrls: ['./activity-management.component.scss']
+  styleUrls: ['./activity-management.component.scss'],
 })
 export class ActivityManagementComponent implements OnInit {
   activities: Activity[] = [];
@@ -101,22 +105,25 @@ export class ActivityManagementComponent implements OnInit {
   }
 
   private loadState() {
-    const savedState = this.localStorageService.getItem<StorageState>(this.STORAGE_KEY, {
-      activities: [],
-      filters: {
-        status: '',
-        searchTerm: ''
-      },
-      pagination: {
-        currentPage: 1,
-        itemsPerPage: 10
-      },
-      sorting: {
-        field: 'expectedTime',
-        direction: 'desc'
-      },
-      selectedDate: new Date().toISOString()
-    });
+    const savedState = this.localStorageService.getItem<StorageState>(
+      this.STORAGE_KEY,
+      {
+        activities: [],
+        filters: {
+          status: '',
+          searchTerm: '',
+        },
+        pagination: {
+          currentPage: 1,
+          itemsPerPage: 10,
+        },
+        sorting: {
+          field: 'expectedTime',
+          direction: 'desc',
+        },
+        selectedDate: new Date().toISOString(),
+      }
+    );
 
     this.statusFilter = savedState.filters.status;
     this.searchQuery = savedState.filters.searchTerm;
@@ -133,17 +140,17 @@ export class ActivityManagementComponent implements OnInit {
       activities: this.activities,
       filters: {
         status: this.statusFilter,
-        searchTerm: this.searchQuery
+        searchTerm: this.searchQuery,
       },
       pagination: {
         currentPage: this.pageIndex + 1,
-        itemsPerPage: this.pageSize
+        itemsPerPage: this.pageSize,
       },
       sorting: {
         field: this.sortField,
-        direction: this.sortDirection
+        direction: this.sortDirection,
       },
-      selectedDate: this.selectedDate.toISOString()
+      selectedDate: this.selectedDate.toISOString(),
     };
 
     this.localStorageService.setItem(this.STORAGE_KEY, state);
@@ -157,11 +164,15 @@ export class ActivityManagementComponent implements OnInit {
         this.applyFilters();
       },
       error: (error) => {
-        this.snackBar.open(this.translate.instant('activity-management.messages.error-load'), 'Cerrar', {
-          duration: 3000
-        });
+        this.snackBar.open(
+          this.translate.instant('activity-management.messages.error-load'),
+          'Cerrar',
+          {
+            duration: 3000,
+          }
+        );
         console.error('Error loading activities:', error);
-      }
+      },
     });
   }
 
@@ -176,7 +187,7 @@ export class ActivityManagementComponent implements OnInit {
 
     // Filter by date (comparing only year, month, and day)
     if (this.selectedDate) {
-      filtered = filtered.filter(activity => {
+      filtered = filtered.filter((activity) => {
         const activityDate = new Date(activity.expectedTime);
         return (
           activityDate.getFullYear() === this.selectedDate.getFullYear() &&
@@ -187,14 +198,17 @@ export class ActivityManagementComponent implements OnInit {
     }
 
     if (this.statusFilter) {
-      filtered = filtered.filter(activity => activity.activityStatus === this.statusFilter);
+      filtered = filtered.filter(
+        (activity) => activity.activityStatus === this.statusFilter
+      );
     }
 
     if (this.searchQuery) {
       const query = this.searchQuery.toLowerCase();
-      filtered = filtered.filter(activity =>
-        activity.activityCode.toLowerCase().includes(query) ||
-        activity.description.toLowerCase().includes(query)
+      filtered = filtered.filter(
+        (activity) =>
+          activity.activityCode.toLowerCase().includes(query) ||
+          activity.description.toLowerCase().includes(query)
       );
     }
 
@@ -232,52 +246,95 @@ export class ActivityManagementComponent implements OnInit {
     const dialogRef = this.dialog.open(ActivityDialogComponent, {
       data: {
         activity,
-        mode: 'edit'
-      }
+        mode: 'edit',
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // Since we don't have a full update method, we'll update the status
-        this.activityService.updateActivityStatus(activity.id, result.activityStatus).subscribe({
-          next: (updatedActivity) => {
-            const index = this.activities.findIndex(a => a.id === updatedActivity.id);
-            if (index !== -1) {
-              this.activities[index] = updatedActivity;
-              this.saveState();
-              this.applyFilters();
-            }
-            this.snackBar.open(this.translate.instant('activity-management.messages.update-success'), 'Cerrar', {
-              duration: 3000
-            });
-          },
-          error: (error) => {
-            this.snackBar.open(this.translate.instant('activity-management.messages.error-update'), 'Cerrar', {
-              duration: 3000
-            });
-            console.error('Error updating activity:', error);
-          }
-        });
+        // Backend only supports status update via PATCH, not full PUT
+        this.activityService
+          .updateActivityStatus(activity.id, result.activityStatus)
+          .subscribe({
+            next: (updatedActivity) => {
+              const index = this.activities.findIndex(
+                (a) => a.id === updatedActivity.id
+              );
+              if (index !== -1) {
+                this.activities[index] = updatedActivity;
+                this.saveState();
+                this.applyFilters();
+              }
+              this.snackBar.open(
+                this.translate.instant(
+                  'activity-management.messages.update-success'
+                ),
+                'Cerrar',
+                {
+                  duration: 3000,
+                }
+              );
+            },
+            error: (error) => {
+              this.snackBar.open(
+                this.translate.instant(
+                  'activity-management.messages.error-update'
+                ),
+                'Cerrar',
+                {
+                  duration: 3000,
+                }
+              );
+              console.error('Error updating activity:', error);
+            },
+          });
       }
     });
   }
 
   onDeleteActivity(activityId: number): void {
-    this.dialogService.confirm({
-      title: this.translate.instant('activity-management.actions.delete'),
-      message: this.translate.instant('activity-management.messages.confirm-delete')
-    }).subscribe(result => {
-      if (result) {
-        // Since we don't have a delete method, we'll filter it out locally for now
-        // In a real implementation, you'd call a delete endpoint
-        this.activities = this.activities.filter(a => a.id !== activityId);
-        this.saveState();
-        this.applyFilters();
-        this.snackBar.open(this.translate.instant('activity-management.messages.delete-success'), 'Cerrar', {
-          duration: 3000
-        });
-      }
-    });
+    this.dialogService
+      .confirm({
+        title: this.translate.instant('activity-management.actions.delete'),
+        message: this.translate.instant(
+          'activity-management.messages.confirm-delete'
+        ),
+      })
+      .subscribe((result) => {
+        if (result) {
+          // Call backend delete endpoint
+          this.activityService.deleteActivity(activityId).subscribe({
+            next: () => {
+              this.activities = this.activities.filter(
+                (a) => a.id !== activityId
+              );
+              this.saveState();
+              this.applyFilters();
+              this.snackBar.open(
+                this.translate.instant(
+                  'activity-management.messages.delete-success'
+                ),
+                'Cerrar',
+                {
+                  duration: 3000,
+                }
+              );
+            },
+            error: (error) => {
+              this.snackBar.open(
+                this.translate.instant(
+                  'activity-management.messages.error-delete'
+                ),
+                'Cerrar',
+                {
+                  duration: 3000,
+                }
+              );
+              console.error('Error deleting activity:', error);
+            },
+          });
+        }
+      });
   }
 
   onEditTask(task: Task): void {
@@ -285,71 +342,93 @@ export class ActivityManagementComponent implements OnInit {
       data: {
         task,
         activityId: task.activityId,
-        mode: 'edit'
-      }
+        mode: 'edit',
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         // Update different aspects of the task based on what changed
         if (result.status !== task.status) {
-          this.taskService.updateTaskStatus(task.taskId, result.status).subscribe({
-            next: (updatedTask) => {
-              this.updateTaskInActivities(updatedTask);
-              this.snackBar.open('Task status updated successfully', 'Close', {
-                duration: 3000
-              });
-            },
-            error: (error) => {
-              this.snackBar.open('Error updating task status', 'Close', {
-                duration: 3000
-              });
-              console.error('Error updating task status:', error);
-            }
-          });
+          this.taskService
+            .updateTaskStatus(task.taskId, result.status)
+            .subscribe({
+              next: (updatedTask) => {
+                this.updateTaskInActivities(updatedTask);
+                this.snackBar.open(
+                  'Task status updated successfully',
+                  'Close',
+                  {
+                    duration: 3000,
+                  }
+                );
+              },
+              error: (error) => {
+                this.snackBar.open('Error updating task status', 'Close', {
+                  duration: 3000,
+                });
+                console.error('Error updating task status:', error);
+              },
+            });
         }
 
         if (result.description !== task.description) {
-          this.taskService.updateTaskDescription(task.taskId, result.description).subscribe({
-            next: (updatedTask) => {
-              this.updateTaskInActivities(updatedTask);
-              this.snackBar.open('Task description updated successfully', 'Close', {
-                duration: 3000
-              });
-            },
-            error: (error) => {
-              this.snackBar.open('Error updating task description', 'Close', {
-                duration: 3000
-              });
-              console.error('Error updating task description:', error);
-            }
-          });
+          this.taskService
+            .updateTaskDescription(task.taskId, result.description)
+            .subscribe({
+              next: (updatedTask) => {
+                this.updateTaskInActivities(updatedTask);
+                this.snackBar.open(
+                  'Task description updated successfully',
+                  'Close',
+                  {
+                    duration: 3000,
+                  }
+                );
+              },
+              error: (error) => {
+                this.snackBar.open('Error updating task description', 'Close', {
+                  duration: 3000,
+                });
+                console.error('Error updating task description:', error);
+              },
+            });
         }
 
         if (result.employeeId !== task.employeeId) {
-          this.taskService.updateTaskEmployeeId(task.taskId, result.employeeId).subscribe({
-            next: (updatedTask) => {
-              this.updateTaskInActivities(updatedTask);
-              this.snackBar.open('Task employee updated successfully', 'Close', {
-                duration: 3000
-              });
-            },
-            error: (error) => {
-              this.snackBar.open('Error updating task employee', 'Close', {
-                duration: 3000
-              });
-              console.error('Error updating task employee:', error);
-            }
-          });
+          this.taskService
+            .updateTaskEmployeeId(task.taskId, result.employeeId)
+            .subscribe({
+              next: (updatedTask) => {
+                this.updateTaskInActivities(updatedTask);
+                this.snackBar.open(
+                  'Task employee updated successfully',
+                  'Close',
+                  {
+                    duration: 3000,
+                  }
+                );
+              },
+              error: (error) => {
+                this.snackBar.open('Error updating task employee', 'Close', {
+                  duration: 3000,
+                });
+                console.error('Error updating task employee:', error);
+              },
+            });
         }
       }
     });
   }
 
   private updateTaskInActivities(updatedTask: Task): void {
-    const activityIndex = this.activities.findIndex(a => a.id === updatedTask.activityId);
+    const activityIndex = this.activities.findIndex(
+      (a) => a.id === updatedTask.activityId
+    );
     if (activityIndex !== -1 && this.activities[activityIndex].tasks) {
-      const taskIndex = this.activities[activityIndex].tasks!.findIndex(t => t.taskId === updatedTask.taskId);
+      const taskIndex = this.activities[activityIndex].tasks!.findIndex(
+        (t) => t.taskId === updatedTask.taskId
+      );
       if (taskIndex !== -1) {
         this.activities[activityIndex].tasks![taskIndex] = updatedTask;
         this.saveState();
@@ -359,41 +438,47 @@ export class ActivityManagementComponent implements OnInit {
   }
 
   onDeleteTask(taskId: number): void {
-    this.dialogService.confirm({
-      title: 'Delete Task',
-      message: 'Are you sure you want to delete this task?'
-    }).subscribe(result => {
-      if (result) {
-        // Since we don't have a delete method, we'll filter it out locally
-        this.activities = this.activities.map(activity => ({
-          ...activity,
-          tasks: activity.tasks ? activity.tasks.filter(t => t.taskId !== taskId) : []
-        }));
-        this.saveState();
-        this.applyFilters();
-        this.snackBar.open('Task deleted successfully', 'Close', {
-          duration: 3000
-        });
-      }
-    });
+    this.dialogService
+      .confirm({
+        title: 'Delete Task',
+        message: 'Are you sure you want to delete this task?',
+      })
+      .subscribe((result) => {
+        if (result) {
+          // Since we don't have a delete method, we'll filter it out locally
+          this.activities = this.activities.map((activity) => ({
+            ...activity,
+            tasks: activity.tasks
+              ? activity.tasks.filter((t) => t.taskId !== taskId)
+              : [],
+          }));
+          this.saveState();
+          this.applyFilters();
+          this.snackBar.open('Task deleted successfully', 'Close', {
+            duration: 3000,
+          });
+        }
+      });
   }
 
   onAddTask(activityId: number): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {
       data: {
         activityId,
-        mode: 'create'
-      }
+        mode: 'create',
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         // Set the activityId for the new task
         result.activityId = activityId;
-        
+
         this.taskService.createTask(result).subscribe({
           next: (newTask) => {
-            const activityIndex = this.activities.findIndex(a => a.id === activityId);
+            const activityIndex = this.activities.findIndex(
+              (a) => a.id === activityId
+            );
             if (activityIndex !== -1) {
               if (!this.activities[activityIndex].tasks) {
                 this.activities[activityIndex].tasks = [];
@@ -403,15 +488,15 @@ export class ActivityManagementComponent implements OnInit {
               this.applyFilters();
             }
             this.snackBar.open('Task created successfully', 'Close', {
-              duration: 3000
+              duration: 3000,
             });
           },
           error: (error) => {
             this.snackBar.open('Error creating task', 'Close', {
-              duration: 3000
+              duration: 3000,
             });
             console.error('Error creating task:', error);
-          }
+          },
         });
       }
     });
@@ -420,11 +505,11 @@ export class ActivityManagementComponent implements OnInit {
   createActivity(): void {
     const dialogRef = this.dialog.open(ActivityDialogComponent, {
       data: {
-        mode: 'create'
-      }
+        mode: 'create',
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.activityService.createActivity(result).subscribe({
           next: (newActivity) => {
@@ -432,15 +517,15 @@ export class ActivityManagementComponent implements OnInit {
             this.saveState();
             this.applyFilters();
             this.snackBar.open('Activity created successfully', 'Close', {
-              duration: 3000
+              duration: 3000,
             });
           },
           error: (error) => {
             this.snackBar.open('Error creating activity', 'Close', {
-              duration: 3000
+              duration: 3000,
             });
             console.error('Error creating activity:', error);
-          }
+          },
         });
       }
     });
