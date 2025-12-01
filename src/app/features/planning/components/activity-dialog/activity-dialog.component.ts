@@ -1,14 +1,23 @@
-import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 
 import { Activity } from '../../model/activity.entity';
 import { Task } from '../../model/task.entity';
@@ -31,10 +40,10 @@ interface DialogData {
     MatButtonModule,
     MatIconModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
   ],
   templateUrl: './activity-dialog.component.html',
-  styleUrls: ['./activity-dialog.component.scss']
+  styleUrls: ['./activity-dialog.component.scss'],
 })
 export class ActivityDialogComponent implements OnInit {
   activityForm: FormGroup;
@@ -46,14 +55,17 @@ export class ActivityDialogComponent implements OnInit {
   ) {
     this.activityForm = this.fb.group({
       activityCode: ['', Validators.required],
-      description: [''],
+      description: ['', Validators.required],
       expectedTime: [new Date(), Validators.required],
-      weekNumber: [1, [Validators.required, Validators.min(1), Validators.max(52)]],
-      activityStatus: ['PENDING', Validators.required],
-      locationOrigin: [null, Validators.required],
-      locationDestination: [null, Validators.required],
-      zoneOrigin: [null, Validators.required],
-      zoneDestination: [null, Validators.required]
+      weekNumber: [
+        1,
+        [Validators.required, Validators.min(1), Validators.max(52)],
+      ],
+      activityStatus: ['PLANNED', Validators.required],
+      locationOrigin: [0, [Validators.required, Validators.min(1)]],
+      locationDestination: [0, [Validators.required, Validators.min(1)]],
+      zoneOrigin: [0, [Validators.required, Validators.min(1)]],
+      zoneDestination: [0, [Validators.required, Validators.min(1)]],
     });
   }
 
@@ -68,7 +80,7 @@ export class ActivityDialogComponent implements OnInit {
         locationOrigin: this.data.activity.locationOrigin,
         locationDestination: this.data.activity.locationDestination,
         zoneOrigin: this.data.activity.zoneOrigin,
-        zoneDestination: this.data.activity.zoneDestination
+        zoneDestination: this.data.activity.zoneDestination,
       });
     }
   }
@@ -95,4 +107,4 @@ export class ActivityDialogComponent implements OnInit {
   onCancel(): void {
     this.dialogRef.close();
   }
-} 
+}
