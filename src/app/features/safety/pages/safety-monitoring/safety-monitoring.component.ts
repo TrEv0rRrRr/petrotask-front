@@ -51,32 +51,46 @@ export class SafetyMonitoringComponent implements OnInit {
   // Métricas de seguridad en tiempo real
   safetyMetrics: SafetyMetric[] = [
     {
-      name: 'Presión del Sistema',
-      value: 45.2,
+      name: 'Presión en Línea Principal',
+      value: 85.5,
       unit: 'PSI',
-      status: 'safe',
-      trend: 'stable',
-    },
-    {
-      name: 'Temperatura de Proceso',
-      value: 85.7,
-      unit: '°C',
       status: 'warning',
       trend: 'up',
     },
     {
-      name: 'Nivel de Combustible',
-      value: 78.3,
-      unit: '%',
+      name: 'Temperatura de Pozo #1',
+      value: 72.3,
+      unit: '°C',
+      status: 'safe',
+      trend: 'stable',
+    },
+    {
+      name: 'Nivel de Gas H2S',
+      value: 92.1,
+      unit: 'ppm',
+      status: 'critical',
+      trend: 'up',
+    },
+    {
+      name: 'Vibración en Compresor',
+      value: 45.2,
+      unit: 'Hz',
       status: 'safe',
       trend: 'down',
     },
     {
-      name: 'Integridad Estructural',
-      value: 92.1,
-      unit: '%',
+      name: 'Flujo de Producción',
+      value: 68.7,
+      unit: 'bbl/día',
       status: 'safe',
       trend: 'stable',
+    },
+    {
+      name: 'Presión de Vapor',
+      value: 78.9,
+      unit: 'PSI',
+      status: 'warning',
+      trend: 'up',
     },
   ];
 
@@ -115,12 +129,56 @@ export class SafetyMonitoringComponent implements OnInit {
       status: 'active',
       priority: 3,
     },
+    {
+      id: '4',
+      type: 'critical',
+      title: 'Detección de Fuga en Línea',
+      description:
+        'Sistema detectó posible fuga en la línea de transferencia L-045',
+      location: 'Campo Delta - Sección B',
+      timestamp: new Date(Date.now() - 5 * 60 * 1000), // 5 minutos atrás
+      status: 'active',
+      priority: 1,
+    },
+    {
+      id: '5',
+      type: 'warning',
+      title: 'Nivel Bajo de Lubricante',
+      description:
+        'El nivel de lubricante en la bomba P-012 está por debajo del mínimo',
+      location: 'Estación de Bombeo Este',
+      timestamp: new Date(Date.now() - 90 * 60 * 1000), // 90 minutos atrás
+      status: 'active',
+      priority: 2,
+    },
+    {
+      id: '6',
+      type: 'info',
+      title: 'Calibración de Sensores',
+      description:
+        'Recordatorio de calibración trimestral de sensores de presión',
+      location: 'Plataforma Beta - Todos los Pozos',
+      timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000), // 3 horas atrás
+      status: 'acknowledged',
+      priority: 3,
+    },
+    {
+      id: '7',
+      type: 'warning',
+      title: 'Ruido Anormal en Turbina',
+      description:
+        'La turbina T-003 presenta niveles de ruido superiores a lo normal',
+      location: 'Planta de Compresión - Sector 2',
+      timestamp: new Date(Date.now() - 30 * 60 * 1000), // 30 minutos atrás
+      status: 'active',
+      priority: 2,
+    },
   ];
 
   // Historial de incidentes
   incidentHistory: SafetyAlert[] = [
     {
-      id: '4',
+      id: '8',
       type: 'critical',
       title: 'Fuga Menor Detectada',
       description: 'Se detectó una fuga menor en la línea de transferencia',
@@ -130,7 +188,7 @@ export class SafetyMonitoringComponent implements OnInit {
       priority: 1,
     },
     {
-      id: '5',
+      id: '9',
       type: 'warning',
       title: 'Vibración Anormal en Bomba',
       description: 'La bomba B-003 presenta vibraciones fuera del rango normal',
@@ -138,6 +196,71 @@ export class SafetyMonitoringComponent implements OnInit {
       timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 días atrás
       status: 'resolved',
       priority: 2,
+    },
+    {
+      id: '10',
+      type: 'critical',
+      title: 'Sobrepresión en Sistema',
+      description:
+        'El sistema de presión alcanzó niveles críticos en la válvula de alivio',
+      location: 'Plataforma Gamma - Cabezal Principal',
+      timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 días atrás
+      status: 'resolved',
+      priority: 1,
+    },
+    {
+      id: '11',
+      type: 'warning',
+      title: 'Corrosión Detectada',
+      description:
+        'Inspección reveló signos de corrosión en tubería secundaria',
+      location: 'Campo Épsilon - Línea 8',
+      timestamp: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 días atrás
+      status: 'resolved',
+      priority: 2,
+    },
+    {
+      id: '12',
+      type: 'info',
+      title: 'Actualización de Firmware',
+      description:
+        'Actualización programada de sistema de control completada exitosamente',
+      location: 'Centro de Control - Servidor Principal',
+      timestamp: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000), // 10 días atrás
+      status: 'resolved',
+      priority: 3,
+    },
+    {
+      id: '13',
+      type: 'critical',
+      title: 'Falla en Sensor de Gas',
+      description:
+        'El sensor de gas S-025 dejó de responder, requirió reemplazo inmediato',
+      location: 'Plataforma Alpha - Sector Sur',
+      timestamp: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000), // 12 días atrás
+      status: 'resolved',
+      priority: 1,
+    },
+    {
+      id: '14',
+      type: 'warning',
+      title: 'Desviación en Lectura de Temperatura',
+      description:
+        'Sensor mostró lecturas inconsistentes, calibración fue necesaria',
+      location: 'Campo Zeta - Pozo 3',
+      timestamp: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000), // 14 días atrás
+      status: 'resolved',
+      priority: 2,
+    },
+    {
+      id: '15',
+      type: 'info',
+      title: 'Mantenimiento Preventivo Completado',
+      description: 'Inspección trimestral de válvulas de seguridad finalizada',
+      location: 'Todas las Plataformas',
+      timestamp: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000), // 20 días atrás
+      status: 'resolved',
+      priority: 3,
     },
   ];
 
@@ -218,12 +341,10 @@ export class SafetyMonitoringComponent implements OnInit {
 
   acknowledgeAlert(alert: SafetyAlert): void {
     alert.status = 'acknowledged';
-    console.log('Alerta reconocida:', alert.id);
   }
 
   resolveAlert(alert: SafetyAlert): void {
     alert.status = 'resolved';
-    console.log('Alerta resuelta:', alert.id);
   }
 
   getMetricStatusIcon(status: string): string {
