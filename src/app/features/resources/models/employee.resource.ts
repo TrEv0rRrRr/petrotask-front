@@ -22,4 +22,13 @@ export interface CreateEmployeeResource {
 
 export interface UpdateEmployeeStatusResource {
   employeeStatus: string;
-} 
+}
+
+export interface UpdateEmployeeResource {
+  name: string;
+  lastName: string;
+  positionId: number;
+  employeeStatus: string;
+  email: string;
+  phoneNumber: string;
+}

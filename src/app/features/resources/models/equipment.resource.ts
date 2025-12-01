@@ -21,4 +21,13 @@ export interface CreateEquipmentResource {
 
 export interface UpdateEquipmentStatusResource {
   status: string;
-} 
+}
+
+export interface UpdateEquipmentResource {
+  name: string;
+  status: string;
+  code: string;
+  plate: string;
+  capacityLoad: number;
+  capacityPax: number;
+}

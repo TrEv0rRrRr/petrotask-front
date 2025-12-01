@@ -1,4 +1,4 @@
-import { Position } from "./position.entity";
+import { Position } from './position.entity';
 
 export class Employee {
   id: number;
@@ -18,7 +18,7 @@ export class Employee {
     lastName?: string,
     positionId?: number,
     positionTitle?: string,
-    status: string = 'ACTIVE',
+    status: string = 'Available',
     email?: string,
     phoneNumber?: string
   ) {
@@ -28,7 +28,7 @@ export class Employee {
     this.lastName = lastName || '';
     this.positionId = positionId || 0;
     this.positionTitle = positionTitle || '';
-    this.status = status || 'ACTIVE';
+    this.status = status || 'Available';
     this.email = email || '';
     this.phoneNumber = phoneNumber || '';
   }

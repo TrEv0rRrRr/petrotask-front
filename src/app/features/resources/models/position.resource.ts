@@ -9,4 +9,9 @@ export interface PositionResource {
 export interface CreatePositionResource {
   title: string;
   description: string;
-} 
+}
+
+export interface UpdatePositionResource {
+  title: string;
+  description: string;
+}

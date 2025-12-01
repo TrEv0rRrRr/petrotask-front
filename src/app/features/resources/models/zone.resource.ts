@@ -32,3 +32,16 @@ export interface CreateLocationResource {
 export interface UpdateLocationStatusResource {
   status: string;
 }
+
+export interface UpdateZoneResource {
+  name: string;
+}
+
+export interface UpdateLocationResource {
+  street: string;
+  city: string;
+  country: string;
+  latitude: number;
+  longitude: number;
+  status: string;
+}
