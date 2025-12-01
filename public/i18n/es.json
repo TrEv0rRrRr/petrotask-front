@@ -161,6 +161,9 @@
     "next": "Siguiente",
     "create": "Crear Usuario"
   },
+  "activities-list": {
+    "subtitle": "Gestión completa de todas las tareas operativas"
+  },
   "team-management": {
     "title": "Gestión de Equipos",
     "filter": "Filtrar por Zona",
@@ -889,5 +892,46 @@
       "title": "Alertas de Seguridad",
       "description": "Monitorea y gestiona alertas de seguridad en tiempo real"
     }
+  },
+  "menu": {
+    "home": "Inicio",
+    "task-planning": "Planificación de Tareas",
+    "task-management": "Gestión de Tareas",
+    "tasks-list": "Lista de Tareas",
+    "task-assignment": "Asignación de Tareas",
+    "critical-tasks": "Tareas Críticas",
+    "alert-management": "Gestión de Alertas",
+    "safety-monitoring": "Monitoreo de Seguridad",
+    "alert-history": "Historial de Alertas",
+    "reports": "Reportes",
+    "execution-history": "Historial de Ejecución",
+    "system-management": "Gestión del Sistema",
+    "users": "Usuarios",
+    "equipments-management": "Gestión de Equipos",
+    "employee-management": "Personal de Campo",
+    "position-management": "Posiciones",
+    "location-management": "Ubicaciones",
+    "teams-management": "Equipos de Trabajo",
+    "settings": "Configuración",
+    "my-tasks": "Mis Tareas",
+    "incident-reporting": "Reporte de Incidencias",
+    "photo-evidence": "Evidencias Fotográficas",
+    "safety-alerts": "Alertas de Seguridad",
+    "dashboard": "Panel de Control",
+    "team-management": "Gestión de Equipos",
+    "petroleum-equipment": "Equipos Petroleros",
+    "petroleum-locations": "Ubicaciones Petroleras",
+    "incident-management": "Gestión de Incidencias"
+  },
+  "errors": {
+    "unexpected": "Ha ocurrido un error inesperado",
+    "invalid-request": "Solicitud inválida. Por favor verifica los datos enviados.",
+    "unauthorized": "No autorizado. Por favor inicia sesión nuevamente.",
+    "forbidden": "No tienes permisos para realizar esta acción.",
+    "not-found": "Recurso no encontrado.",
+    "conflict": "Conflicto con los datos existentes.",
+    "server-error": "Error interno del servidor. Por favor intenta más tarde.",
+    "service-unavailable": "Servicio no disponible. Por favor intenta más tarde.",
+    "server-error-code": "Error del servidor: {{code}}"
   }
 }

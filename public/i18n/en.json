@@ -161,6 +161,9 @@
     "next": "Next",
     "create": "Create User"
   },
+  "activities-list": {
+    "subtitle": "Complete management of all operational tasks"
+  },
   "team-management": {
     "title": "Team Management",
     "filter": "Filter by Zone",
@@ -996,5 +999,46 @@
       "title": "Safety Alerts",
       "description": "Monitor and manage safety alerts in real time"
     }
+  },
+  "menu": {
+    "home": "Home",
+    "task-planning": "Task Planning",
+    "task-management": "Task Management",
+    "tasks-list": "Task List",
+    "task-assignment": "Task Assignment",
+    "critical-tasks": "Critical Tasks",
+    "alert-management": "Alert Management",
+    "safety-monitoring": "Safety Monitoring",
+    "alert-history": "Alert History",
+    "reports": "Reports",
+    "execution-history": "Execution History",
+    "system-management": "System Management",
+    "users": "Users",
+    "equipments-management": "Equipment Management",
+    "employee-management": "Field Personnel",
+    "position-management": "Positions",
+    "location-management": "Locations",
+    "teams-management": "Work Teams",
+    "settings": "Settings",
+    "my-tasks": "My Tasks",
+    "incident-reporting": "Incident Reporting",
+    "photo-evidence": "Photo Evidence",
+    "safety-alerts": "Safety Alerts",
+    "dashboard": "Dashboard",
+    "team-management": "Team Management",
+    "petroleum-equipment": "Petroleum Equipment",
+    "petroleum-locations": "Petroleum Locations",
+    "incident-management": "Incident Management"
+  },
+  "errors": {
+    "unexpected": "An unexpected error has occurred",
+    "invalid-request": "Invalid request. Please check the data sent.",
+    "unauthorized": "Unauthorized. Please log in again.",
+    "forbidden": "You do not have permission to perform this action.",
+    "not-found": "Resource not found.",
+    "conflict": "Conflict with existing data.",
+    "server-error": "Internal server error. Please try again later.",
+    "service-unavailable": "Service unavailable. Please try again later.",
+    "server-error-code": "Server error: {{code}}"
   }
 }
